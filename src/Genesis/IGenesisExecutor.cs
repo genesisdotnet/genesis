@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Genesis
 {
     //TODO: Rename, think its the same as a task method
-    public interface ITaskExecutor<ITaskResult>
+    public interface IGenesisExecutor<IGenesisExecutionResult> 
     {
         string CommandText { get; }
         string Description { get; }
@@ -14,6 +14,6 @@ namespace Genesis
         Task Initialize();
 
         Task<bool> EditConfig<TPropertyType>(string propertyName, TPropertyType value);
-        Task<ITaskResult> Execute(GenesisContext genesis, string args);
+        Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string args);
     }
 }

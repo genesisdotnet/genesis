@@ -1,6 +1,5 @@
 # ToDo / Could be cool
 
-* Rename ITaskExecutor to IGenesisExecutor, it evidently conflics with Microsoft's base Task api.
 * Possible dependency injection for IGenesisExecutors?
 * Dependencies for whatever is 'generated'. (Base classes for Entities, Controllers, ViewModels, Views, etc.)
 * Tests? Tests.
