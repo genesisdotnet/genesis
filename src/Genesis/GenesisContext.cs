@@ -10,8 +10,8 @@ namespace Genesis.Cli
     {
         public string PromptString { get; private set; }
 
-        private ITaskExecutor<ITaskResult> _currentExecutor;
-        public ITaskExecutor<ITaskResult> CurrentTask {
+        private IGenesisExecutor<ITaskResult> _currentExecutor;
+        public IGenesisExecutor<ITaskResult> CurrentTask {
             get =>_currentExecutor;
             private set {
                 _currentExecutor = value;

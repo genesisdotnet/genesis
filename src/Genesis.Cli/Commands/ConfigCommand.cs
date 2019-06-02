@@ -64,11 +64,19 @@ namespace Genesis.Cli.Commands
                     {
                         Text.RedLine("Couldn't update value");
                     }
+                    else
+                    {
+                        result.Success = true;
+                    }
                 } else if (populator != null)
                 {
                     if (!await populator.EditConfig(chunks[0], chunks[1]))
                     {
                         Text.RedLine("Couldn't update value");
+                    }
+                    else
+                    {
+                        result.Success = true;
                     }
                 }
                 else

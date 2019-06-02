@@ -65,17 +65,17 @@ Here are a few:
 help      We'll try to
  
 clear     Sets Populator and Generator (to be changed) to null
-exit      Exit the app or currently scoped ITaskExecutor
+exit      Exit the app or currently scoped IGenesisExecutor
  
 scan      Scan the filesystem for Producers and Generators within assemblies
 status    Display information about the configuration
 
 pop       Scope to a Populator
 gen       Scope to a Generator
-scope     (Soon) Manipulate an ITaskExecutor's Config property        
+scope     (Soon) Manipulate an IGenesisExecutor's Config property        
 
 go        Execute the current configuration.
-exec      (Soon) Execute an ITaskExecutor by alias (Populator or Generator)
+exec      (Soon) Execute an IGenesisExecutor by alias (Populator or Generator)
 
 update    Eventually download latest and restart
 ```

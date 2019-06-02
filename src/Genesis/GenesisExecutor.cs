@@ -6,7 +6,7 @@ using Genesis.Cli;
 
 namespace Genesis
 {
-    public abstract class GenesisExecutor<TResultType> : ITaskExecutor<ITaskResult> where TResultType : ITaskResult, new()
+    public abstract class GenesisExecutor<TResultType> : IGenesisExecutor<ITaskResult> where TResultType : ITaskResult, new()
     {
         public virtual string CommandText => throw new NotImplementedException();
 

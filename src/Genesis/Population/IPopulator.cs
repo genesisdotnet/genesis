@@ -6,7 +6,7 @@ using Genesis.Cli;
 
 namespace Genesis.Population
 {
-    public interface IPopulator : ITaskExecutor<ITaskResult>
+    public interface IPopulator : IGenesisExecutor<ITaskResult>
     {
         IPopulatorConfiguration Configuration { get; set; }
     }
