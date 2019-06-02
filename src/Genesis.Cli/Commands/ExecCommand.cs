@@ -12,7 +12,7 @@ namespace Genesis.Cli.Commands
     {
         public override string Name { get => "exec"; } //I keep typing 'exec' whatever, and it's annoying. 
 
-        public override string Description => "Execute an ITaskExecutor by alias (Populator or Generator)";
+        public override string Description => "Execute an IGenesisExecutor by alias (Populator or Generator)";
 
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {

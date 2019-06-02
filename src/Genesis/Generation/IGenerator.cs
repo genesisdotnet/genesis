@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Genesis.Generation
 {
-    public interface IGenerator : ITaskExecutor<ITaskResult>
+    public interface IGenerator : IGenesisExecutor<ITaskResult>
     {
         IGeneratorTemplate Template { get; set; }
 
