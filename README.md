@@ -1,7 +1,7 @@
-# Genesis
-Genesis a code generator at heart, though it could do other 'things'. It's written in c#.
+# Genesis .Net
+Genesis a code generator. It fairly extensible and could do more than just generate boiler plate code. It's written in c#.
 
-Given a source of data, Genesis and its generators are free to consume schema information and/or data from an interrogated source. Right now there is only one source (Populator) written, but many more are possible. 
+Given a source of data, Genesis and its Generators are free to consume schema information and/or data from an interrogated source. Right now there is only one source (Populator) written, but many more are possible. (NoSQL, CSV, Web Request)
 
 Here's the basic flow for now:
 * Configure an input source (Populator for now, cringe)
@@ -13,7 +13,7 @@ It's pretty cool because you can script it with a series of different sources or
 * This isn't really anything new, but it was a fun project that could be useful to someone else. 
 
 # Some Possible Use Cases
-Some existing use cases as well as some thoughts on others to maybe help provide an idea of what Genesis does and could do. 
+Thing you can and could do...
 * Write out a plain old csharp object file based on the column schema of a database table
 `DatabaseTableNamePoco.cs` (for now)
 * Create customized ViewModels for entities from anywhere you can write code to 'talk to'
@@ -24,7 +24,7 @@ Some existing use cases as well as some thoughts on others to maybe help provide
 * Web calls or duties in general from a specific table of tasks?
 * I'm not sure where this is going :D
 
-That's just one input source, using the MSSqlDb Populator. 
+That's just one input source right now, using the MSSqlDb Populator. 
 
 These are all currently prototypes, and they're all coming from the same input source. 
 
@@ -92,5 +92,6 @@ Comments <b>aren't</b> handled yet. This configures the [Genesis.Input.MSSqlDb](
 ```
  scan          //load all of the Populators and Generators
  pop mssql     //configure (scope to) the Populator with the key "mssql", which reads an sql database
+ config mssql ConnectionString="Server=xxxxx;Database=dbName"
  gen poco      //configure (scope to) the Generator with the key "poco". Maybe it just writes out c# classes of nothing
  go            //run the currently configured Populator then Generator. They share the GenesisContext and are worthless alone.
