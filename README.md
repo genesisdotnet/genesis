@@ -1,5 +1,5 @@
 # Genesis .Net
-Genesis a code generator. It fairly extensible and could do more than just generate boiler plate code. It's written in c#.
+Genesis a code generator. It is extensible and could do more than just generate boiler plate code. It's written in c#.
 
 Given a source of data, Genesis and its Generators are free to consume schema information and/or data from an interrogated source. Right now there is only one source (Populator) written, but many more are possible. (NoSQL, CSV, Web Request)
 
