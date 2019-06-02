@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 namespace Genesis
 {
-    //TODO: Rename, think its the same as a task method
     public interface IGenesisExecutor<IGenesisExecutionResult> 
     {
         string CommandText { get; }
