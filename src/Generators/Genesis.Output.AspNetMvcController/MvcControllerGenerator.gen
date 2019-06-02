@@ -1,0 +1,47 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+namespace ~NAMESPACE~.Controllers
+{
+    [Route("api/[controller]")]
+    [ApiController]
+    public class ~OBJECT_NAME~Controller : ControllerBase
+    {
+		public ~OBJECT_NAME~Controller() {}
+		
+        // GET api/~OBJECT_NAME~
+        [HttpGet]
+        public ActionResult<IEnumerable<~OBJECT_NAME~>> Get()
+        {
+            return new ~OBJECT_NAME~[] { default(~OBJECT_NAME~), default(~OBJECT_NAME~) };
+        }
+
+        // GET api/~OBJECT_NAME~/5
+        [HttpGet("{id}")]
+        public ActionResult<~OBJECT_NAME~> Get(int id)
+        {
+            return new ~OBJECT_NAME~();
+        }
+
+        // POST api/~OBJECT_NAME~
+        [HttpPost]
+        public void Post([FromBody] ~OBJECT_NAME~ value)
+        {
+        }
+
+        // PUT api/~OBJECT_NAME~/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] ~OBJECT_NAME~ value)
+        {
+        }
+
+        // DELETE api/~OBJECT_NAME~/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
+    }
+}

@@ -1,0 +1,7 @@
+﻿{
+  "language": "C#",
+  "namespace": "Output.Xamarin.ViewModels",
+  "outputPath": "C:\\Temp\\Output",
+  "overwrite": "all",
+  "preserve": "none"
+}

@@ -1,0 +1,19 @@
+﻿using System;
+
+using ~NAMESPACE~.Models;
+
+namespace ~NAMESPACE~.ViewModels
+{
+    public class ~OBJECT_NAME~DetailViewModel : BaseViewModel
+    {
+        private ~OBJECT_NAME~? _instance = null;
+
+		public ~OBJECT_NAME~ Instance { get => _instance; set => SetProperty(value); }
+
+        public ItemDetailViewModel(~OBJECT_NAME~ instance = null)
+        {
+            //TODO: This template is cringy
+            _instance = instance ?? new ~OBJECT_NAME~();
+        }
+    }
+}
