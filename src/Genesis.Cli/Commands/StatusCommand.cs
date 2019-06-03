@@ -18,16 +18,13 @@ namespace Genesis.Cli.Commands
         {
             Console.WriteLine();
             Console.WriteLine("Known Populators:");
-            
+
             if (InputManager.Populators.Count == 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\t no populators found");
+                Text.RedLine("\t no populators found");
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-
                 foreach (var pop in InputManager.Populators)
                 {
                     //TODO: More info here?
@@ -36,25 +33,21 @@ namespace Genesis.Cli.Commands
             }
 
             Console.ResetColor();
-
             Console.WriteLine("Known Generators:");
-            
-            if(OutputManager.Generators.Count == 0)
+
+            if (OutputManager.Generators.Count == 0)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine("\t no generators found");
+                Text.RedLine("\t no generators found");
             }
             else
             {
-                Console.ForegroundColor = ConsoleColor.Cyan;
-
                 foreach (var gen in OutputManager.Generators)
                 {
                     //TODO: More info here?
-                    Text.White($"\t'");Text.Green(gen.CommandText);Text.WhiteLine($"' is defined in {gen.GetType().Name}");
+                    Text.White($"\t'"); Text.Green(gen.CommandText); Text.White($"' is defined in '"); Text.Cyan($"{gen.FriendlyName}"); Text.WhiteLine("'");
                 }
             }
-            
+
             Console.ResetColor();
 
             genesis.WriteContextInfo();

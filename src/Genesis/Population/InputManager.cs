@@ -15,14 +15,17 @@ namespace Genesis.Population
     {
         public static List<IPopulator> Populators { get; set; } = new List<IPopulator>();
 
+        //TODO: Why is InputManager 'writing' messages to the Console?
+
         /// <summary>
         /// Load Populator extensions from the current directory
         /// </summary>
+        [Obsolete]
         public static async Task InitializePopulatorsAsync(bool writeOutputMessages = false)
         {
             Populators.Clear();
 
-            Debug.WriteLine($@"Scanning local directory for Populator libraries");
+            Text.WhiteLine($@"Scanning local directory for Populator libraries");
 
             var assemblies = new List<Assembly>();
 
@@ -54,6 +57,7 @@ namespace Genesis.Population
                     var cfgWarning = false;
                     try
                     {
+                        //cmdtext was located from friendlyname and is available if it succeedes
                         if (typeof(PopulatorConfiguration).IsAssignableFrom(configType)) //Make sure we can use it
                             populator.Configuration = (IPopulatorConfiguration)Activator.CreateInstance(configType, true);
 
@@ -69,9 +73,13 @@ namespace Genesis.Population
                         if (!writeOutputMessages)
                             continue;
 
-                        Console.Write($"'{populator.FriendlyName}': ");
-                        Console.ForegroundColor = (cfgWarning) ? ConsoleColor.Yellow : ConsoleColor.Green;
-                        Console.WriteLine((cfgWarning) ? "Warning" : "Success");
+                        Text.White($"'"); Text.Green(populator.CommandText); Text.White("' was found in '"); Text.Cyan(populator.FriendlyName); Text.White("'... ");
+
+                        if (cfgWarning)
+                            Text.YellowLine("warning");
+                        else
+                            Text.GreenLine("OK");
+
                         Console.ResetColor();
                     }
                     catch (Exception exc)
