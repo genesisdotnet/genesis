@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="REM copy /y &quot;$(TargetPath)&quot; &quot;../../Genesis/bin/debug/netstandard2.0/&quot;" />
   </Target>
 
 </Project>

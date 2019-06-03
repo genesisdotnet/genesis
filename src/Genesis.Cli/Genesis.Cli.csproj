@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <AssemblyName>Genesis-cli</AssemblyName>
+    <AssemblyName>genesis-cli</AssemblyName>
     <LangVersion>8.0</LangVersion>
     <Version>0.5.2</Version>
     <Authors>Izerian, Solatticus</Authors>
@@ -11,13 +11,13 @@
     <Product>genesis-cli</Product>
     <Description>Extensible scaffolding from just about any source to any destination you can write code for.</Description>
     <Copyright></Copyright>
-    <AssemblyVersion>0.5.2.*</AssemblyVersion>
-    <FileVersion>0.5.2.1</FileVersion>
+    <AssemblyVersion>0.5.2</AssemblyVersion>
+    <FileVersion>0.5.2</FileVersion>
     <PackageProjectUrl>https://www.github.com/genesis-</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DefineConstants>DEBUG</DefineConstants>
+    <DefineConstants>DEBUG;NETCOREAPP;NETCOREAPP3_0</DefineConstants>
   </PropertyGroup>
 
   <ItemGroup>
