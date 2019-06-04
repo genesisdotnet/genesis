@@ -75,7 +75,7 @@ namespace Genesis.Output.Poco
             foreach (var p in properties)
             {
                 if (p.SourceType != "UNKNOWN")
-                    sb.AppendLine(template.Replace(Tokens.PropertyDataType, p.SourceType)
+                    sb.AppendLine(template.Replace(Tokens.PropertyDataType, p.SourceType.ToCodeDataType())
                         .Replace(Tokens.PropertyName, p.Name)
                         .Replace(Tokens.PropertyMemberName, p.Name.ToCorrectedCase()));
             }
