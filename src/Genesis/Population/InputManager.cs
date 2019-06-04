@@ -20,7 +20,7 @@ namespace Genesis.Population
         /// <summary>
         /// Load Populator extensions from the current directory
         /// </summary>
-        [Obsolete]
+        //slow down son
         public static async Task InitializePopulatorsAsync(bool writeOutputMessages = false)
         {
             Populators.Clear();
