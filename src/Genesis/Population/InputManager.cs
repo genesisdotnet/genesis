@@ -25,8 +25,6 @@ namespace Genesis.Population
         {
             Populators.Clear();
 
-            Text.WhiteLine($@"Scanning local directory for Populator libraries");
-
             var assemblies = new List<Assembly>();
 
             foreach (var file in Directory.EnumerateFiles(Environment.CurrentDirectory, "*" + GenesisDefaults.LibraryExtension, SearchOption.TopDirectoryOnly))
