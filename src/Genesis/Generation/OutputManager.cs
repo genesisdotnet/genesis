@@ -59,7 +59,8 @@ namespace Genesis.Generation
                     var cfgWarning = false;
                     try
                     {
-                        if (typeof(GeneratorConfiguration).IsAssignableFrom(configType)) //is this even necessary since ^ IsInstanceOf
+                        //cmdtext was located from friendlyname and is available if it succeedes
+                        if (typeof(GeneratorConfiguration).IsAssignableFrom(configType)) //Make sure we can use it
                             generator.Configuration = (IGeneratorConfiguration)Activator.CreateInstance(configType, true);
 
                         //bind the configuration json to the config instance
@@ -69,27 +70,18 @@ namespace Genesis.Generation
                             Text.RedLine($"Unable to configure from {configType.Name}.json for {generator.GetType().Name}");
                         }
 
-                        //load a template - don't like it throwing exceptions
-                        try
-                        {
-                            var template = TemplateLoader.LoadTemplateFor(generator); //brittle?, every generator must have a template to be valid during scan
-
-                            generator.Template = template; //whatever for now
-                        }
-                        catch (Exception)
-                        {
-                            Text.DarkYellow("Problems loading template for: '"); Text.Cyan(generator.FriendlyName); Text.DarkYellow("' (Generator)");
-                            //throw; //maybe it doesn't need a template
-                        }
-                        
                         await generator.Initialize();
 
                         if (!writeOutputMessages)
                             continue;
 
-                        Console.Write($"'{generator.FriendlyName}': ");
-                        Console.ForegroundColor = (cfgWarning) ? ConsoleColor.Yellow : ConsoleColor.Green;
-                        Console.WriteLine((cfgWarning) ? "Warning" : "Success");
+                        Text.White($"'"); Text.Green(generator.CommandText); Text.White("' was found in '"); Text.Cyan(generator.FriendlyName); Text.White("'... ");
+
+                        if (cfgWarning)
+                            Text.YellowLine("warning");
+                        else
+                            Text.GreenLine("OK");
+
                         Console.ResetColor();
                     }
                     catch (Exception exc)
