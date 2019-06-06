@@ -37,6 +37,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Generators\Genesis.Output.AspNetDbContextCachedRepositories\Genesis.Output.AspNetDbContextCachedRepositories.csproj" />
     <ProjectReference Include="..\Generators\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj" />
     <ProjectReference Include="..\Generators\Genesis.Output.Poco\Genesis.Output.Poco.csproj" />
     <ProjectReference Include="..\Generators\Genesis.Output.XamarinViewModel\Genesis.Output.XamarinViewModel.csproj" />

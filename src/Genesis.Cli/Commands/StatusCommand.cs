@@ -28,7 +28,8 @@ namespace Genesis.Cli.Commands
                 foreach (var pop in InputManager.Populators)
                 {
                     //TODO: More info here?
-                    Text.White($"\t'"); Text.Green(pop.CommandText); Text.WhiteLine($"' is defined in {pop.GetType().Name}");
+                    Text.White($"\t'"); Text.Green(pop.CommandText); Text.White($"' is defined in '"); Text.Cyan($"{pop.FriendlyName}"); Text.WhiteLine("'");
+
                 }
             }
 
