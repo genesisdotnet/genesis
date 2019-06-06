@@ -11,7 +11,7 @@ namespace Genesis.Output.MvcController
 {
     public class MvcControllerGenerator : Generator
     {
-        public override string CommandText => "mvccon";
+        public override string CommandText => "aspnet-mvc-con";
         public override string Description => "Generates an Asp.Net Controller based on an entity.";
         public override string FriendlyName => "Asp.Net MvcController Generator";
 
