@@ -9,6 +9,7 @@ namespace Genesis.Cli
     public class GenesisScope //INotifyPropertyChanged?
     {
         public string PromptString { get; private set; }
+        public List<IGenesisExecutor<ITaskResult>> Executors { get; } = new List<IGenesisExecutor<ITaskResult>>();
 
         private IGenesisExecutor<ITaskResult> _currentExecutor;
         public IGenesisExecutor<ITaskResult> CurrentTask {

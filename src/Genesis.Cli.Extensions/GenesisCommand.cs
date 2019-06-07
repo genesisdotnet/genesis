@@ -17,10 +17,44 @@ namespace Genesis.Cli.Extensions
         public virtual string Usage { get; } = "command parameter [[0] [1] [2]]"; //or something
         public abstract string Description { get; }
 
-        public virtual async Task InitializeAsync()
+        public Task InitializeAsync(string[] args)
         {
             Debug.WriteLine($@"{GetType().Name}.{nameof(InitializeAsync)}");
-            await Task.CompletedTask;
+
+            return OnInitializing(args);
+        }
+
+        /// <summary>
+        /// Tells the command to check and see if they should write a help command to the screen
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        public Task ProcessHelpCommand(string[] args)
+        {
+            if (HelpWasRequested(args))
+            {
+                Debug.WriteLine($@"{GetType().Name}.{nameof(ProcessHelpCommand)}");
+                OnHelpRequested(args);
+            }
+
+            return Task.CompletedTask;
+        }
+
+        protected virtual Task OnInitializing(string[] args)
+        {
+            //dump dependencies from a convention?
+            return Task.CompletedTask;
+        }
+
+        /// <summary>
+        /// Occurs when - command occurs with no args in [1] or later, or has -h, -help, --help
+        /// Override this to write out a help page
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
+        protected virtual Task OnHelpRequested(string[] args)
+        {
+            return Task.CompletedTask;
         }
 
         public IPopulator GetPopulator(string populatorName = "nope")
@@ -43,6 +77,15 @@ namespace Genesis.Cli.Extensions
             throw new Exception($"Invalid Generator name '{generatorName}'");
         }
 
+        public IGenesisExecutor<ITaskResult> GetExecutor(string executorName)
+        {
+            IGenesisExecutor<ITaskResult> exe = InputManager.Populators.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
+
+            if (exe == null)
+                exe = OutputManager.Generators.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
+
+            return exe;
+        }
         #region Helper Methods
 
         private const string helpArguments = "-h,-?,--help";
@@ -55,7 +98,6 @@ namespace Genesis.Cli.Extensions
         /// <returns>true if a help option/argument was matched, otherwise false</returns>
         protected bool HelpWasRequested(string[] args)
             => (args.Length == 2 && HelpArguments.Contains(args[1].ToLower()));
-
         #endregion
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Genesis.Cli;
@@ -37,6 +38,27 @@ namespace Genesis
         {
 
         }
+        public async virtual Task DisplayConfiguration()
+        {
+            var cfgObj = ConfigObject();
+            var cfgObjType = cfgObj.GetType();
+
+            Text.WhiteLine();
+            Text.White($"Properties for '"); Text.Cyan($"{cfgObjType.Name}"); Text.WhiteLine("'");
+
+            foreach (var p in cfgObjType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
+            {
+                var val = cfgObjType.GetProperty(p.Name)?.GetValue(cfgObj)?.ToString();
+
+                Text.Yellow($"\t{p.Name}: ");
+                Text.Blue(p.PropertyType.Name);
+                Text.White("   (");
+                Text.DarkYellow($"{((val is string) ? $"\"{val}\"":val)}");
+                Text.WhiteLine(")");
+            }
+
+            await Task.CompletedTask;
+        }
 
         public async virtual Task<bool> EditConfig<TPropertyType>(string propertyName, TPropertyType value)
         {
@@ -44,11 +66,20 @@ namespace Genesis
             Type cfgType = null;
             try
             {
-                var cfg = GetType().GetProperty("Config").GetValue(this);
+                var cfg = ConfigObject();
                 cfgType = cfg.GetType();
-                cfgType.GetProperty(propertyName).SetValue(cfg, value);
 
-                Text.Green(cfgType.Name); Text.White("."); Text.Cyan(propertyName);Text.WhiteLine(" was updated.");
+                if (value.GetType().IsAssignableFrom(typeof(string)))
+                {
+                    var bsalloc = value.ToString().TrimStart('"').TrimEnd('"');
+                    cfgType.GetProperty(propertyName).SetValue(cfg, bsalloc);
+                }
+                else //feels ghetto to remove quotes like this... 
+                {
+                    cfgType.GetProperty(propertyName).SetValue(cfg, value);
+                }
+
+                Text.Green(cfgType.Name); Text.White("."); Text.Cyan(propertyName); Text.WhiteLine(" was updated.");
             }
             catch (NullReferenceException)
             {
@@ -57,6 +88,9 @@ namespace Genesis
             }
             return await Task.FromResult(!err);
         }
+
+        protected object ConfigObject() 
+            => GetType().GetProperty("Config").GetValue(this);
 
         public abstract Task<ITaskResult> Execute(GenesisContext genesis, string args);
     }

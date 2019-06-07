@@ -14,9 +14,8 @@ namespace Genesis.Cli
     {
         public static List<IGenesisCommand> Commands { get; } = new List<IGenesisCommand>();
 
-        public static async Task InitAsync()
+        public static async Task InitAsync(string[] args)
         {
-
             var assemblies = new List<Assembly>();
 
             foreach (var file in Directory.EnumerateFiles(Environment.CurrentDirectory, "*" + GenesisDefaults.LibraryExtension, SearchOption.TopDirectoryOnly))
@@ -40,7 +39,7 @@ namespace Genesis.Cli
                 try
                 {
                     Commands.Add(command);
-                    await command.InitializeAsync();
+                    await command.InitializeAsync(args); //raises all the commands' OnInitializing(args)
                 }
                 catch (Exception ex)
                 {
