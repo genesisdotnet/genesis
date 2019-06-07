@@ -12,6 +12,5 @@ namespace Genesis.Population
         {
             
         }
-        public string ConfigurationString { get; set; }
     }
 }

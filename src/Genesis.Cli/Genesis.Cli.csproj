@@ -5,14 +5,15 @@
     <TargetFramework>netcoreapp3.0</TargetFramework>
     <AssemblyName>genesis-cli</AssemblyName>
     <LangVersion>8.0</LangVersion>
-    <Version>0.5.2</Version>
+    <Version>0.6.0</Version>
     <Authors>Izerian, Solatticus</Authors>
     <Company>Genesis Team</Company>
     <Product>genesis-cli</Product>
     <Description>Extensible scaffolding from just about any source to any destination you can write code for.</Description>
     <Copyright></Copyright>
-    <AssemblyVersion>0.5.2</AssemblyVersion>
-    <FileVersion>0.5.2</FileVersion>
+    <Deterministic>False</Deterministic> <!-- required (for now) to use the * below for the assembly version -->
+    <AssemblyVersion>0.6.0.*</AssemblyVersion>
+    <FileVersion>0.6.0</FileVersion>
     <PackageProjectUrl>https://www.github.com/genesis-</PackageProjectUrl>
   </PropertyGroup>
 
@@ -44,6 +45,7 @@
     <ProjectReference Include="..\Genesis.Cli.Extensions\Genesis.Cli.Extensions.csproj" />
     <ProjectReference Include="..\Genesis\Genesis.csproj" />
     <ProjectReference Include="..\Populators\Genesis.Input.MSSqlDB\Genesis.Input.MSSqlDb.csproj" />
+    <ProjectReference Include="..\Populators\Genesis.Input.YamlAddress\Genesis.Input.YamlAddress.csproj" />
   </ItemGroup>
 
 </Project>

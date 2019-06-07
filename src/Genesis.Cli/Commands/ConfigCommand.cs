@@ -13,45 +13,53 @@ namespace Genesis.Cli.Commands
         public override string Name { get => "config"; }
         public override string Description => "Edit an Executor's .Config object or list its current contents (soon)";
 
+        protected override Task OnHelpRequested(string[] args)
+        {
+            Console.WriteLine("Usage:");
+            Text.White($"\t{Name} "); Text.Green("CommandText"); Text.WhiteLine($@" PropertyName=<value>");
+            Text.WhiteLine($"\tSet the Executor.Config.PropertyName to the value provided.");
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            Console.ResetColor();
+            Console.WriteLine();
+
+            if (OutputManager.Generators.Count == 0 && InputManager.Populators.Count == 0) //NO Generators Found
+            {
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("There are no Executors discovered yet. Run a '");
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("scan");
+                Console.ResetColor();
+                Console.WriteLine("'.");
+            }
+            else //Something was found
+            {
+                foreach (var item in InputManager.Populators)
+                {
+                    Text.White("Populator: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
+                }
+                foreach (var item in OutputManager.Generators)
+                {
+                    Text.White("Generator: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
+                }
+            }
+
+            return base.OnHelpRequested(args);
+        }
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
             var result = new OutputTaskResult();
-
-            if (args.Length == 1 || HelpWasRequested(args)) //just 'gen' or 'gen --help,-?'
+            
+            if (args.Length == 1) //config
             {
-                Console.WriteLine("Usage:");
-                Text.White($"\t{Name} "); Text.Green("CommandText"); Text.WhiteLine($@" PropertyName=<value>");
-                Text.WhiteLine($"\t\tSet the Executor.Config.PropertyName to the value provided.");
-                Console.ForegroundColor = ConsoleColor.Cyan;
-                Console.ResetColor();
-                Console.WriteLine();
-
-                if (OutputManager.Generators.Count == 0 && InputManager.Populators.Count == 0) //NO Generators Found
-                {
-                    Console.ForegroundColor = ConsoleColor.Yellow;
-                    Console.Write("There are no Executors discovered yet. Run a '");
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    Console.Write("scan");
-                    Console.ResetColor();
-                    Console.WriteLine("'.");
-                }
-                else //Something was found
-                {
-                    foreach (var item in InputManager.Populators)
-                    {
-                        Text.White("Populator: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
-                    }
-                    foreach (var item in OutputManager.Generators)
-                    {
-                        Text.White("Generator: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
-                    }
-                }
-                result.Success = true;
-                result.Message = string.Empty;
+                await OnHelpRequested(args);
+            }
+            else if(args.Length == 2) //config executorname
+            {
+                WriteExecutorDetails(args[1]);
             }
             else
             {
-                var generator = OutputManager.Generators.Find(g => g.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
+                var generator = OutputManager.Generators.Find(g => g.CommandText.Trim().ToLower().Equals(args[1].Trim().ToLower(), StringComparison.Ordinal));
                 var populator = InputManager.Populators.Find(p => p.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
 
                 var chunks = args[2].Split('=');
@@ -59,7 +67,6 @@ namespace Genesis.Cli.Commands
 
                 if (generator != null )
                 {
-
                     if (!await generator.EditConfig(chunks[0], chunks[1]))
                     {
                         Text.RedLine("Couldn't update value");
@@ -91,6 +98,19 @@ namespace Genesis.Cli.Commands
                 }
             }
             return await Task.FromResult(result);
+        }
+
+        private void WriteExecutorDetails(string executorName)
+        {
+            var exe = GetExecutor(executorName);
+
+            if(exe == null)
+            {
+                Text.RedLine("No executor found with that name.");
+                return;
+            }
+
+            exe.DisplayConfiguration();
         }
     }
 }
