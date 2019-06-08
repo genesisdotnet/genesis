@@ -1,4 +1,4 @@
-﻿using Genesis.Cli;
+﻿using Genesis;
 using System.Threading.Tasks;
 
 namespace Genesis
@@ -13,6 +13,6 @@ namespace Genesis
         Task Initialize();
         Task DisplayConfiguration();
         Task<bool> EditConfig<TPropertyType>(string propertyName, TPropertyType value);
-        Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string args);
+        Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args);
     }
 }

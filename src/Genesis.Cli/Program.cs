@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,8 +19,6 @@ namespace Genesis.Cli
 
         static async Task Main(string[] args)
         {
-            InitializeVersion();
-
             //comment to run the loop
             //args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
 
@@ -29,14 +28,14 @@ namespace Genesis.Cli
 
             var tokenSource = new CancellationTokenSource(); //TODO: Is this even necessary here? 
 
-            Console.WriteLine($"Genesis Creation Engine {GetVersionDisplayString()}");
-            Console.WriteLine();
+            Text.White($"Genesis Creation Engine "); Text.GrayLine(GetVersionDisplayString());
+            Text.Line();
 
             await CommandLoader.InitAsync(args);
 
             if (!_isScript) //execute 'normally'
             {
-                Console.WriteLine("HINT: '?' for assistance");
+                Text.Yellow("HINT"); Text.White(": '"); Text.Green("?"); Text.White("' for a list of ");Text.Command("commands", false);Text.Line();
                 do
                 {
                     if (tokenSource.IsCancellationRequested)
@@ -44,7 +43,7 @@ namespace Genesis.Cli
 
                     Console.Write($@"genesis{GenesisContext.Scope?.PromptString}>");
 
-                    args = Console.ReadLine().Split(" ");
+                    args = Console.ReadLine().ToArgs().ToArray();
 
                     ProcessCommandLine(args, tokenSource);
                 }
@@ -53,7 +52,8 @@ namespace Genesis.Cli
             else //execute a script
             {
                 Text.WhiteLine($"Processing script '{args[1]}' with {_script.Length} lines");
-                Console.WriteLine();
+                Text.YellowLine($"----- {DateTimeOffset.UtcNow}]-----");
+
                 foreach (var line in _script)
                 {
                     Text.WhiteLine($"Executing: '{line}' as {line.Split(" ").Length} arguments");
@@ -63,13 +63,14 @@ namespace Genesis.Cli
             }
         }
 
-        internal static string GetVersionDisplayString(bool withAV = true) 
-            => (withAV)
-                ? $"v{_version.Major}.{_version.Minor}.{_version.Revision}"
-                : $"{_version.Major}.{_version.Minor}.{_version.Revision}";
+        internal static string GetVersionDisplayString(bool withAV = true)
+        {
+            var version = typeof(Program).Assembly.GetName().Version;
 
-        private static void InitializeVersion() 
-            => _version = typeof(Program).Assembly.GetName().Version;
+            return (withAV)
+                           ? $"v{version.Major}.{version.Minor}.{version.Revision}"
+                           : $"{version.Major}.{version.Minor}.{version.Revision}";
+        }
 
         /// <summary>
         /// Expects a path to a .genesis file in order to execute it
@@ -111,11 +112,11 @@ namespace Genesis.Cli
             {
                 if (0 == app.Execute(args)) //command executed successfully '0' is success, all others are errors
                 {
-                    
+
                 }
-                else 
+                else
                 {
-                    
+
                 }
             }
             catch (Exception cliex)

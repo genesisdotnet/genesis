@@ -1,4 +1,4 @@
-﻿using Genesis.Cli;
+﻿using Genesis;
 using Genesis.Generation;
 using System;
 using System.Collections.Concurrent;

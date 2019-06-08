@@ -1,4 +1,4 @@
-﻿using Genesis.Cli;
+﻿using Genesis;
 using Genesis.Population;
 using System;
 using System.Net.Http;
@@ -19,10 +19,10 @@ namespace Genesis.Input.YamlAddress
             Config = (YamlConfig)Configuration; //TODO: configuration is wonky
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string args)
+        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
             var net = new HttpClient();
-            var yamlString = await net.GetStringAsync(args);
+            var yamlString = await net.GetStringAsync(Config.Address);
             Text.DarkYellowLine(yamlString);
 
             return await base.Execute(genesis, args);

@@ -1,12 +1,6 @@
 ﻿using Genesis;
-using Genesis.Cli;
-using Genesis.Generation.Templates;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Memory;
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Composition;
 using System.Composition.Convention;
 using System.Composition.Hosting;
 using System.Diagnostics;
@@ -22,9 +16,6 @@ namespace Genesis.Generation
     {
         public static List<IGenerator> Generators { get; set; } = new List<IGenerator>();
 
-        /// <summary>
-        /// Load Generator extensions from the current directory
-        /// </summary>
         public static async Task InitializeGeneratorsAsync(bool writeOutputMessages = false)
         {
             Generators.Clear();
@@ -75,7 +66,7 @@ namespace Genesis.Generation
                         if (!writeOutputMessages)
                             continue;
 
-                        Text.White($"'"); Text.Green(generator.CommandText); Text.White("' was found in '"); Text.Cyan(generator.FriendlyName); Text.White("'... ");
+                        Text.White($"'"); Text.Green(generator.CommandText); Text.White("' ("); Text.Cyan(generator.FriendlyName); Text.White(") was found in '"); Text.Magenta(generator.GetType().Name); Text.White("'... ");
 
                         if (cfgWarning)
                             Text.YellowLine("warning");

@@ -1,4 +1,4 @@
-﻿using Genesis.Cli;
+﻿using Genesis;
 using Genesis.Generation;
 using System;
 using System.Collections.Generic;
@@ -22,7 +22,7 @@ namespace Genesis.Output.CachedRepo
             Config = (CachedRepoConfig)Configuration;
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string args)
+        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
             var result = new OutputTaskResult();
 

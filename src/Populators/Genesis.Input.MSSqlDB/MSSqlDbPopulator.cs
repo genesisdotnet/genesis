@@ -28,7 +28,7 @@ namespace Genesis.Input.MSSqlDb
             Config = (SqlConfig)Configuration; //TODO: configuration is wonky
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string args)
+        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
             var tmp = GetSchema();
 

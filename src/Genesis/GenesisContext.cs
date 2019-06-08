@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Genesis.Cli
+namespace Genesis
 {
     public class GenesisScope //INotifyPropertyChanged?
     {
@@ -12,12 +12,14 @@ namespace Genesis.Cli
         public List<IGenesisExecutor<ITaskResult>> Executors { get; } = new List<IGenesisExecutor<ITaskResult>>();
 
         private IGenesisExecutor<ITaskResult> _currentExecutor;
-        public IGenesisExecutor<ITaskResult> CurrentTask {
-            get =>_currentExecutor;
-            private set {
+        public IGenesisExecutor<ITaskResult> CurrentTask
+        {
+            get => _currentExecutor;
+            private set
+            {
                 _currentExecutor = value;
-                PromptString = (_currentExecutor != null) 
-                                ? "/" + _currentExecutor.CommandText 
+                PromptString = (_currentExecutor != null)
+                                ? "/" + _currentExecutor.CommandText
                                 : string.Empty;
             }
         }
@@ -29,9 +31,9 @@ namespace Genesis.Cli
                     throw new Exception("You're not within a scope. "); //TODO: Elaborate how to set a scope
 
                 _ = await CurrentTask.EditConfig(propertyName, value?.ToString() ?? string.Empty); //for now
-                
+
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 Text.RedLine($@"{e.Message}");
             }
@@ -46,6 +48,13 @@ namespace Genesis.Cli
 
     public class GenesisContext
     {
+        public GenesisContext()
+        {
+            Chain = new ExecutionChain(this);
+        }
+        /*
+         This whole ITaskResult thing is worthless and annoying. 
+        */
         public static GenesisScope Scope { get; } = null;
         public static GenesisContext Current { get; } = new GenesisContext();
 
@@ -60,34 +69,32 @@ namespace Genesis.Cli
         public IGenerator Generator { get { return currentGenerator; } set { currentGenerator = value; } }
         public List<ObjectGraph> Objects { get; set; } = new List<ObjectGraph>();
         public bool HasAllComponentsConfigured { get => hasAllComponentsConfigured; }
+        public ExecutionChain Chain { get; private set; } 
 
         public async Task AddObject(ObjectGraph obj)
         {
             if (Objects.Contains(obj))
             {
-                Text.DarkYellowLine($"{obj.Name} exists, not adding (use --force) to overwrite.");
-                await Task.CompletedTask;
+                Text.DarkYellowLine($"{obj.Name} exists, not adding.");
+                return;
             }
 
             Objects.Add(obj);
 
-            Text.GreenLine($"Adding ObjectGraph '{obj.Name}'");
+            Text.White($"Adding Object '"); Text.DarkMagenta(obj.Name); Text.WhiteLine("'");
 
             await Task.CompletedTask;
         }
 
         public void ClearObjects()
             => Objects.Clear();
-        
-        public async Task<BlankTaskResult> ExecuteConfiguration(string[] args = null)
-        {
-            var result = new BlankTaskResult();
-            //var x = new ExecutionAggregateException();
 
+        public async Task<ITaskResult> ExecuteConfiguration(string[] args = null)
+        {
+            ITaskResult result = new BlankTaskResult();
+            
             //TODO: Use an Aggregate Exception here
 
-            //if (!HasAllComponentsConfigured)
-            //{
             if (Populator == null)
             {
                 Text.RedLine("No Populator configured."); Text.White("Use '"); Text.Green("gen"); Text.WhiteLine("' to set the current Populator");
@@ -100,62 +107,50 @@ namespace Genesis.Cli
 
                 try
                 {
-                    await Populator.Execute(this, string.Empty); //TODO: Pass args
+                    result = await Populator.Execute(this, args);
                     Text.GreenLine("OK");
-                    result.Success = true;
                 }
                 catch (Exception popEx)
                 {
                     Text.RedLine("ERROR");
                     Text.RedLine($"{popEx.Message}");
 
-                    result.Success = false;
-                    //result.Message = popEx.Message;
+                    result = new ErrorTaskResult { Success = false };
                     return result;
                 }
             }
-            //TODO: lame check that will blow up
+
             if (Objects.Count == 0 || Objects[0].IsDefault) //no pop and/or no gen
-            {
-                Text.RedLine("Objects is empty");
-                result.Message = "No data in ObjectGraph";
-                result.Success = false;
-            }
+                Text.RedLine("No objects exist yet");
             else
-            {
-                Text.GreenLine("GenesisContext data is present");
-                result.Success = true;
-            }
+                Text.GreenLine($"There are {Objects.Count} objects populated.");
 
             if (Generator == null)
             {
-                Text.RedLine("No Generator configured."); Text.White("Use '"); Text.Green("gen"); Text.WhiteLine("' to set the current Generator");
+                Text.RedLine("No Generator configured.");
+                Text.White("Use '"); Text.Green("gen"); Text.WhiteLine("' to set the current Generator");
             }
             else
             {
                 Text.White($"Executing '");
-                Text.Cyan(Generator.FriendlyName);
-                Text.White("' with its configuration... ");
-
+                Text.Green(Generator.CommandText);
+                Text.WhiteLine($"'. With output to {Generator.Configuration.OutputPath}");
+                
                 try
                 {
-                    //NOTE: presumes whatever implementation isn't going to screw with the terminal 
-                    await Generator.Execute(this, string.Empty); //TODO: Pass args
+                    result = await Generator.Execute(this, args); //TODO: Pass args
                     Text.GreenLine("OK");
-                    result.Success = true;
+                    return result;
                 }
                 catch (Exception popEx)
                 {
                     Text.RedLine("ERROR");
                     Text.RedLine($"{popEx.Message}");
 
-                    result.Success = false;
-                    result.Message = popEx.Message;
-                    return result;
+                    return new ErrorTaskResult { Success = false, Message = popEx.Message };
                 }
             }
-            result.Message = $"Execution performed {(result.Success ? "successfully" : "with errors")}";
-            //}
+
             return await Task.FromResult(result);
         }
 

@@ -12,6 +12,6 @@ namespace Genesis
         }
 
         public virtual bool Success { get; set; } 
-        public virtual string Message { get; set; } = "Blank... empty. Void of contents, if there were any at all...";
+        public virtual string Message { get; set; } = string.Empty;
     }
 }

@@ -22,7 +22,7 @@ namespace Genesis.Output.Poco
             Config = (PocoConfig)Configuration;
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string args)
+        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
             var result = new OutputTaskResult();
 

@@ -1,4 +1,4 @@
-﻿using Genesis.Cli;
+﻿using Genesis;
 using Genesis.Generation.Templates;
 using System;
 using System.Composition;

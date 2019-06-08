@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Genesis.Cli;
+using Genesis;
 
 namespace Genesis
 {
@@ -92,6 +92,6 @@ namespace Genesis
         protected object ConfigObject() 
             => GetType().GetProperty("Config").GetValue(this);
 
-        public abstract Task<ITaskResult> Execute(GenesisContext genesis, string args);
+        public abstract Task<ITaskResult> Execute(GenesisContext genesis, string[] args);
     }
 }

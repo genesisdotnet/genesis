@@ -71,7 +71,7 @@ namespace Genesis.Population
                         if (!writeOutputMessages)
                             continue;
 
-                        Text.White($"'"); Text.Green(populator.CommandText); Text.White("' was found in '"); Text.Cyan(populator.FriendlyName); Text.White("'... ");
+                        Text.White($"'"); Text.Green(populator.CommandText); Text.White("' (");Text.Cyan(populator.FriendlyName);Text.White(") was found in '"); Text.Magenta(populator.GetType().Name); Text.White("'... ");
 
                         if (cfgWarning)
                             Text.YellowLine("warning");

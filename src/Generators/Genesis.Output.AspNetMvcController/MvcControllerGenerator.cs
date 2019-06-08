@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Genesis.Cli;
+using Genesis;
 using Genesis.Generation;
 
 namespace Genesis.Output.MvcController
@@ -22,7 +22,7 @@ namespace Genesis.Output.MvcController
             Config = (MvcControllerConfig)Configuration;
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string args)
+        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
             var result = new OutputTaskResult(); //overridden just to loop over all the graphs
 

@@ -9,6 +9,41 @@ namespace Genesis
     /// </summary>
     public static class Text
     {
+        public static void Command(string commandText, bool showWhiteTicks = true)
+        {
+            if (showWhiteTicks)
+                White("'");
+
+            Green(commandText);
+
+            if (showWhiteTicks)
+                White("'");
+        }
+
+        public static void Assembly(string name)
+        {
+            White("'");
+            Yellow(name);
+            White("'");
+        }
+
+        public static void FriendlyText(string friendlyText)
+        {
+            White("'");
+            Cyan(friendlyText);
+            White("'");
+        }
+
+        public static void Execute(string executor)
+        {
+            Yellow("Executing '");
+            DarkCyan(executor);
+            Yellow("'");
+        }
+
+        public static void Line()
+            => Console.WriteLine();
+
         public static void White(string message = "", params string[] parameters)
         {
             Console.ForegroundColor = ConsoleColor.White;
@@ -47,6 +82,44 @@ namespace Genesis
             Console.ResetColor();
         }
 
+        public static void Gray(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+
+            if (parameters is null) { Console.Write(message); }
+            else { Console.Write(message, parameters); }
+
+            Console.ResetColor();
+        }
+        public static void GrayLine(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.Gray;
+
+            if (parameters is null) { Console.WriteLine(message); }
+            else { Console.WriteLine(message, parameters); }
+
+            Console.ResetColor();
+        }
+
+        public static void DarkGray(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            if (parameters is null) { Console.Write(message); }
+            else { Console.Write(message, parameters); }
+
+            Console.ResetColor();
+        }
+        public static void DarkGrayLine(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+
+            if (parameters is null) { Console.WriteLine(message); }
+            else { Console.WriteLine(message, parameters); }
+
+            Console.ResetColor();
+        }
+
         public static void Red(string message = "", params string[] parameters)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -56,6 +129,7 @@ namespace Genesis
 
             Console.ResetColor();
         }
+
         public static void RedLine(string message = "", params string[] parameters)
         {
             Console.ForegroundColor = ConsoleColor.Red;
@@ -134,6 +208,63 @@ namespace Genesis
         public static void DarkYellowLine(string message = "", params string[] parameters)
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+            if (parameters is null) { Console.WriteLine(message); } //NOTE: Console probably handles this
+            else { Console.WriteLine(message, parameters); }
+
+            Console.ResetColor();
+        }
+
+        public static void Magenta(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+
+            if (parameters is null) { Console.Write(message); }
+            else { Console.Write(message, parameters); }
+
+            Console.ResetColor();
+        }
+        public static void MagentaLine(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.Magenta;
+
+            if (parameters is null) { Console.WriteLine(message); } //NOTE: Console probably handles this
+            else { Console.WriteLine(message, parameters); }
+
+            Console.ResetColor();
+        }
+
+        public static void DarkMagenta(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+
+            if (parameters is null) { Console.Write(message); }
+            else { Console.Write(message, parameters); }
+
+            Console.ResetColor();
+        }
+        public static void DarkMagentaLine(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+
+            if (parameters is null) { Console.WriteLine(message); } //NOTE: Console probably handles this
+            else { Console.WriteLine(message, parameters); }
+
+            Console.ResetColor();
+        }
+
+        public static void DarkCyan(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+
+            if (parameters is null) { Console.Write(message); }
+            else { Console.Write(message, parameters); }
+
+            Console.ResetColor();
+        }
+        public static void DarkCyanLine(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
 
             if (parameters is null) { Console.WriteLine(message); } //NOTE: Console probably handles this
             else { Console.WriteLine(message, parameters); }

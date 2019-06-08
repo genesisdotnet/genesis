@@ -4,7 +4,7 @@ using System.IO;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Genesis.Cli;
+using Genesis;
 using Genesis.Generation;
 
 namespace Genesis.Output.Poco
@@ -22,7 +22,7 @@ namespace Genesis.Output.Poco
             Config = (XvmConfig)Configuration;
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string args)
+        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
             var result = new OutputTaskResult();
 

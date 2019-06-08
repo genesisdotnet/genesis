@@ -18,16 +18,16 @@ namespace Genesis.Cli.Commands
         {
             var result = new BlankTaskResult() { Success = true, Message = "" };
 
-            Console.WriteLine();
-            Console.WriteLine("Scanning Populators:");
+            Text.Line();
+            Text.YellowLine("Scanning Populators:");
             await InputManager.InitializePopulatorsAsync(true);
 
-            Console.WriteLine();
+            Text.Line();
 
-            Console.WriteLine("Scanning Generators:");
+            Text.YellowLine("Scanning Generators:");
             await OutputManager.InitializeGeneratorsAsync(true);
 
-            Console.WriteLine();
+            Text.Line();
 
             Console.ForegroundColor = (InputManager.Populators.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
             Console.Write($@"{InputManager.Populators.Count}");

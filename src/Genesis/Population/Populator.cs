@@ -1,4 +1,4 @@
-﻿using Genesis.Cli;
+﻿using Genesis;
 using System.Composition;
 using System.Threading.Tasks;
 
@@ -21,7 +21,7 @@ namespace Genesis.Population
 
         public IPopulatorConfiguration Configuration { get; set; } = new PopulatorConfiguration();
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string args)
+        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
             return await Task.FromResult(new InputTaskResult());
         }
