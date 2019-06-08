@@ -13,7 +13,7 @@ namespace Genesis.Cli
     class Program
     {
         private static bool _isScript = false;
-        private static string[] _script = new string[];
+        private static string[] _script = new string[] { };
         private static Version _version;
 
         static async Task Main(string[] args)
