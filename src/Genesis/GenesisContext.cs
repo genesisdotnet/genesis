@@ -54,8 +54,6 @@ namespace Genesis.Cli
         private IPopulator currentPopulator = null; //should these be ICollections?
         private IGenerator currentGenerator = null;
 
-        public static readonly string Version = "0.5.9 (prototype)";
-
         public int ScanCount { get; set; } = 0;
 
         public IPopulator Populator { get { return currentPopulator; } set { currentPopulator = value; } }

@@ -17,7 +17,7 @@ namespace Genesis.Cli.Commands
             await CommandLoader.InitAsync(args);
 
             Text.WhiteLine();
-            Text.Cyan("Genesis"); Text.WhiteLine($" {GenesisContext.Version}");
+            Text.Cyan("Genesis"); Text.WhiteLine($" {Program.GetVersionDisplayString()}");
             foreach(var cmd in CommandLoader.Commands)
             {
                 Text.Green($"\t{cmd.Name}"); Text.WhiteLine($"\t\t{cmd.Description}");

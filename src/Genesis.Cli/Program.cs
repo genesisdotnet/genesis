@@ -13,7 +13,7 @@ namespace Genesis.Cli
     class Program
     {
         private static bool _isScript = false;
-        private static string[] _script = new string[] { };
+        private static string[] _script = new string[];
         private static Version _version;
 
         static async Task Main(string[] args)
@@ -24,12 +24,12 @@ namespace Genesis.Cli
             //args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
 
             //NOTE:      --script "C:\Path\To\Script.genesis"
-            //if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
-                //await InitializeScript(args[1]);
+            if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
+                await InitializeScript(args[1]);
 
             var tokenSource = new CancellationTokenSource(); //TODO: Is this even necessary here? 
 
-            Console.WriteLine($"Genesis Creation Engine v{GenesisContext.Version}"); //TODO: Get real version
+            Console.WriteLine($"Genesis Creation Engine {GetVersionDisplayString()}");
             Console.WriteLine();
 
             await CommandLoader.InitAsync(args);
@@ -52,21 +52,24 @@ namespace Genesis.Cli
             }
             else //execute a script
             {
-                Console.WriteLine($"Processing script '{args[1]}' with {_script.Length} lines");
+                Text.WhiteLine($"Processing script '{args[1]}' with {_script.Length} lines");
                 Console.WriteLine();
                 foreach (var line in _script)
                 {
-                    Console.WriteLine($"Executing: '{line}' as {line.Split(" ").Length} arguments");
+                    Text.WhiteLine($"Executing: '{line}' as {line.Split(" ").Length} arguments");
 
                     ProcessCommandLine(line.Split(" "), tokenSource);
                 }
             }
         }
 
-        private static void InitializeVersion()
-        {
-            _version = typeof(Program).Assembly.GetName().Version;
-        }
+        internal static string GetVersionDisplayString(bool withAV = true) 
+            => (withAV)
+                ? $"v{_version.Major}.{_version.Minor}.{_version.Revision}"
+                : $"{_version.Major}.{_version.Minor}.{_version.Revision}";
+
+        private static void InitializeVersion() 
+            => _version = typeof(Program).Assembly.GetName().Version;
 
         /// <summary>
         /// Expects a path to a .genesis file in order to execute it
@@ -104,16 +107,15 @@ namespace Genesis.Cli
                 Environment.Exit(-2);
 
             CommandLineApplication app = ExecuteContext(args);
-
             try
             {
                 if (0 == app.Execute(args)) //command executed successfully '0' is success, all others are errors
                 {
-                    Debug.WriteLine($@"Nice"); //TODO: Log more stuff, or at all :|
+                    
                 }
-                else //some way to get errors?
+                else 
                 {
-                    Debug.WriteLine($@"Wtf?");
+                    
                 }
             }
             catch (Exception cliex)
