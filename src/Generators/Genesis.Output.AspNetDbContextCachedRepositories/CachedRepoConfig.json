@@ -1,0 +1,7 @@
+﻿{
+  "language": "C#",
+  "namespace": "Genesis.Output.Repositories.Cached",
+  "outputPath": "C:\\Temp\\Output",
+  "overwrite": "all",
+  "preserve": "none"
+}

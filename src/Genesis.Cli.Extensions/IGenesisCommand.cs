@@ -8,10 +8,13 @@ namespace Genesis.Cli.Extensions
     {
         string Name { get; }
         string HelpTemplate { get; }
-        Task InitializeAsync(/*init params?*/);
         string Description { get; }
         string Usage { get; }
-        
+
+        Task InitializeAsync(string[] args);
+
+        Task ProcessHelpCommand(string[] args);
+
         Task<ITaskResult> Execute(GenesisContext genesis, string[] args);
     }
 }

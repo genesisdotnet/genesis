@@ -32,7 +32,7 @@ namespace Genesis.Cli
             Console.WriteLine($"Genesis Creation Engine v{GenesisContext.Version}"); //TODO: Get real version
             Console.WriteLine();
 
-            await CommandLoader.InitAsync();
+            await CommandLoader.InitAsync(args);
 
             if (!_isScript) //execute 'normally'
             {

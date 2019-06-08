@@ -11,7 +11,7 @@ namespace Genesis
 
         bool Initialized { get; }
         Task Initialize();
-
+        Task DisplayConfiguration();
         Task<bool> EditConfig<TPropertyType>(string propertyName, TPropertyType value);
         Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string args);
     }

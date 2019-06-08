@@ -1,0 +1,67 @@
+﻿using System.Collections.Generic;
+
+namespace ~NAMESPACE~.Data
+{
+    public interface IReadOnlyRepository<T> where T : BaseEntity
+    {
+        T GetById(int id);
+        List<T> List();
+    }
+}
+<!----->
+namespace ~NAMESPACE~.Data
+{
+    public interface IRepository<T> : IReadOnlyRepository<T> where T : BaseEntity
+    {
+        T Upsert(T entity);
+        void Delete(T entity);
+    }
+}
+<!----->
+namespace ~NAMESPACE~.Data
+{
+    public class BaseEntity
+    {
+        public int Id { get; set; }
+    }
+}
+<!----->
+using System;
+using System.Collections.Generic;
+using System.Text;
+using Microsoft.Extensions.Caching.Memory;
+
+namespace ~NAMESPACE~.Data
+{
+    public class Cached~OBJECT_NAME~Repository : IReadOnlyRepository<~OBJECT_NAME~>
+    {
+        private const string cacheKey = "~OBJECT_NAME~";
+
+        private readonly ~OBJECT_NAME~Repository repo;
+        private readonly IMemoryCache cache;
+
+        public MemoryCacheEntryOptions CacheOptions { get; private set; }
+
+        public Cached~OBJECT_NAME~Repository(~OBJECT_NAME~Repository repository, IMemoryCache cacheObject) //NOTE: IDistributedCache if you use redis and multiple services
+        {
+            repo = repository;
+            cache = cacheObject;
+
+            CacheOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(relative: TimeSpan.FromSeconds(DataGlobals.DEFAULT_CACHETIMEOUT));
+        }
+
+        public ~OBJECT_NAME~ GetById(int id)
+        =>  cache.GetOrCreate($@"{cacheKey}-{id}", entry =>
+            {
+                entry.SetOptions(CacheOptions);
+                return repo.GetById(id);
+            });
+
+        public List<~OBJECT_NAME~> List() 
+            => cache.GetOrCreate(cacheKey, entry =>
+            {
+                entry.SetOptions(CacheOptions);
+                return repo.List();
+            });
+    }
+}

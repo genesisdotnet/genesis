@@ -4,6 +4,5 @@ namespace Genesis.Population
 {
     public interface IPopulatorConfiguration
     {
-        string ConfigurationString { get; set; }
     }
 }

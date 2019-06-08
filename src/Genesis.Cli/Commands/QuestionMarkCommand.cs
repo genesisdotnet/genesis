@@ -14,7 +14,7 @@ namespace Genesis.Cli.Commands
         public override string Usage => "?";
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
-            await CommandLoader.InitAsync();
+            await CommandLoader.InitAsync(args);
 
             Text.WhiteLine();
             Text.Cyan("Genesis"); Text.WhiteLine($" {GenesisContext.Version}");
