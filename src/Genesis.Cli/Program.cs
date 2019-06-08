@@ -29,7 +29,7 @@ namespace Genesis.Cli
 
             var tokenSource = new CancellationTokenSource(); //TODO: Is this even necessary here? 
 
-            Console.WriteLine($"Genesis Creation Engine v{_version}"); //TODO: Get real version
+            Console.WriteLine($"Genesis Creation Engine v{GenesisContext.Version}"); //TODO: Get real version
             Console.WriteLine();
 
             await CommandLoader.InitAsync();
