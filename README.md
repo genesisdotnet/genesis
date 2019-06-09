@@ -89,6 +89,14 @@ Here is the '<b>poco</b>' generator being executed after the '<b>mssql</b>' popu
 ![alt text](https://github.com/genesisdotnet/genesis/blob/master/docs/images/exec_poco.png?raw=true "Execution Example")
 <i>Evidently it doesn't output anything right now. That'll be fixed ;)</i>
 
+## Templates & Dependencies
+---
+Each output executor has a `[GeneratingExecutorClassName].gen` file that contains a simple "template" for it to use during its `Execute` procedure. In the case of the <b>poco</b> executor, it's just a class file that all the generated code will look like.
+
+There are search and replace tokens that the generator can use. 
+
+They have a `[GeneratingExecutorClassName].deps` file that contains all of the dependencies that the specific piece of code it generates will need to run properly. (Base classes, interfaceses, abstractions etc.)
+
 ## This sounds and looks like a pain in the ass
 ---
 Agreed. It's not really though. 
