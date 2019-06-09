@@ -1,0 +1,31 @@
+﻿<!----->
+\Data\IReadOnlyRepository.cs
+using System.Collections.Generic;
+
+namespace ~NAMESPACE~.Data
+{
+    public interface IReadOnlyRepository<T> where T : BaseEntity
+    {
+        T GetById(int id);
+        List<T> List();
+    }
+}
+<!----->
+\Data\IRepository.cs
+namespace ~NAMESPACE~.Data
+{
+    public interface IRepository<T> : IReadOnlyRepository<T> where T : BaseEntity
+    {
+        T Upsert(T entity);
+        void Delete(T entity);
+    }
+}
+<!----->
+\Data\BaseEntity.cs
+namespace ~NAMESPACE~.Data
+{
+    public class BaseEntity
+    {
+        public int Id { get; set; }
+    }
+}

@@ -75,7 +75,21 @@ namespace Genesis.Generation
 
                             cfgWarning = true;
                         }
-                        
+
+                        try
+                        {
+                            await generator.AttachDependencies(DependencyManager.LoadDependencies(generator));
+                        }
+                        catch (Exception dx)
+                        {
+                            Text.DarkYellow($"Could not load or parse dependencies for");
+                            Text.Command(generator.CommandText);
+                            Text.Line();
+
+                            Debug.WriteLine(dx.Message);
+
+                            cfgWarning = true;
+                        }
                         await generator.Initialize();
 
                         if (!writeOutputMessages)

@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Genesis;
+using Genesis.Generation;
 
 namespace Genesis
 {
@@ -88,6 +89,7 @@ namespace Genesis
             }
             return await Task.FromResult(!err);
         }
+
 
         protected object ConfigObject() 
             => GetType().GetProperty("Config").GetValue(this);

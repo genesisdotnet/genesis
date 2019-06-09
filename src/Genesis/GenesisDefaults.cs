@@ -12,5 +12,6 @@ namespace Genesis
         public static readonly string LibraryExtension = ".dll";
         public static readonly string TemplateExtension = ".template";
         public static readonly string UnknownSourceType = "UNKNOWN";
+        public static readonly string DependenciesExtension = ".deps";
     }
 }

@@ -1,32 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ~NAMESPACE~.Data
-{
-    public interface IReadOnlyRepository<T> where T : BaseEntity
-    {
-        T GetById(int id);
-        List<T> List();
-    }
-}
-<!----->
-namespace ~NAMESPACE~.Data
-{
-    public interface IRepository<T> : IReadOnlyRepository<T> where T : BaseEntity
-    {
-        T Upsert(T entity);
-        void Delete(T entity);
-    }
-}
-<!----->
-namespace ~NAMESPACE~.Data
-{
-    public class BaseEntity
-    {
-        public int Id { get; set; }
-    }
-}
-<!----->
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Caching.Memory;
