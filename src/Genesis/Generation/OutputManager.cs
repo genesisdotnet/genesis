@@ -1,4 +1,5 @@
 ﻿using Genesis;
+using Genesis.Generation.Templates;
 using System;
 using System.Collections.Generic;
 using System.Composition.Convention;
@@ -61,6 +62,20 @@ namespace Genesis.Generation
                             Text.RedLine($"Unable to configure from {configType.Name}.json for {generator.GetType().Name}");
                         }
 
+                        try
+                        {
+                            generator.Template = TemplateLoader.LoadTemplateFor(generator);
+                        }
+                        catch(Exception ex)
+                        {
+                            Debug.WriteLine(ex.Message);
+                            Text.DarkYellow($"Could not load template for ");
+                            Text.Command(generator.CommandText);
+                            Text.Line();
+
+                            cfgWarning = true;
+                        }
+                        
                         await generator.Initialize();
 
                         if (!writeOutputMessages)
@@ -84,15 +99,6 @@ namespace Genesis.Generation
                         Console.ForegroundColor = ConsoleColor.Red;
                         Console.WriteLine(exc.Message);
                         Console.ResetColor();
-                    }
-
-                    try
-                    {
-                        
-                    }
-                    catch(Exception ex)
-                    {
-                        Text.DarkYellowLine($"Couldn't load template: '{ex.Message}'");
                     }
                 }
             }

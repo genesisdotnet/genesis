@@ -19,12 +19,12 @@ namespace Genesis.Cli.Commands
             var result = new BlankTaskResult() { Success = true, Message = "" };
 
             Text.Line();
-            Text.YellowLine("Scanning Populators:");
+            Text.YellowLine("Scanning for Inputs:");
             await InputManager.InitializePopulatorsAsync(true);
 
             Text.Line();
 
-            Text.YellowLine("Scanning Generators:");
+            Text.YellowLine("Scanning for Outputs:");
             await OutputManager.InitializeGeneratorsAsync(true);
 
             Text.Line();

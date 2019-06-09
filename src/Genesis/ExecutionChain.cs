@@ -48,6 +48,7 @@ namespace Genesis
 
         public List<ITaskResult> Execute(string[] args)
         {
+            Text.Line();
             Text.WhiteLine($"Beginning serial execution of {ll.Count} executors.");
 
             var results = new List<ITaskResult>();
@@ -56,7 +57,7 @@ namespace Genesis
                 ITaskResult result = null;
                 try
                 {
-                    Text.Execute($"{e.GetType().Name}");
+                    Text.Execute($"{e.GetType().Name}"); Text.Line();
                     result = e.Execute(_ctx, args).GetAwaiter().GetResult();
                 }
                 catch (Exception ex)
