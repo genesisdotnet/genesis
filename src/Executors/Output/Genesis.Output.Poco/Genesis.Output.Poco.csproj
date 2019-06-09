@@ -5,8 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Genesis.Cli.Extensions\Genesis.Cli.Extensions.csproj" />
-    <ProjectReference Include="..\..\Genesis\Genesis.csproj" />
+    <ProjectReference Include="..\..\..\Genesis.Cli.Extensions\Genesis.Cli.Extensions.csproj" />
+    <ProjectReference Include="..\..\..\Genesis\Genesis.csproj" />
   </ItemGroup>
 
   <ItemGroup>

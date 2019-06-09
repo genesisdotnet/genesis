@@ -5,14 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Genesis\Genesis.csproj" />
+    <ProjectReference Include="..\..\..\Genesis\Genesis.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="XvmConfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="XvmGenerator.gen">
+    <None Update="CachedRepoConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
