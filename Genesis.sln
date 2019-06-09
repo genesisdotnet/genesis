@@ -49,6 +49,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{6B22B7DE-B4BB-456C-B92A-F775B98CEFD7}"
 	ProjectSection(SolutionItems) = preProject
 		docs\images\commands.png = docs\images\commands.png
+		docs\images\config.png = docs\images\config.png
 		docs\images\scan.png = docs\images\scan.png
 	EndProjectSection
 EndProject
