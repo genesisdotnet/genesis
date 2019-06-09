@@ -47,7 +47,7 @@ namespace Genesis.Cli
                     ProcessCommandLine(line.ToArgs().ToArray(), tokenSource);
                 }
             }
-            //command can call StopScript() to 'break' to the console prompt
+            
             if(!_isScript)
             {
                 Text.Yellow("HINT"); Text.White(": '"); Text.Green("?"); Text.White("' for a list of "); Text.Command("commands", false); Text.Line();
