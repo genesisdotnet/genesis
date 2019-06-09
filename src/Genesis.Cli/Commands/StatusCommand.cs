@@ -2,6 +2,7 @@
 using Genesis.Generation;
 using Genesis.Population;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
@@ -16,36 +17,49 @@ namespace Genesis.Cli.Commands
 
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
-            Console.WriteLine();
-            Console.WriteLine("Known Populators:");
+            Text.Line();
+            Text.White("Known Inputs:"); Text.Line();
 
-            if (InputManager.Populators.Count == 0)
+            if (InputManager.Inputs.Count == 0)
             {
-                Text.RedLine("\t no populators found");
+                Text.RedLine("\t no inputs found");
             }
             else
             {
-                foreach (var pop in InputManager.Populators)
-                {
-                    //TODO: More info here?
-                    Text.White($"\t'"); Text.Green(pop.CommandText); Text.White($"' is defined in '"); Text.Cyan($"{pop.FriendlyName}"); Text.WhiteLine("'");
+                var tmp = new List<string>(args);
 
+                if(tmp.Contains("detailed") || tmp.Contains("-d") || tmp.Contains("d"))
+                {
+                    foreach (var exe in InputManager.Inputs)
+                        DisplayDetail(exe);
+                }
+                else
+                {
+                    foreach (var exe in InputManager.Inputs)
+                        DisplayQuick(exe);
                 }
             }
 
-            Console.ResetColor();
-            Console.WriteLine("Known Generators:");
+            Text.Line();
+            Text.White("Known Outputs:"); Text.Line();
 
-            if (OutputManager.Generators.Count == 0)
+            if (OutputManager.Outputs.Count == 0)
             {
-                Text.RedLine("\t no generators found");
+                Text.RedLine("\t no outputs found");
             }
             else
             {
-                foreach (var gen in OutputManager.Generators)
+                var tmp = new List<string>(args);
+
+                if (tmp.Contains("detailed") || tmp.Contains("-d") || tmp.Contains("d"))
                 {
-                    //TODO: More info here?
-                    Text.White($"\t'"); Text.Green(gen.CommandText); Text.White($"' is defined in '"); Text.Cyan($"{gen.FriendlyName}"); Text.WhiteLine("'");
+                    foreach (var exe in OutputManager.Outputs)
+                        DisplayDetail(exe);
+                }
+                else
+                {
+                    foreach (var exe in OutputManager.Outputs)
+                        DisplayQuick(exe);
                 }
             }
 
@@ -54,6 +68,20 @@ namespace Genesis.Cli.Commands
             genesis.WriteContextInfo();
 
             return await Task.FromResult(new BlankTaskResult() { Success = true, Message = "" });
+        }
+
+        private static void DisplayDetail(IGenesisExecutor<ITaskResult> exe)
+        {
+            Text.White("\tCommand: "); Text.Command(exe.CommandText, false); Text.Line();
+            Text.White("\tSource: "); Text.Yellow(exe.GetType().Assembly.GetName().Name); Text.White("."); Text.DarkMagenta(exe.GetType().Name); Text.Line();
+            Text.White("\tDescription: "); Text.FriendlyText(exe.FriendlyName, false); Text.Line();
+            Text.White("\tFile Path: "); Text.GrayLine(exe.GetType().Assembly.Location);
+            Text.Line();
+        }
+
+        private static void DisplayQuick(IGenesisExecutor<ITaskResult> exe)
+        {
+            Text.White("\t"); Text.Command(exe.CommandText, true); Text.White(" ("); Text.FriendlyText(exe.FriendlyName); Text.White(") found on "); Text.DarkMagenta(exe.GetType().Name); Text.Line();
         }
     }
 }

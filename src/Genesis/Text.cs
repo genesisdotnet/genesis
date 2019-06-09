@@ -27,11 +27,15 @@ namespace Genesis
             White("'");
         }
 
-        public static void FriendlyText(string friendlyText)
+        public static void FriendlyText(string friendlyText, bool showWhiteTicks = true)
         {
-            White("'");
+            if(showWhiteTicks)
+                White("'");
+
             Cyan(friendlyText);
-            White("'");
+
+            if(showWhiteTicks)
+                White("'");
         }
 
         public static void Execute(string executor)
@@ -255,7 +259,7 @@ namespace Genesis
 
         public static void DarkCyan(string message = "", params string[] parameters)
         {
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
 
             if (parameters is null) { Console.Write(message); }
             else { Console.Write(message, parameters); }
@@ -264,7 +268,7 @@ namespace Genesis
         }
         public static void DarkCyanLine(string message = "", params string[] parameters)
         {
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
 
             if (parameters is null) { Console.WriteLine(message); } //NOTE: Console probably handles this
             else { Console.WriteLine(message, parameters); }

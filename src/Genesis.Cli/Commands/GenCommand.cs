@@ -8,7 +8,7 @@ namespace Genesis.Cli.Commands
     public class GenCommand : GenesisCommand
     {
         public override string Name { get => "gen"; }
-        public override string Description => "Configure a Generator or list current Known Generators";
+        public override string Description => "Configure a Generator or list current Known Outputs";
 
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
@@ -23,7 +23,7 @@ namespace Genesis.Cli.Commands
                 Console.ResetColor();
                 Console.WriteLine();
 
-                if (OutputManager.Generators.Count == 0) //NO Generators Found
+                if (OutputManager.Outputs.Count == 0) //NO Outputs Found
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("There are no generators discovered yet. Run a '");
@@ -32,10 +32,10 @@ namespace Genesis.Cli.Commands
                     Console.ResetColor();
                     Console.WriteLine("'.");
                 }
-                else //Generators were found
+                else //Outputs were found
                 {
-                    Console.WriteLine("Known Generators:");
-                    foreach (var item in OutputManager.Generators)
+                    Console.WriteLine("Known Outputs:");
+                    foreach (var item in OutputManager.Outputs)
                     {
                         Text.White("Command: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
                     }
@@ -45,7 +45,7 @@ namespace Genesis.Cli.Commands
             }
             else
             { 
-                var generator = OutputManager.Generators.Find(g => g.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
+                var generator = OutputManager.Outputs.Find(g => g.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
                 if(generator != null)
                 {
                     await genesis.ConfigureGenerator(generator);

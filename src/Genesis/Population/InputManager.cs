@@ -13,7 +13,7 @@ namespace Genesis.Population
 {
     public class InputManager
     {
-        public static List<IPopulator> Populators { get; set; } = new List<IPopulator>();
+        public static List<IPopulator> Inputs { get; set; } = new List<IPopulator>();
 
         //TODO: Why is InputManager 'writing' messages to the Console?
 
@@ -23,7 +23,7 @@ namespace Genesis.Population
         //slow down son
         public static async Task InitializePopulatorsAsync(bool writeOutputMessages = false)
         {
-            Populators.Clear();
+            Inputs.Clear();
 
             var assemblies = new List<Assembly>();
 
@@ -44,11 +44,11 @@ namespace Genesis.Population
             {
                 var populators = container.GetExports<IPopulator>();
 
-                Populators.Clear();
+                Inputs.Clear();
 
                 foreach (var populator in populators)
                 {
-                    Populators.Add(populator);
+                    Inputs.Add(populator);
 
                     var configType = populator.GetType().GetRuntimeProperty("Config").PropertyType ?? typeof(PopulatorConfiguration);
                     var config = configType.IsInstanceOfType(typeof(PopulatorConfiguration));

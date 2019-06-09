@@ -4,7 +4,7 @@ using System.Composition;
 namespace Genesis.Generation
 {
     /// <summary>
-    /// Primary configuration class for individual Generators
+    /// Primary configuration class for individual Outputs
     /// </summary>
     [Export(nameof(IGeneratorConfiguration), typeof(IGeneratorConfiguration))]
     public class GeneratorConfiguration : IGeneratorConfiguration

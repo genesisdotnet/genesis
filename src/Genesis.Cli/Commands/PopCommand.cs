@@ -23,7 +23,7 @@ namespace Genesis.Cli.Commands
                 Console.ResetColor();
                 Console.WriteLine();
 
-                if (InputManager.Populators.Count == 0) //NO Populators Found
+                if (InputManager.Inputs.Count == 0) //NO Inputs Found
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("There are no populators discovered yet. Run a '");
@@ -32,10 +32,10 @@ namespace Genesis.Cli.Commands
                     Console.ResetColor();
                     Console.WriteLine("'.");
                 }
-                else //Populators were found
+                else //Inputs were found
                 {
-                    Console.WriteLine("Known Populators:");
-                    foreach (var item in InputManager.Populators)
+                    Console.WriteLine("Known Inputs:");
+                    foreach (var item in InputManager.Inputs)
                     {
                         Text.White("Command: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
                     }
@@ -45,7 +45,7 @@ namespace Genesis.Cli.Commands
             }
             else
             {
-                var populator = InputManager.Populators.Find(g => g.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
+                var populator = InputManager.Inputs.Find(g => g.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
                 if (populator != null)
                 {
                     await genesis.ConfigurePopulator(populator);

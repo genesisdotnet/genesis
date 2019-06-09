@@ -15,11 +15,11 @@ namespace Genesis.Generation
 {
     public static class OutputManager
     {
-        public static List<IGenerator> Generators { get; set; } = new List<IGenerator>();
+        public static List<IGenerator> Outputs { get; set; } = new List<IGenerator>();
 
         public static async Task InitializeGeneratorsAsync(bool writeOutputMessages = false)
         {
-            Generators.Clear();
+            Outputs.Clear();
 
             Debug.WriteLine($@"Scanning local directory for Generator libraries");
 
@@ -40,11 +40,11 @@ namespace Genesis.Generation
             {
                 var generators = container.GetExports<IGenerator>();
 
-                Generators.Clear();
+                Outputs.Clear();
 
                 foreach (var generator in generators)
                 {
-                    Generators.Add(generator);
+                    Outputs.Add(generator);
 
                     var configType = generator.GetType().GetRuntimeProperty("Config").PropertyType ?? typeof(GeneratorConfiguration);
                     var config = configType.IsInstanceOfType(typeof(GeneratorConfiguration));

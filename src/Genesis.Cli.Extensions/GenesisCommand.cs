@@ -59,7 +59,7 @@ namespace Genesis.Cli.Extensions
 
         public IPopulator GetPopulator(string populatorName = "nope")
         {
-            foreach(var populator in InputManager.Populators)
+            foreach(var populator in InputManager.Inputs)
             {
                 if (populatorName.ToLower().Trim() == populator.CommandText.ToLower())
                     return populator;
@@ -69,7 +69,7 @@ namespace Genesis.Cli.Extensions
 
         public IGenerator GetGenerator(string generatorName = "nope")
         {
-            foreach (var generator in OutputManager.Generators)
+            foreach (var generator in OutputManager.Outputs)
             {
                 if (generatorName.ToLower().Trim() == generator.CommandText.ToLower())
                     return generator;
@@ -79,10 +79,10 @@ namespace Genesis.Cli.Extensions
 
         public IGenesisExecutor<ITaskResult> GetExecutor(string executorName)
         {
-            IGenesisExecutor<ITaskResult> exe = InputManager.Populators.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
+            IGenesisExecutor<ITaskResult> exe = InputManager.Inputs.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
 
             if (exe == null)
-                exe = OutputManager.Generators.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
+                exe = OutputManager.Outputs.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
 
             return exe;
         }

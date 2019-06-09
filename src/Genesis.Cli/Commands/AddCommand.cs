@@ -27,7 +27,7 @@ namespace Genesis.Cli.Commands
                 Console.ResetColor();
                 Console.WriteLine();
 
-                if (OutputManager.Generators.Count == 0 || InputManager.Populators.Count == 0) //NO Executors found, this still needs combined
+                if (OutputManager.Outputs.Count == 0 || InputManager.Inputs.Count == 0) //NO Executors found, this still needs combined
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("There are no inputs discovered yet. Run a ");
@@ -37,13 +37,13 @@ namespace Genesis.Cli.Commands
                 else 
                 {
                     Console.WriteLine("Known Inputs:"); //TODO: Get rid of Generator / Populator concept
-                    foreach (var item in InputManager.Populators)
+                    foreach (var item in InputManager.Inputs)
                     {
                         Text.White("Input: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.DarkCyanLine($"{item.GetType().Assembly.GetName().Name}"); 
                     }
                     Console.WriteLine();
                     Console.WriteLine("Known Outputs:"); //TODO: Get rid of Generator / Populator concept
-                    foreach (var item in OutputManager.Generators)
+                    foreach (var item in OutputManager.Outputs)
                     {
                         Text.White("Output: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.DarkCyanLine($"{item.GetType().Assembly.GetName().Name}");
                     }
@@ -52,7 +52,7 @@ namespace Genesis.Cli.Commands
             }
             else
             {
-                var generator = OutputManager.Generators.Find(g => g.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
+                var generator = OutputManager.Outputs.Find(g => g.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
                 if (generator != null)
                 {
                     await genesis.Chain.Append(generator);
@@ -62,7 +62,7 @@ namespace Genesis.Cli.Commands
                     return result;
                 }
 
-                var populator = InputManager.Populators.Find(p => p.CommandText.Trim().ToLower() == args[1].Trim().ToLower()); //this is silly
+                var populator = InputManager.Inputs.Find(p => p.CommandText.Trim().ToLower() == args[1].Trim().ToLower()); //this is silly
                 if (populator != null)
                 {
                     await genesis.Chain.Append(populator);

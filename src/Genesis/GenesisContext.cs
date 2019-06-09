@@ -183,23 +183,23 @@ namespace Genesis
         public void WriteContextInfo()
         {
             Console.WriteLine();
-            Console.Write($@"Current Populator is:");
+            Console.Write($@"Current Input is:");
 
             if (Populator != null)
             {
                 Text.Cyan($" '{Populator.FriendlyName}'"); Text.White(" ("); Text.Green(Populator.CommandText); Text.WhiteLine(") ");
             }
             else
-                Text.RedLine($" not configured");
+                Text.YellowLine($" not configured");
 
-            Console.Write($@"Current Generator is:");
+            Console.Write($@"Current Output is:");
 
             if (Generator != null)
             {
                 Text.Cyan($" '{Generator.FriendlyName}'"); Text.White(" ("); Text.Green(Generator.CommandText); Text.WhiteLine(") ");
             }
             else
-                Text.RedLine($" not configured");
+                Text.YellowLine($" not configured");
 
             Console.WriteLine();
             Console.Write($@"Scans since reset: ");
@@ -208,23 +208,17 @@ namespace Genesis
             else
                 Text.RedLine(ScanCount.ToString());
 
-            Console.WriteLine();
-            Console.Write("Use the '");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("pop");
-            Console.ResetColor();
-            Console.Write("' command to configure a Populator and '");
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.Write("gen");
-            Console.ResetColor();
-            Console.WriteLine("' for a Generator like:");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\tpop SomeCoolPopulator");
-            Console.ResetColor();
-            Console.WriteLine("\t\tor");
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.WriteLine("\tgen SomeCoolGenerator");
-            Console.ResetColor();
+            Text.Line();
+
+            Text.White($"Execute an ");
+            Text.FriendlyText("input");
+            Text.White(" or an ");
+            Text.FriendlyText("output");
+            Text.White(" using the ");
+            Text.Command("exec");
+            Text.WhiteLine(" command.");
+
+            Text.Line();
         }
     }
 }

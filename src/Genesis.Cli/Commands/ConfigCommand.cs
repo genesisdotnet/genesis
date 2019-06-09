@@ -22,7 +22,7 @@ namespace Genesis.Cli.Commands
             Console.ResetColor();
             Console.WriteLine();
 
-            if (OutputManager.Generators.Count == 0 && InputManager.Populators.Count == 0) //NO Generators Found
+            if (OutputManager.Outputs.Count == 0 && InputManager.Inputs.Count == 0) //NO Outputs Found
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("There are no Executors discovered yet. Run a '");
@@ -33,11 +33,11 @@ namespace Genesis.Cli.Commands
             }
             else //Something was found
             {
-                foreach (var item in InputManager.Populators)
+                foreach (var item in InputManager.Inputs)
                 {
                     Text.White("Populator: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
                 }
-                foreach (var item in OutputManager.Generators)
+                foreach (var item in OutputManager.Outputs)
                 {
                     Text.White("Generator: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
                 }
@@ -59,8 +59,8 @@ namespace Genesis.Cli.Commands
             }
             else
             {
-                var generator = OutputManager.Generators.Find(g => g.CommandText.Trim().ToLower().Equals(args[1].Trim().ToLower(), StringComparison.Ordinal));
-                var populator = InputManager.Populators.Find(p => p.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
+                var generator = OutputManager.Outputs.Find(g => g.CommandText.Trim().ToLower().Equals(args[1].Trim().ToLower(), StringComparison.Ordinal));
+                var populator = InputManager.Inputs.Find(p => p.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
 
                 var chunks = args[2].Split('=');
                 var propertyName = chunks[0];

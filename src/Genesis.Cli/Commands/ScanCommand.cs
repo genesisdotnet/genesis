@@ -12,7 +12,7 @@ namespace Genesis.Cli.Commands
     public class ScanCommand : GenesisCommand
     {
         public override string Name { get => "scan"; }
-        public override string Description => "Scan the filesystem for Producers and Generators within assemblies";
+        public override string Description => "Scan the filesystem for Producers and Outputs within assemblies";
 
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
@@ -29,13 +29,13 @@ namespace Genesis.Cli.Commands
 
             Text.Line();
 
-            Console.ForegroundColor = (InputManager.Populators.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
-            Console.Write($@"{InputManager.Populators.Count}");
+            Console.ForegroundColor = (InputManager.Inputs.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
+            Console.Write($@"{InputManager.Inputs.Count}");
             Console.ResetColor();
             Console.WriteLine($" Populator(s)");
 
-            Console.ForegroundColor = (OutputManager.Generators.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
-            Console.Write($"{OutputManager.Generators.Count}");
+            Console.ForegroundColor = (OutputManager.Outputs.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
+            Console.Write($"{OutputManager.Outputs.Count}");
             Console.ResetColor();
             Console.WriteLine(" Generator(s)");
 

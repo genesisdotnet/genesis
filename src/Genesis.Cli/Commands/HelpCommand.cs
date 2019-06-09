@@ -20,10 +20,10 @@ namespace Genesis.Cli.Commands
             Console.WriteLine("How this works:");
             Console.ResetColor();
             Console.Write("\tPopulators are called that because they 'populate' an ObjectGraph collection, usually from a data source. ");
-            Console.WriteLine("Generators read from the ObjectGraph collection populators fill in, and output whatever is desired, typically writing a file. It could write emails, call a service, anything really though.");
+            Console.WriteLine("Outputs read from the ObjectGraph collection populators fill in, and output whatever is desired, typically writing a file. It could write emails, call a service, anything really though.");
             Console.WriteLine();
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Before anything can successfully execute, Populators and Generators have to be manually scanned / located with the 'scan' command. (for now)");
+            Console.WriteLine("Before anything can successfully execute, Inputs and Outputs have to be manually scanned / located with the 'scan' command. (for now)");
             Console.ResetColor();
             Console.WriteLine();
             Console.Write("Use '");
