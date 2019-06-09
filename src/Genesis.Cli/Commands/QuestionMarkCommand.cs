@@ -16,11 +16,13 @@ namespace Genesis.Cli.Commands
         {
             await CommandLoader.InitAsync(args);
 
-            Text.WhiteLine();
-            Text.Cyan("Genesis"); Text.WhiteLine($" {Program.GetVersionDisplayString()}");
+            Text.Line();
+            Text.Cyan("Genesis"); Text.GrayLine($" {Program.GetVersionDisplayString()}");
+            Text.Line();
+            
             foreach(var cmd in CommandLoader.Commands)
             {
-                Text.Green($"\t{cmd.Name}"); Text.WhiteLine($"\t\t{cmd.Description}");
+                Text.Green($"\t{cmd.Name}"); Text.WhiteLine($"\t{cmd.Description}");
             }
             return await Task.FromResult(new BlankTaskResult() { Success = true, Message = "" });
         }

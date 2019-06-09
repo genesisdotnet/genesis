@@ -11,7 +11,7 @@ namespace Genesis.Cli.Commands
     public class ConfigCommand : GenesisCommand
     {
         public override string Name { get => "config"; }
-        public override string Description => "Edit an Executor's .Config object or list its current contents (soon)";
+        public override string Description => "Edit Executor configurations";
 
         protected override Task OnHelpRequested(string[] args)
         {
