@@ -50,6 +50,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{6B22B7
 	ProjectSection(SolutionItems) = preProject
 		docs\images\commands.png = docs\images\commands.png
 		docs\images\config.png = docs\images\config.png
+		docs\images\exec_chain.png = docs\images\exec_chain.png
+		docs\images\exec_mssql.png = docs\images\exec_mssql.png
+		docs\images\exec_poco.png = docs\images\exec_poco.png
 		docs\images\scan.png = docs\images\scan.png
 	EndProjectSection
 EndProject

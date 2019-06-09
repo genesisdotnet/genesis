@@ -41,7 +41,7 @@ namespace Genesis.Input.MSSqlDb
                     await genesis.AddObject(i); //yeah, this can blow up - leaving it for errors
             }
 
-            Text.CyanLine(genesis.Objects.Count().ToString());
+            Text.CyanLine("Populated "+genesis.Objects.Count().ToString()+" object(s).");
             return await Task.FromResult(new InputTaskResult {
                 Success = true,
             });

@@ -76,3 +76,38 @@ This changes the value of the ConnectionString property that lives on that execu
 Once things are configured the way you want them, you would execute a generator.
 
 Here is the <b>mssql</b> executor being used to populate a few ObjectGraphs for the other executors:
+![alt text](https://github.com/genesisdotnet/genesis/blob/master/docs/images/exec_mssql.png?raw=true "Execution Example")
+
+At this point, any other executor (Generator / Output) would have ObjectGraphs that contained some schema. 
+
+Lets create some <b>P</b>lain <b>O</b>ld <b>C</b># <b>O</b>bjects. (Pocos)
+* <i>If you'll notice, there is an executor listed from the scan called <b>pocos</b>.</i>
+ 
+They can use this schema to write out / act upon / completeley ignore the schema that was identified.
+
+Here is the '<b>poco</b>' generator being executed after the '<b>mssql</b>' populator has been executed. The result is a class file with properties for each column in the source (mssql database table)
+![alt text](https://github.com/genesisdotnet/genesis/blob/master/docs/images/exec_poco.png?raw=true "Execution Example")
+<i>Evidently it doesn't output anything right now. That'll be fixed ;)</i>
+
+## This sounds and looks like a pain in the ass
+---
+Agreed. It's not really though. 
+
+Fortunately, <b>`you can script it`</b>. Its yet another tool for your development toolbox.  We all end up writing boilerplate code repetitively and often. When you realize you have code that will need typed a ton, write a Generator for them. More than likely they come from or are dictated-by some other source or authority. 
+
+This is obviously not perfect. It's a simple scriptable prompt that feeds a REPL line-by-line. It can read a .genesis ('script') file and pass along each line to the interpreter as if it were typed to the console. 
+
+It's activated by a <b>`--script [path]'</b> option:
+```bash
+genesis-cli --script "\path\to\script.genesis"
+```
+
+You could have a script to write out classes based on one source/input, then turn around and switch the input to something completely different, then write out different support classes with a seperate Generator. 
+
+## What if?
+* Pretty odd to think about, but you could integrate it into a build chain.
+* Genesis doesn't <i>HAVE</i> to write out code. It could act on data that was within a table, rather than on its schema.
+* The sources could literally come from anywhere. There's a ton of "schema definition" out there on the web.
+* Generate a .Net Standard HttpClient wrapper for a specific Endpoint/Yaml.  
+
+There are tools to do pretty much anything this could do. Though, if they had executors for Genesis..., it would be pretty slick!
