@@ -11,16 +11,15 @@ using System.Threading.Tasks;
 
 namespace Genesis.Cli
 {
-    class Program
+    static class Program
     {
-        private static bool _isScript = false;
+        public static bool _isScript = false;
         private static string[] _script = new string[] { };
-        private static Version _version;
 
         static async Task Main(string[] args)
         {
             //comment to run the loop
-            //args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
+            args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
 
             //NOTE:      --script "C:\Path\To\Script.genesis"
             if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
@@ -33,9 +32,25 @@ namespace Genesis.Cli
 
             await CommandLoader.InitAsync(args);
 
-            if (!_isScript) //execute 'normally'
+            if (_isScript)
             {
-                Text.Yellow("HINT"); Text.White(": '"); Text.Green("?"); Text.White("' for a list of ");Text.Command("commands", false);Text.Line();
+                Text.WhiteLine($"Processing script '{args[1]}' with {_script.Length} lines");
+                Text.YellowLine($"----- {DateTimeOffset.UtcNow}]-----");
+
+                foreach (var line in _script)
+                {
+                    Text.WhiteLine($"Executing: '{line}' as {line.Split(" ").Length} arguments");
+
+                    if (line.ToLower().StartsWith("break"))
+                        _isScript = false; //cheesy, but can't set it from a command apparently, CommandLineApplication?
+
+                    ProcessCommandLine(line.ToArgs().ToArray(), tokenSource);
+                }
+            }
+            //command can call StopScript() to 'break' to the console prompt
+            if(!_isScript)
+            {
+                Text.Yellow("HINT"); Text.White(": '"); Text.Green("?"); Text.White("' for a list of "); Text.Command("commands", false); Text.Line();
                 do
                 {
                     if (tokenSource.IsCancellationRequested)
@@ -48,18 +63,6 @@ namespace Genesis.Cli
                     ProcessCommandLine(args, tokenSource);
                 }
                 while (!tokenSource.IsCancellationRequested);
-            }
-            else //execute a script
-            {
-                Text.WhiteLine($"Processing script '{args[1]}' with {_script.Length} lines");
-                Text.YellowLine($"----- {DateTimeOffset.UtcNow}]-----");
-
-                foreach (var line in _script)
-                {
-                    Text.WhiteLine($"Executing: '{line}' as {line.Split(" ").Length} arguments");
-
-                    ProcessCommandLine(line.Split(" "), tokenSource);
-                }
             }
         }
 
@@ -137,7 +140,7 @@ namespace Genesis.Cli
             {
                 Description = "Generate stuff from other stuff",
                 //TODO: Default help stuff?
-                ExtendedHelpText = "Populators create a pool of ObjectGraph objects.\nGenerators write out files according to what's in the ObjectGraphs\n If you want to support a 'thing' then just write a producer to produce an ObjectGraph. If you want to support 'something new', then write a Generator that consumes an ObjectGraph."
+                ExtendedHelpText = "Use Executors to do things in regard to objects and their schemas"
             };
 
             foreach (var cmd in CommandLoader.Commands)
@@ -156,12 +159,12 @@ namespace Genesis.Cli
                     try
                     {
                         result = await cmd.Execute(GenesisContext.Current, args);
-                        Console.WriteLine(result.Message);
+                        //Console.WriteLine(result.Message);
                     }
                     catch (Exception exception)
                     {
                         result = new Genesis.BlankTaskResult();
-                        Console.WriteLine(exception.Message);
+                        Text.RedLine(exception.Message);
                     }
 
                     return result.Success ? 0 : -1; //does this even matter?

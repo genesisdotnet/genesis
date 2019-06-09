@@ -1,8 +1,9 @@
+scan
+add mssql
+config mssql
+add poco
+config poco
+status
 
-	scan
-				pop mssql
-	   gen poco
-go
-	gen xvm
-go
-exit
+config poco Language="Klingon Bro"
+break
