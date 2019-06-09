@@ -44,6 +44,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{A4522569
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Output", "Output", "{43570CDD-40A3-4D73-A1B7-22F24B8261A9}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5FBB60FF-ABE1-4316-B82E-3E2AA32AF8E6}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "images", "images", "{6B22B7DE-B4BB-456C-B92A-F775B98CEFD7}"
+	ProjectSection(SolutionItems) = preProject
+		docs\images\commands.png = docs\images\commands.png
+		docs\images\scan.png = docs\images\scan.png
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -176,6 +184,7 @@ Global
 		{58162A95-BD9B-48D1-B297-8465FE5216FA} = {A4522569-85BB-4EF1-AC94-BE2978547AAE}
 		{A4522569-85BB-4EF1-AC94-BE2978547AAE} = {7064AAEF-D4AA-4CEB-A3AB-2588672FC1EE}
 		{43570CDD-40A3-4D73-A1B7-22F24B8261A9} = {7064AAEF-D4AA-4CEB-A3AB-2588672FC1EE}
+		{6B22B7DE-B4BB-456C-B92A-F775B98CEFD7} = {5FBB60FF-ABE1-4316-B82E-3E2AA32AF8E6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A29E004-0C17-4E72-AE88-F7EA03136D6E}
