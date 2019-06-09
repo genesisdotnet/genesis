@@ -88,11 +88,8 @@ namespace Genesis.Cli.Commands
                 }
                 else
                 {
-                    Console.Write("'");
-                    Text.Green(args[1]);
-                    Console.ResetColor();
-                    Console.Write("'");
-                    Console.WriteLine(" is not a known Executor. (Populator or Generator)");
+                    Text.Command(args[1]);
+                    Text.RedLine(" is not a known Executor. (");Text.FriendlyText("Input", false);Text.Red(" or "); Text.FriendlyText("Output"); Text.RedLine(".");
 
                     result.Message = "Invalid Executor";
                 }
@@ -106,11 +103,13 @@ namespace Genesis.Cli.Commands
 
             if(exe == null)
             {
-                Text.RedLine("No executor found with that name.");
+                Text.DarkYellowLine("No executor found with that name.");
                 return;
             }
 
             exe.DisplayConfiguration();
+
+            Text.Line();
         }
     }
 }
