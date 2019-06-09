@@ -3,6 +3,8 @@ Executors are basically chunks of code you can configure and execute.
 They're broken up into two types as it stands, though this is arbitrary. 
 
 ## Input
+These are what feed an ObjectGraph array with data about objects. 
+
 * `Genesis.Input.MSSqlDb` 
     
 Reads MSSql database schema into ObjectGraphs
@@ -16,6 +18,8 @@ Reads a web address for a /swagger.yaml into ObjectGraphs
 You could populate ObjectGraphs off of actual objects for whatever reason.
 
 ## Output
+There's a ton of things to potentially do and/or generate. Here's a few...
+
 * `Genesis.Output.Poco`
 
 Write out a (P)lain (O)ld (C)# (O)bject file according to whats in the ObjectGraphs
