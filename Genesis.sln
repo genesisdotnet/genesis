@@ -36,6 +36,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.YamlAddress", "src\Executors\Input\Genesis.Input.YamlAddress\Genesis.Input.YamlAddress.csproj", "{58162A95-BD9B-48D1-B297-8465FE5216FA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Executors", "Executors", "{7064AAEF-D4AA-4CEB-A3AB-2588672FC1EE}"
+	ProjectSection(SolutionItems) = preProject
+		src\Executors\README.md = src\Executors\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{A4522569-85BB-4EF1-AC94-BE2978547AAE}"
 EndProject
