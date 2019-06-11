@@ -1,6 +1,9 @@
 # Genesis .Net
 ---
-A framework for generating "things" based on a schema from a "source". It's designed to make starting a project a lot faster. It's entirely configurable; even scriptable. 
+A framework to generate (or act upon) code. Any source, to any destination as long as there is an executor that handles a specific situation. It may sound very arbitrary, and that's on purpose. There's always data that isn't normalized between sources / destinations etc. This aims to address that, or facilitate addressing that.
+
+# Demos are coming!
+There hasn't been a whole lot of time, but demos seem to be a hot topic. There are a few development <b>.genesis</b> script files used in testing, but need sanitized for connection string passwords etc. 
 
 ## How does it work?
 ---
