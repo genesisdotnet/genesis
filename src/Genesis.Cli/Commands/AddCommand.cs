@@ -52,6 +52,8 @@ namespace Genesis.Cli.Commands
             }
             else
             {
+                Text.Line();
+
                 var generator = OutputManager.Outputs.Find(g => g.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
                 if (generator != null)
                 {
@@ -75,6 +77,7 @@ namespace Genesis.Cli.Commands
                 Text.White("'");
                 Text.Red(args[1]);
                 Text.WhiteLine("' is not a known input or output.");
+                Text.Line();
             }
 
             return await Task.FromResult(result);
