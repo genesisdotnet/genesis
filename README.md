@@ -1,12 +1,10 @@
 # Genesis .Net
----
 A framework to generate (or act upon) code. Any source, to any destination as long as there is an executor that handles a specific situation. It may sound very arbitrary, and that's on purpose. There's always data that isn't normalized between sources / destinations etc. This aims to address that, or facilitate addressing that.
 
 # Demos are coming!
 There hasn't been a whole lot of time, but demos seem to be a hot topic. There are a few development <b>.genesis</b> script files used in testing, but need sanitized for connection string passwords etc. 
 
 ## How does it work?
----
 Genesis is centered around a group of ObjectGraph objects and pieces of code that manipulate them, called Executors. 
 
 There are currently two types of executors, though more could certainly be added.
@@ -22,7 +20,6 @@ There are currently two types of executors, though more could certainly be added
 * Configuration of executors may also be done by commands at the Genesis Prompt. 
 
 ## genesis>
----
 Genesis is a console application based on Microsoft's .Net standard/core. The commands are fairly simple to implement and use. Its usage and syntax are common to a shell. 
 
 Here is a basic syntax of console commands:
@@ -35,7 +32,6 @@ The '<b>?</b>' command will list all of the commands that have been discovered. 
 ![alt text](https://github.com/genesisdotnet/genesis/blob/master/docs/images/commands.png?raw=true "Command List")
 
 ## Commands
----
 An example of the <b>scan</b> command. This loads configurations and initializes new executors. There's probably a case for it to automatically scan on startup, but for now you have to trigger it.
 ![alt text](https://github.com/genesisdotnet/genesis/blob/master/docs/images/scan.png?raw=true "Scan Example")
 
@@ -55,7 +51,6 @@ This will let you know what the commands they expose actually are. Once you know
 There are quite a few more commands, but those should produce some results. 
 
 ## Configuration
----
 In addition to a .json file for each executor, they're able to be configured during execution from the prompt.
 
 Say I wanted to set the connection string for an sql input executor:

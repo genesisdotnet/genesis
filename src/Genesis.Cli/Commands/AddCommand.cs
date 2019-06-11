@@ -60,6 +60,7 @@ namespace Genesis.Cli.Commands
                     await genesis.Chain.Append(generator);
 
                     Text.Command(generator.CommandText); Text.WhiteLine($@" was added to the Chain. There are {genesis.Chain.Count} now.");
+                    Text.Line();
                     result.Success = true;
                     return result;
                 }
@@ -70,6 +71,7 @@ namespace Genesis.Cli.Commands
                     await genesis.Chain.Append(populator);
 
                     Text.Command(populator.CommandText); Text.WhiteLine($@" was added to the Chain. There are {genesis.Chain.Count} now.");
+                    Text.Line();
                     result.Success = true;
                     return result;
                 }

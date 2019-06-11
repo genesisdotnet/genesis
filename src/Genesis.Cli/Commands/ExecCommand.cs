@@ -25,6 +25,7 @@ namespace Genesis.Cli.Commands
                 Text.White(" or ");
                 Text.Yellow("chain");
                 Text.WhiteLine(" to execute the chain");
+                Text.Line();
 
                 return r;
             }

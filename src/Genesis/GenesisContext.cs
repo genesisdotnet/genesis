@@ -187,10 +187,11 @@ namespace Genesis
             Text.Line();
 
             Text.White("Execution Chain: " + "\n\t");
-            Chain.ForEach(e => {
+            Chain.ForEach(e =>
+            {
                 Text.Command(e.CommandText, false); Text.White(" -> ");
             });
-            Text.Line();
+            Text.Line(); Text.Line();
             Text.White($@"Scans since reset: ");
             if (ScanCount > 0)
                 Text.GreenLine(ScanCount.ToString());
