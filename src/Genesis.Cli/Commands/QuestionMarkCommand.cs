@@ -22,8 +22,14 @@ namespace Genesis.Cli.Commands
             
             foreach(var cmd in CommandLoader.Commands)
             {
+                if (cmd.Name == string.Empty) //default command leaves an empty line otherwise
+                    continue;
+
                 Text.Green($"\t{cmd.Name}"); Text.WhiteLine($"\t{cmd.Description}");
             }
+
+            Text.Line();
+
             return await Task.FromResult(new BlankTaskResult() { Success = true, Message = "" });
         }
     }
