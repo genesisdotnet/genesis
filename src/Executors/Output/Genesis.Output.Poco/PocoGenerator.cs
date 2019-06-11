@@ -58,7 +58,9 @@ namespace Genesis.Output.Poco
 
             await Task.Delay(100); //timing or something weirdness
 
-            File.WriteAllText(Path.Combine(subPath, objectGraph.Name.ToSingular() + ".cs"), output);            
+            var outPath = Path.Combine(subPath, objectGraph.Name.ToSingular() + ".cs");
+            File.WriteAllText(outPath, output);
+            Text.White($"Wrote '");Text.Yellow($""); Text.WhiteLine("'");
         }
 
         private string GetPropertiesReplacement(List<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators

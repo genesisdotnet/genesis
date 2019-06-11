@@ -1,9 +1,7 @@
 scan
 add mssql
 config mssql
-add poco
-config poco
+add aspnet-repo-cached
+config aspnet-repo-cached
 status
-
-config poco Language="Klingon Bro"
 break

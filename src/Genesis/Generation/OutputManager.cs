@@ -95,7 +95,7 @@ namespace Genesis.Generation
                         if (!writeOutputMessages)
                             continue;
 
-                        Text.White($"'"); Text.Green(generator.CommandText); Text.White("' ("); Text.Cyan(generator.FriendlyName); Text.White(") was found in '"); Text.Magenta(generator.GetType().Name); Text.White("'... ");
+                        Text.White($"'"); Text.Green(generator.CommandText); Text.White("' ("); Text.Cyan(generator.FriendlyName); Text.White(") was found in '"); Text.Blue(generator.GetType().Name); Text.White("'... ");
 
                         if (cfgWarning)
                             Text.YellowLine("warning");

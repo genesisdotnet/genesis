@@ -52,7 +52,7 @@ namespace Genesis
                 var val = cfgObjType.GetProperty(p.Name)?.GetValue(cfgObj)?.ToString();
 
                 Text.Yellow($"\t{p.Name}: ");
-                Text.Blue(p.PropertyType.Name);
+                Text.DarkBlue(p.PropertyType.Name);
                 Text.White("   (");
                 Text.DarkYellow($"{((val is string) ? $"\"{val}\"":val)}");
                 Text.WhiteLine(")");

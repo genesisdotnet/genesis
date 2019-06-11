@@ -34,7 +34,7 @@ namespace Genesis
                     Text.WhiteLine(".");
                 });        
 
-        protected Task ForEach(Action<IGenesisExecutor<ITaskResult>> action)
+        public Task ForEach(Action<IGenesisExecutor<ITaskResult>> action)
         {
             var node = ll.First;
             while (node != null && node.Value != null)

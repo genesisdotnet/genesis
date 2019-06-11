@@ -36,9 +36,17 @@ namespace Genesis.Output.CachedRepo
 
         private async Task ExecuteGraph(ObjectGraph objGraph)
         {
-            await Task.CompletedTask;
+            var output = Template.Raw.Replace(Tokens.Namespace, Config.Namespace) 
+                                     .Replace(Tokens.ObjectName, objGraph.Name.ToSingular());
 
-            //Template.Raw.Replace
+            var subPath = Path.Combine(OutputPath, "Pocos");
+
+            if (!Directory.Exists(subPath))
+                Directory.CreateDirectory(subPath);
+
+            File.WriteAllText(Path.Combine(subPath, $"Cached{objGraph.Name.ToSingular()}Repository.cs"), output);
+
+            await Task.CompletedTask;
         }
     }
 }

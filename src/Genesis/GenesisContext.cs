@@ -69,7 +69,7 @@ namespace Genesis
         public IGenerator Generator { get { return currentGenerator; } set { currentGenerator = value; } }
         public List<ObjectGraph> Objects { get; set; } = new List<ObjectGraph>();
         public bool HasAllComponentsConfigured { get => hasAllComponentsConfigured; }
-        public ExecutionChain Chain { get; private set; } 
+        public ExecutionChain Chain { get; private set; }
 
         public async Task AddObject(ObjectGraph obj)
         {
@@ -92,7 +92,7 @@ namespace Genesis
         public async Task<ITaskResult> ExecuteConfiguration(string[] args = null)
         {
             ITaskResult result = new BlankTaskResult();
-            
+
             //TODO: Use an Aggregate Exception here
 
             if (Populator == null)
@@ -135,7 +135,7 @@ namespace Genesis
                 Text.White($"Executing '");
                 Text.Green(Generator.CommandText);
                 Text.WhiteLine($"'. With output to {Generator.Configuration.OutputPath}");
-                
+
                 try
                 {
                     result = await Generator.Execute(this, args); //TODO: Pass args
@@ -182,42 +182,22 @@ namespace Genesis
 
         public void WriteContextInfo()
         {
-            Console.WriteLine();
-            Console.Write($@"Current Input is:");
+            Text.Line();
+            Text.DarkMagentaLine("--------------------------------------------------------------------------------".PadLeft(80));
+            Text.Line();
 
-            if (Populator != null)
-            {
-                Text.Cyan($" '{Populator.FriendlyName}'"); Text.White(" ("); Text.Green(Populator.CommandText); Text.WhiteLine(") ");
-            }
-            else
-                Text.YellowLine($" not configured");
-
-            Console.Write($@"Current Output is:");
-
-            if (Generator != null)
-            {
-                Text.Cyan($" '{Generator.FriendlyName}'"); Text.White(" ("); Text.Green(Generator.CommandText); Text.WhiteLine(") ");
-            }
-            else
-                Text.YellowLine($" not configured");
-
-            Console.WriteLine();
-            Console.Write($@"Scans since reset: ");
+            Text.White("Execution Chain: " + "\n\t");
+            Chain.ForEach(e => {
+                Text.Command(e.CommandText, false); Text.White(" -> ");
+            });
+            Text.Line();
+            Text.White($@"Scans since reset: ");
             if (ScanCount > 0)
                 Text.GreenLine(ScanCount.ToString());
             else
-                Text.RedLine(ScanCount.ToString());
-
+                Text.YellowLine(ScanCount.ToString());
             Text.Line();
-
-            Text.White($"Execute an ");
-            Text.FriendlyText("input");
-            Text.White(" or an ");
-            Text.FriendlyText("output");
-            Text.White(" using the ");
-            Text.Command("exec");
-            Text.WhiteLine(" command.");
-
+            Text.White($"Execute an "); Text.FriendlyText("input"); Text.White(" or an "); Text.FriendlyText("output"); Text.White(" using the "); Text.Command("exec"); Text.WhiteLine(" command.");
             Text.Line();
         }
     }
