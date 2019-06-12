@@ -1,6 +1,6 @@
 ﻿using Genesis.Cli.Extensions;
-using Genesis.Generation;
-using Genesis.Population;
+using Genesis.Output;
+using Genesis.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,7 +20,7 @@ namespace Genesis.Cli.Commands
 
             Text.Line();
             Text.YellowLine("Scanning for Inputs:");
-            await InputManager.InitializePopulatorsAsync(true);
+            await InputManager.InitializeInputsAsync(true);
 
             Text.Line();
 
@@ -30,14 +30,16 @@ namespace Genesis.Cli.Commands
             Text.Line();
 
             Console.ForegroundColor = (InputManager.Inputs.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
-            Console.Write($@"{InputManager.Inputs.Count}");
-            Console.ResetColor();
-            Console.WriteLine($" Populator(s)");
+            Text.White($@"{InputManager.Inputs.Count}");
+            Text.WhiteLine($" Potential Inputs(s)");
 
             Console.ForegroundColor = (OutputManager.Outputs.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
-            Console.Write($"{OutputManager.Outputs.Count}");
-            Console.ResetColor();
-            Console.WriteLine(" Generator(s)");
+            Text.White($"{OutputManager.Outputs.Count}");
+            Text.WhiteLine(" Possible Outputs(s)");
+
+            Text.Line();
+            Text.White("The ");Text.Green("green"); Text.WhiteLine(" text is how you reference an Executor. ");
+            Text.Line();
 
             genesis.ScanCount++;
 

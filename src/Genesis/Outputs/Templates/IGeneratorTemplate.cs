@@ -1,4 +1,4 @@
-﻿namespace Genesis.Generation
+﻿namespace Genesis.Output
 {
     public interface IGeneratorTemplate
     {

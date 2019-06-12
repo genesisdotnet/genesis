@@ -1,6 +1,7 @@
 ﻿using Genesis.Cli.Extensions;
-using Genesis.Generation;
-using Genesis.Population;
+using Genesis.Output;
+using Genesis.Input;
+using Genesis.Cli;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -36,13 +37,13 @@ namespace Genesis.Cli.Commands
                 }
                 else 
                 {
-                    Console.WriteLine("Known Inputs:"); //TODO: Get rid of Generator / Populator concept
+                    Console.WriteLine("Known Inputs:"); //TODO: Get rid of OutputExecutor / InputExecutor concept
                     foreach (var item in InputManager.Inputs)
                     {
                         Text.White("Input: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.DarkCyanLine($"{item.GetType().Assembly.GetName().Name}"); 
                     }
                     Console.WriteLine();
-                    Console.WriteLine("Known Outputs:"); //TODO: Get rid of Generator / Populator concept
+                    Console.WriteLine("Known Outputs:"); //TODO: Get rid of OutputExecutor / InputExecutor concept
                     foreach (var item in OutputManager.Outputs)
                     {
                         Text.White("Output: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.DarkCyanLine($"{item.GetType().Assembly.GetName().Name}");

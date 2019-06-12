@@ -9,19 +9,19 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Genesis.Population
+namespace Genesis.Input
 {
     public class InputManager
     {
-        public static List<IPopulator> Inputs { get; set; } = new List<IPopulator>();
+        public static List<IInputExecutor> Inputs { get; set; } = new List<IInputExecutor>();
 
         //TODO: Why is InputManager 'writing' messages to the Console?
 
         /// <summary>
-        /// Load Populator extensions from the current directory
+        /// Load InputExecutor extensions from the current directory
         /// </summary>
         //slow down son
-        public static async Task InitializePopulatorsAsync(bool writeOutputMessages = false)
+        public static async Task InitializeInputsAsync(bool writeOutputMessages = false)
         {
             Inputs.Clear();
 
@@ -32,17 +32,17 @@ namespace Genesis.Population
 
             var conventions = new ConventionBuilder();
 
-            conventions.ForTypesDerivedFrom<IPopulator>()
-                        .Export<IPopulator>()
+            conventions.ForTypesDerivedFrom<IInputExecutor>()
+                        .Export<IInputExecutor>()
                         .Shared();
 
             var configuration = new ContainerConfiguration().WithAssemblies(assemblies, conventions);
 
-            //TODO: Post-build steps for Populator assemblies
+            //TODO: Post-build steps for InputExecutor assemblies
 
             using (var container = configuration.CreateContainer())
             {
-                var populators = container.GetExports<IPopulator>();
+                var populators = container.GetExports<IInputExecutor>();
 
                 Inputs.Clear();
 
@@ -50,14 +50,14 @@ namespace Genesis.Population
                 {
                     Inputs.Add(populator);
 
-                    var configType = populator.GetType().GetRuntimeProperty("Config").PropertyType ?? typeof(PopulatorConfiguration);
-                    var config = configType.IsInstanceOfType(typeof(PopulatorConfiguration));
+                    var configType = populator.GetType().GetRuntimeProperty("Config").PropertyType ?? typeof(InputConfiguration);
+                    var config = configType.IsInstanceOfType(typeof(InputConfiguration));
                     var cfgWarning = false;
                     try
                     {
                         //cmdtext was located from friendlyname and is available if it succeedes
-                        if (typeof(PopulatorConfiguration).IsAssignableFrom(configType)) //Make sure we can use it
-                            populator.Configuration = (IPopulatorConfiguration)Activator.CreateInstance(configType, true);
+                        if (typeof(InputConfiguration).IsAssignableFrom(configType)) //Make sure we can use it
+                            populator.Configuration = (IInputConfiguration)Activator.CreateInstance(configType, true);
 
                         //bind the configuration json to the config instance
                         if (writeOutputMessages && !GenesisConfiguration.ApplyFromJson(configType, $"{configType.Name}.json", populator.Configuration))

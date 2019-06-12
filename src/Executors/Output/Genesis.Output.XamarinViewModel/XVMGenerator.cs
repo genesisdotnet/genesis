@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Genesis;
-using Genesis.Generation;
+using Genesis.Output;
 
 namespace Genesis.Output.Poco
 {
-    public class XvmGenerator : Generator
+    public class XvmGenerator : OutputExecutor
     {
         public override string CommandText => "xvm";
         public override string Description => "Generates a basic ViewModel with property changed event / base";
-        public override string FriendlyName => "Xamarin ViewModel Generator";
+        public override string FriendlyName => "Xamarin ViewModel OutputExecutor";
 
         public XvmConfig Config { get; set; }
 

@@ -1,5 +1,5 @@
 ﻿using Genesis;
-using Genesis.Generation.Templates;
+using Genesis.Output.Templates;
 using System;
 using System.Collections.Generic;
 using System.Composition.Convention;
@@ -11,17 +11,17 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Genesis.Generation
+namespace Genesis.Output
 {
     public static class OutputManager
     {
-        public static List<IGenerator> Outputs { get; set; } = new List<IGenerator>();
+        public static List<IOutputExecutor> Outputs { get; set; } = new List<IOutputExecutor>();
 
         public static async Task InitializeGeneratorsAsync(bool writeOutputMessages = false)
         {
             Outputs.Clear();
 
-            Debug.WriteLine($@"Scanning local directory for Generator libraries");
+            Debug.WriteLine($@"Scanning local directory for OutputExecutor libraries");
 
             var assemblies = new List<Assembly>();
 
@@ -30,15 +30,15 @@ namespace Genesis.Generation
 
             var conventions = new ConventionBuilder();
 
-            conventions.ForTypesDerivedFrom<IGenerator>()
-                        .Export<IGenerator>()
+            conventions.ForTypesDerivedFrom<IOutputExecutor>()
+                        .Export<IOutputExecutor>()
                         .Shared();
 
             var configuration = new ContainerConfiguration().WithAssemblies(assemblies, conventions);
 
             using (var container = configuration.CreateContainer())
             {
-                var generators = container.GetExports<IGenerator>();
+                var generators = container.GetExports<IOutputExecutor>();
 
                 Outputs.Clear();
 
@@ -53,7 +53,7 @@ namespace Genesis.Generation
                     {
                         //cmdtext was located from friendlyname and is available if it succeedes
                         if (typeof(GeneratorConfiguration).IsAssignableFrom(configType)) //Make sure we can use it
-                            generator.Configuration = (IGeneratorConfiguration)Activator.CreateInstance(configType, true);
+                            generator.Configuration = (IOutputConfiguration)Activator.CreateInstance(configType, true);
 
                         //bind the configuration json to the config instance
                         if (writeOutputMessages && !GenesisConfiguration.ApplyFromJson(configType, $"{configType.Name}.json", generator.Configuration))
@@ -66,7 +66,7 @@ namespace Genesis.Generation
                         {
                             generator.Template = TemplateLoader.LoadTemplateFor(generator);
                         }
-                        catch(Exception ex)
+                        catch (Exception ex)
                         {
                             Debug.WriteLine(ex.Message);
                             Text.DarkYellow($"Could not load template for ");

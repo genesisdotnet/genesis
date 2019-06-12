@@ -1,6 +1,6 @@
 ﻿using Genesis.Cli.Extensions;
-using Genesis.Generation;
-using Genesis.Population;
+using Genesis.Output;
+using Genesis.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -30,39 +30,39 @@ namespace Genesis.Cli.Commands
                 return r;
             }
 
-            if (args[1] == "pop") //cheesy
-                return (InputTaskResult)await genesis.Populator.Execute(genesis, args);
-            else if (args[1] == "gen")
-                return (OutputTaskResult)await genesis.Generator.Execute(genesis, args);
+            var exe = GetExecutor(args[1]);
+
+            if(exe != null) //executor name
+            {
+                await exe.Execute(genesis, args);
+                return new BlankTaskResult(); //whatever for now
+            }
             else if (args[1] == "chain")
             {
-                var singleError = false;
-                var allErrors = true;
+                var errorCount = 0;
+
                 foreach (var e in genesis.Chain.Execute(args))
                 {
-                    if (!e.Success)
-                    {
-                        singleError = true;
-                        allErrors = false;
-                    }
+                    if (!e.Success) //Executors have to return a result with true
+                        errorCount++;
                 }
 
-                if (!singleError && !allErrors)
+                if (errorCount == 0)
                 {
                     Text.SuccessGraffiti();
-                    return new OutputTaskResult { Success = (!singleError && !allErrors) };
+                    return new OutputTaskResult { Success = true };
                 }
 
-                if (singleError)
+                if (errorCount < genesis.Chain.Count)
                 {
                     Text.WarningGraffiti();
-                    return new OutputTaskResult { Success = singleError };
+                    return new OutputTaskResult { Success = false };
                 }
 
-                if (allErrors)
+                if (errorCount == genesis.Chain.Count)
                 {
                     Text.ErrorGraffiti();
-                    return new OutputTaskResult { Success = !allErrors && singleError };
+                    return new OutputTaskResult { Success = false };
                 }
 
                 return new BlankTaskResult(); //whatever for now

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Genesis.Generation
+namespace Genesis.Output
 {
     public class OutputTaskResult : BlankTaskResult
     {

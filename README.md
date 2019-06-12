@@ -76,7 +76,7 @@ Once things are configured the way you want them, you would execute a generator.
 Here is the <b>mssql</b> executor being used to populate a few ObjectGraphs for the other executors:
 ![alt text](https://github.com/genesisdotnet/genesis/blob/master/docs/images/exec_mssql.png?raw=true "Execution Example")
 
-At this point, any other executor (Generator / Output) would have ObjectGraphs that contained some schema. 
+At this point, any other executor (OutputExecutor / Output) would have ObjectGraphs that contained some schema. 
 
 Lets create some <b>P</b>lain <b>O</b>ld <b>C</b># <b>O</b>bjects. (Pocos)
 * <i>If you'll notice, there is an executor listed from the scan called <b>pocos</b>.</i>
@@ -99,7 +99,7 @@ They have a `[GeneratingExecutorClassName].deps` file that contains all of the d
 ---
 Agreed. It's not really though. 
 
-Fortunately, <b>`you can script it`</b>. Its yet another tool for your development toolbox.  We all end up writing boilerplate code repetitively and often. When you realize you have code that will need typed a ton, write a Generator for them. More than likely they come from or are dictated-by some other source or authority. 
+Fortunately, <b>`you can script it`</b>. Its yet another tool for your development toolbox.  We all end up writing boilerplate code repetitively and often. When you realize you have code that will need typed a ton, write a OutputExecutor for them. More than likely they come from or are dictated-by some other source or authority. 
 
 This is obviously not perfect. It's a simple scriptable prompt that feeds a REPL line-by-line. It can read a .genesis ('script') file and pass along each line to the interpreter as if it were typed to the console. 
 
@@ -108,7 +108,7 @@ It's activated by a <b>`--script [path]'</b> option:
 genesis-cli --script "\path\to\script.genesis"
 ```
 
-You could have a script to write out classes based on one source/input, then turn around and switch the input to something completely different, then write out different support classes with a seperate Generator. 
+You could have a script to write out classes based on one source/input, then turn around and switch the input to something completely different, then write out different support classes with a seperate OutputExecutor. 
 
 ## What if?
 * Pretty odd to think about, but you could integrate it into a build chain.

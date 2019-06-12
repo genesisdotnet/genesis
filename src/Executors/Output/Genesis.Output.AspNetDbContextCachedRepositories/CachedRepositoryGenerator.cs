@@ -1,5 +1,5 @@
 ﻿using Genesis;
-using Genesis.Generation;
+using Genesis.Output;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Genesis.Output.CachedRepo
 {
-    public class CachedRepositoryGenerator : Generator
+    public class CachedRepositoryGenerator : OutputExecutor
     {
-        public override string CommandText => "aspnet-repo-cached";
+        public override string CommandText => "aspnet-repo-cached"; //UX: This is annoying to type, though descriptive
         public override string Description => "Implements a simple cached repository";
         public override string FriendlyName => "Asp.Net Cached Repository";
 

@@ -1,6 +1,6 @@
 ﻿using Genesis.Cli.Extensions;
-using Genesis.Generation;
-using Genesis.Population;
+using Genesis.Output;
+using Genesis.Input;
 using System;
 using System.Linq;
 using System.Collections.Generic;

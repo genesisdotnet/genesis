@@ -1,5 +1,5 @@
-﻿using Genesis.Generation;
-using Genesis.Population;
+﻿using Genesis.Output;
+using Genesis.Input;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -57,29 +57,9 @@ namespace Genesis.Cli.Extensions
             return Task.CompletedTask;
         }
 
-        public IPopulator GetPopulator(string populatorName = "nope")
-        {
-            foreach(var populator in InputManager.Inputs)
-            {
-                if (populatorName.ToLower().Trim() == populator.CommandText.ToLower())
-                    return populator;
-            }
-            throw new Exception($"Invalid Populator name '{populatorName}'");
-        }
-
-        public IGenerator GetGenerator(string generatorName = "nope")
-        {
-            foreach (var generator in OutputManager.Outputs)
-            {
-                if (generatorName.ToLower().Trim() == generator.CommandText.ToLower())
-                    return generator;
-            }
-            throw new Exception($"Invalid Generator name '{generatorName}'");
-        }
-
         public IGenesisExecutor<ITaskResult> GetExecutor(string executorName)
         {
-            IGenesisExecutor<ITaskResult> exe = InputManager.Inputs.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
+            var exe = (IGenesisExecutor<ITaskResult>)InputManager.Inputs.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
 
             if (exe == null)
                 exe = OutputManager.Outputs.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();

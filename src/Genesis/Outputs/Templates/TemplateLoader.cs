@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Genesis.Generation.Templates
+namespace Genesis.Output.Templates
 {
     public static class TemplateLoader
     {
-        public static IGeneratorTemplate LoadTemplateFor(IGenerator generator)
+        public static IGeneratorTemplate LoadTemplateFor(IOutputExecutor generator)
         {
             var templateFilePath = Path.Combine(Environment.CurrentDirectory, generator.GetType().Name + ".gen"); //TODO: hard coded path
 

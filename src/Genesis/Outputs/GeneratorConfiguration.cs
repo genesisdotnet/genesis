@@ -1,13 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using System.Composition;
 
-namespace Genesis.Generation
+namespace Genesis.Output
 {
     /// <summary>
     /// Primary configuration class for individual Outputs
     /// </summary>
-    [Export(nameof(IGeneratorConfiguration), typeof(IGeneratorConfiguration))]
-    public class GeneratorConfiguration : IGeneratorConfiguration
+    [Export(nameof(IOutputConfiguration), typeof(IOutputConfiguration))]
+    public class GeneratorConfiguration : IOutputConfiguration
     {
         public GeneratorConfiguration()
         {

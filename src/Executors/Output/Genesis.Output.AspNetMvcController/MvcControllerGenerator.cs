@@ -5,15 +5,15 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Genesis;
-using Genesis.Generation;
+using Genesis.Output;
 
 namespace Genesis.Output.MvcController
 {
-    public class MvcControllerGenerator : Generator
+    public class MvcControllerGenerator : OutputExecutor
     {
         public override string CommandText => "aspnet-mvc-con";
         public override string Description => "Generates an Asp.Net Controller based on an entity.";
-        public override string FriendlyName => "Asp.Net MvcController Generator";
+        public override string FriendlyName => "Asp.Net MvcController OutputExecutor";
 
         public MvcControllerConfig Config { get; set; } 
 

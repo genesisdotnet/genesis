@@ -1,6 +1,6 @@
 ﻿using Genesis.Cli.Extensions;
-using Genesis.Generation;
-using Genesis.Population;
+using Genesis.Output;
+using Genesis.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -35,11 +35,11 @@ namespace Genesis.Cli.Commands
             {
                 foreach (var item in InputManager.Inputs)
                 {
-                    Text.White("Populator: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
+                    Text.White("Input: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
                 }
                 foreach (var item in OutputManager.Outputs)
                 {
-                    Text.White("Generator: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
+                    Text.White("OutputExecutor: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.Cyan($"'{item.GetType().Name}'"); Text.WhiteLine($"\t\t{ item.Description} ");
                 }
             }
 
@@ -47,54 +47,66 @@ namespace Genesis.Cli.Commands
         }
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
-            var result = new OutputTaskResult();
-            
+            var result = new OutputTaskResult { Success = true };
+
             if (args.Length == 1) //config
             {
                 await OnHelpRequested(args);
+                return result;
             }
-            else if(args.Length == 2) //config executorname
+            else if (args.Length == 2) //config executorname
             {
                 WriteExecutorDetails(args[1]);
+                return result;
             }
             else
             {
-                var generator = OutputManager.Outputs.Find(g => g.CommandText.Trim().ToLower().Equals(args[1].Trim().ToLower(), StringComparison.Ordinal));
-                var populator = InputManager.Inputs.Find(p => p.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
-
-                var chunks = args[2].Split('=');
-                var propertyName = chunks[0];
-
-                if (generator != null )
+                try
                 {
-                    if (!await generator.EditConfig(chunks[0], chunks[1]))
+                    var generator = OutputManager.Outputs.Find(g => g.CommandText.Trim().ToLower().Equals(args[1].Trim().ToLower(), StringComparison.Ordinal));
+                    var populator = InputManager.Inputs.Find(p => p.CommandText.Trim().ToLower() == args[1].Trim().ToLower());
+
+                    var chunks = args[2].Split('='); //TODO: terse
+                    var propertyName = chunks[0];
+
+                    if (generator != null)
                     {
-                        Text.RedLine("Couldn't update value");
+                        if (!await generator.EditConfig(chunks[0], chunks[1]))
+                        {
+                            Text.RedLine("Couldn't update value");
+                        }
+                        else
+                        {
+                            result.Success = true;
+                        }
+                    }
+                    else if (populator != null)
+                    {
+                        if (!await populator.EditConfig(chunks[0], chunks[1]))
+                        {
+                            Text.RedLine("Couldn't update value");
+                        }
+                        else
+                        {
+                            result.Success = true;
+                        }
                     }
                     else
                     {
-                        result.Success = true;
-                    }
-                } else if (populator != null)
-                {
-                    if (!await populator.EditConfig(chunks[0], chunks[1]))
-                    {
-                        Text.RedLine("Couldn't update value");
-                    }
-                    else
-                    {
-                        result.Success = true;
-                    }
-                }
-                else
-                {
-                    Text.CliCommand(args[1]);
-                    Text.RedLine(" is not a known Executor. (");Text.FriendlyText("Input", false);Text.Red(" or "); Text.FriendlyText("Output"); Text.RedLine(".");
+                        Text.CliCommand(args[1]);
+                        Text.RedLine(" is not a known Executor. ("); Text.FriendlyText("Input", false); Text.Red(" or "); Text.FriendlyText("Output"); Text.RedLine(".");
 
-                    result.Message = "Invalid Executor";
+                        result.Message = "Invalid Executor";
+                    }
                 }
+                catch (IndexOutOfRangeException ioor)
+                {
+                    result.Message = ioor.Message;
+                    Text.RedLine("Invalid arguments");
+                }
+
+                return await Task.FromResult(result);
             }
-            return await Task.FromResult(result);
         }
 
         private void WriteExecutorDetails(string executorName)

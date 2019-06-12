@@ -1,4 +1,4 @@
-﻿namespace Genesis.Population
+﻿namespace Genesis.Input
 {
     public class InputTaskResult : BlankTaskResult, ITaskResult
     {

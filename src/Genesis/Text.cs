@@ -31,31 +31,39 @@ namespace Genesis
             => Console.WriteLine(text);
 
         public static void ErrorGraffiti()
+        {
             //ATTRIB: http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=Genesis (with tweaks)
-            => Text.RedLine(@"
+            RedLine(@" 
                                             .
                                 .-.     .   |
                                 | |. ..-|-. '
                                 `-''-'`-' : o");
+            Line();
+            Line();
+        }
 
         public static void WarningGraffiti()
         {
             //ATTRIB: http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=Genesis (with tweaks)
-            Text.YellowLine(@"
+            YellowLine(@"
             _ _ _                o            _ 
              ))`)`) ___  __  _ _  _  _ _  ___  ))
             ((,(,' ((_( (|  ((\( (( ((\( ((_( (( 
                                            _)) o");
+            Line();
+            Line();
         }
         public static void SuccessGraffiti()
         {
             //ATTRIB: http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=Genesis (with tweaks)
-            Text.GreenLine(@"
+            GreenLine(@"
             _________                                        
            /   _____/__ __   ____  ____  ____   ______ ______
            \_____  \|  |  \_/ ___\/ ___\/ __ \ /  ___//  ___/
            /        \  |  /\  \__\  \__\  ___/ \___ \ \___ \ 
           /_______  /____/  \___  >___  >___  >____  >____  >");
+            Line();
+            Line();
         }
 
         public static void FriendlyText(string friendlyText, bool showWhiteTicks = true)

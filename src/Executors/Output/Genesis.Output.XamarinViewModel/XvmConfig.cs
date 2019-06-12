@@ -1,4 +1,4 @@
-﻿using Genesis.Generation;
+﻿using Genesis.Output;
 
 namespace Genesis.Output.Poco
 {

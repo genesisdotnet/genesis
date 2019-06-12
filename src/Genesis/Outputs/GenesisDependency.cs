@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Genesis.Generation
+namespace Genesis.Output
 {
-    public class GenesisDependency : IGenesisDependency
+    public class GenesisDependency : IOutputDependency
     {
         public GenesisDependency(string pathFragment, string contents)
         {

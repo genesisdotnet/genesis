@@ -4,7 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Genesis;
-using Genesis.Generation;
+using Genesis.Output;
 
 namespace Genesis
 {
@@ -35,7 +35,7 @@ namespace Genesis
             return Task.CompletedTask;
         }
 
-        protected virtual void OnInitilized()//TODO: Pass args[] to Generator.OnInitialized
+        protected virtual void OnInitilized()//TODO: Pass args[] to OutputExecutor.OnInitialized
         {
 
         }

@@ -1,5 +1,5 @@
 ﻿using Genesis;
-using Genesis.Generation.Templates;
+using Genesis.Output.Templates;
 using System;
 using System.Collections.Generic;
 using System.Composition;
@@ -9,32 +9,32 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Genesis.Generation
+namespace Genesis.Output
 {
     /// <summary>
     /// The primary class responsible for writing out generated code and imported via the core Extensibility Framework (MEF) 
     /// </summary>
-    [Export(nameof(IGenerator), typeof(IGenerator))]
-    public abstract class Generator : GenesisExecutor<OutputTaskResult>, IGenerator
+    [Export(nameof(IOutputExecutor), typeof(IOutputExecutor))]
+    public abstract class OutputExecutor : GenesisExecutor<OutputTaskResult>, IOutputExecutor
     {
         private readonly string commandText = "newgenerator";
         public override string CommandText { get => commandText; }
 
-        private readonly string description = "Enter a description for this Generator";
+        private readonly string description = "Enter a description for this OutputExecutor";
         public override string Description { get => description; }
 
         private readonly string friendlyName = "FriendlyName Can Have Spaces";
 
-        public IList<IGenesisDependency> _deps = new List<IGenesisDependency>();
+        public IList<IOutputDependency> _deps = new List<IOutputDependency>();
 
         public override string FriendlyName { get => friendlyName; }
 
         public virtual IGeneratorTemplate Template { get; set; } = new StringTemplate("Template contains text loaded from a source"); //for now
         public virtual string OutputPath { get; set; } = Path.Combine(Environment.CurrentDirectory, "Output");
 
-        public IGeneratorConfiguration Configuration { get; set; } = new GeneratorConfiguration();
+        public IOutputConfiguration Configuration { get; set; } = new GeneratorConfiguration();
 
-        public IList<IGenesisDependency> Dependencies { get => _deps; }
+        public IList<IOutputDependency> Dependencies { get => _deps; }
         public Task<bool> DepositDependencies(string outputRoot = @"Output\") 
         {
             try
@@ -61,7 +61,7 @@ namespace Genesis.Generation
             }
         }
 
-        public Task AttachDependencies(IList<IGenesisDependency> deps)
+        public Task AttachDependencies(IList<IOutputDependency> deps)
         {
             _deps = deps;
 

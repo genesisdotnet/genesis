@@ -1,12 +1,12 @@
 ﻿using Genesis;
-using Genesis.Population;
+using Genesis.Input;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Genesis.Input.YamlAddress
 {
-    public class YamlAddressPopulator : Populator
+    public class YamlAddressInput : InputExecutor
     {
         public override string CommandText => "yaml";
         public override string FriendlyName => "YAML Endpoint";

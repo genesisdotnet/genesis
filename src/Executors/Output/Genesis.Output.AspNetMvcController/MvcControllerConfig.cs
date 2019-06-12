@@ -1,4 +1,4 @@
-﻿using Genesis.Generation;
+﻿using Genesis.Output;
 using System;
 using System.Collections.Generic;
 using System.Text;

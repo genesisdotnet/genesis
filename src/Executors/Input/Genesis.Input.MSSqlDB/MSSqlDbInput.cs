@@ -6,11 +6,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Genesis.Cli;
-using Genesis.Population;
+using Genesis.Input;
 
 namespace Genesis.Input.MSSqlDb
 {
-    public class MSSqlDbPopulator : Populator
+    public class MSSqlDbInput : InputExecutor
     {
         private const string Q_TABLE_PROPERTIES = @"SELECT c.*, t.[name] AS [SqlTypeName] FROM [sys].[Columns] c " +
                                                     "INNER JOIN [sys].[types] t  ON t.system_type_id = c.system_type_id " +

@@ -1,5 +1,5 @@
 ﻿using Genesis.Cli.Extensions;
-using Genesis.Generation;
+using Genesis.Output;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,8 +14,8 @@ namespace Genesis.Cli.Commands
 
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
-            var exe = GetGenerator(args[1]);
-            switch(args[2])
+            var exe = (IOutputExecutor)GetExecutor(args[1]);
+            switch (args[2])
             {
                 case "list":
                     Text.Line();
@@ -23,7 +23,7 @@ namespace Genesis.Cli.Commands
                     {
                         Text.YellowLine(d.PathFragment);
                         Text.White("\t");
-                        Text.Blue(d.Contents.Length.ToString()+ " bytes");
+                        Text.Blue(d.Contents.Length.ToString() + " bytes");
                         Text.Line();
                     }
                     break;
@@ -35,7 +35,7 @@ namespace Genesis.Cli.Commands
                     Text.Line();
                     Text.White("Choose an operation:");
                     Text.FriendlyText("\tdump", false); Text.WhiteLine("\tWrites dependencies to the filesystem.");
-                    Text.FriendlyText("\tlist", false);Text.WhiteLine("\tDisplays dependency information");
+                    Text.FriendlyText("\tlist", false); Text.WhiteLine("\tDisplays dependency information");
                     Text.Line();
                     break;
             }

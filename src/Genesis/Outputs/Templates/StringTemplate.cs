@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Genesis.Generation.Templates
+namespace Genesis.Output.Templates
 {
     public class StringTemplate : IGeneratorTemplate
     {

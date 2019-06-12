@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace Genesis.Generation
+namespace Genesis.Output
 {
     public static class DependencyManager
     {
-        public static List<IGenesisDependency> LoadDependencies(IGenerator executor)
+        public static List<IOutputDependency> LoadDependencies(IOutputExecutor executor)
         {
-            var result = new List<IGenesisDependency>();
+            var result = new List<IOutputDependency>();
 
             var fileName = executor.GetType().Name + GenesisDefaults.DependenciesExtension;
 
