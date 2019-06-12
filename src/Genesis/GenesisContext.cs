@@ -189,7 +189,7 @@ namespace Genesis
             Text.White("Execution Chain: " + "\n\t");
             Chain.ForEach(e =>
             {
-                Text.Command(e.CommandText, false); Text.White(" -> ");
+                Text.CliCommand(e.CommandText, false); Text.White(" -> ");
             });
             Text.Line(); Text.Line();
             Text.White($@"Scans since reset: ");
@@ -198,7 +198,7 @@ namespace Genesis
             else
                 Text.YellowLine(ScanCount.ToString());
             Text.Line();
-            Text.White($"Execute an "); Text.FriendlyText("input"); Text.White(" or an "); Text.FriendlyText("output"); Text.White(" using the "); Text.Command("exec"); Text.WhiteLine(" command.");
+            Text.White($"Execute an "); Text.FriendlyText("input"); Text.White(" or an "); Text.FriendlyText("output"); Text.White(" using the "); Text.CliCommand("exec"); Text.WhiteLine(" command.");
             Text.Line();
         }
     }

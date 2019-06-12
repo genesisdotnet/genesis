@@ -31,7 +31,7 @@ namespace Genesis.Cli.Commands
                 {
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     Console.Write("There are no inputs discovered yet. Run a ");
-                    Text.Command("scan");
+                    Text.CliCommand("scan");
                     Console.WriteLine(".");
                 }
                 else 
@@ -59,7 +59,7 @@ namespace Genesis.Cli.Commands
                 {
                     await genesis.Chain.Append(generator);
 
-                    Text.Command(generator.CommandText); Text.WhiteLine($@" was added to the Chain. There are {genesis.Chain.Count} now.");
+                    Text.CliCommand(generator.CommandText); Text.WhiteLine($@" was added to the Chain. There are {genesis.Chain.Count} now.");
                     Text.Line();
                     result.Success = true;
                     return result;
@@ -70,7 +70,7 @@ namespace Genesis.Cli.Commands
                 {
                     await genesis.Chain.Append(populator);
 
-                    Text.Command(populator.CommandText); Text.WhiteLine($@" was added to the Chain. There are {genesis.Chain.Count} now.");
+                    Text.CliCommand(populator.CommandText); Text.WhiteLine($@" was added to the Chain. There are {genesis.Chain.Count} now.");
                     Text.Line();
                     result.Success = true;
                     return result;

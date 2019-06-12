@@ -9,7 +9,7 @@ namespace Genesis
     /// </summary>
     public static class Text
     {
-        public static void Command(string commandText, bool showWhiteTicks = true)
+        public static void CliCommand(string commandText, bool showWhiteTicks = true)
         {
             if (showWhiteTicks)
                 White("'");
@@ -25,6 +25,37 @@ namespace Genesis
             White("'");
             Yellow(name);
             White("'");
+        }
+
+        public static void Line(string text) 
+            => Console.WriteLine(text);
+
+        public static void ErrorGraffiti()
+            //ATTRIB: http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=Genesis (with tweaks)
+            => Text.RedLine(@"
+                                            .
+                                .-.     .   |
+                                | |. ..-|-. '
+                                `-''-'`-' : o");
+
+        public static void WarningGraffiti()
+        {
+            //ATTRIB: http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=Genesis (with tweaks)
+            Text.YellowLine(@"
+            _ _ _                o            _ 
+             ))`)`) ___  __  _ _  _  _ _  ___  ))
+            ((,(,' ((_( (|  ((\( (( ((\( ((_( (( 
+                                           _)) o");
+        }
+        public static void SuccessGraffiti()
+        {
+            //ATTRIB: http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=Genesis (with tweaks)
+            Text.GreenLine(@"
+            _________                                        
+           /   _____/__ __   ____  ____  ____   ______ ______
+           \_____  \|  |  \_/ ___\/ ___\/ __ \ /  ___//  ___/
+           /        \  |  /\  \__\  \__\  ___/ \___ \ \___ \ 
+          /_______  /____/  \___  >___  >___  >____  >____  >");
         }
 
         public static void FriendlyText(string friendlyText, bool showWhiteTicks = true)

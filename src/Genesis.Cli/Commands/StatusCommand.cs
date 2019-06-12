@@ -72,7 +72,7 @@ namespace Genesis.Cli.Commands
 
         private static void DisplayDetail(IGenesisExecutor<ITaskResult> exe)
         {
-            Text.White("\tCommand: "); Text.Command(exe.CommandText, false); Text.Line();
+            Text.White("\tCommand: "); Text.CliCommand(exe.CommandText, false); Text.Line();
             Text.White("\tSource: "); Text.Yellow(exe.GetType().Assembly.GetName().Name); Text.White("."); Text.Blue(exe.GetType().Name); Text.Line();
             Text.White("\tDescription: "); Text.FriendlyText(exe.FriendlyName, false); Text.Line();
             Text.White("\tFile Path: "); Text.GrayLine(exe.GetType().Assembly.Location);
@@ -81,7 +81,7 @@ namespace Genesis.Cli.Commands
 
         private static void DisplayQuick(IGenesisExecutor<ITaskResult> exe)
         {
-            Text.White("\t"); Text.Command(exe.CommandText, true); Text.White(" ("); Text.FriendlyText(exe.FriendlyName); Text.White(") found on "); Text.Blue(exe.GetType().Name); Text.Line();
+            Text.White("\t"); Text.CliCommand(exe.CommandText, true); Text.White(" ("); Text.FriendlyText(exe.FriendlyName); Text.White(") found on "); Text.Blue(exe.GetType().Name); Text.Line();
         }
     }
 }

@@ -28,7 +28,7 @@ namespace Genesis
 
         public Task DisplayDetail()
             => ForEach(e => {
-                    Text.Command(e.CommandText);
+                    Text.CliCommand(e.CommandText);
                     Text.White(" from ");
                     Text.Assembly(e.GetType().Assembly.GetName().Name);
                     Text.WhiteLine(".");

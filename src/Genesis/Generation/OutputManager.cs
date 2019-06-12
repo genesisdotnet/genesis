@@ -70,7 +70,7 @@ namespace Genesis.Generation
                         {
                             Debug.WriteLine(ex.Message);
                             Text.DarkYellow($"Could not load template for ");
-                            Text.Command(generator.CommandText);
+                            Text.CliCommand(generator.CommandText);
                             Text.Line();
 
                             cfgWarning = true;
@@ -83,7 +83,7 @@ namespace Genesis.Generation
                         catch (Exception dx)
                         {
                             Text.DarkYellow($"Could not load or parse dependencies for");
-                            Text.Command(generator.CommandText);
+                            Text.CliCommand(generator.CommandText);
                             Text.Line();
 
                             Debug.WriteLine(dx.Message);

@@ -21,7 +21,7 @@ namespace Genesis.Cli.Commands
             if(args.Length == 1)
             {
                 Text.White("Specify something to execute. A ");
-                Text.Command("command");
+                Text.CliCommand("command");
                 Text.White(" or ");
                 Text.Yellow("chain");
                 Text.WhiteLine(" to execute the chain");
@@ -36,7 +36,35 @@ namespace Genesis.Cli.Commands
                 return (OutputTaskResult)await genesis.Generator.Execute(genesis, args);
             else if (args[1] == "chain")
             {
-                _ = genesis.Chain.Execute(args);
+                var singleError = false;
+                var allErrors = true;
+                foreach (var e in genesis.Chain.Execute(args))
+                {
+                    if (!e.Success)
+                    {
+                        singleError = true;
+                        allErrors = false;
+                    }
+                }
+
+                if (!singleError && !allErrors)
+                {
+                    Text.SuccessGraffiti();
+                    return new OutputTaskResult { Success = (!singleError && !allErrors) };
+                }
+
+                if (singleError)
+                {
+                    Text.WarningGraffiti();
+                    return new OutputTaskResult { Success = singleError };
+                }
+
+                if (allErrors)
+                {
+                    Text.ErrorGraffiti();
+                    return new OutputTaskResult { Success = !allErrors && singleError };
+                }
+
                 return new BlankTaskResult(); //whatever for now
             }
             else

@@ -19,7 +19,7 @@ namespace Genesis.Cli
         static async Task Main(string[] args)
         {
             //comment to run the loop
-            args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
+            //args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
 
             //NOTE:      --script "C:\Path\To\Script.genesis"
             if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
@@ -39,7 +39,7 @@ namespace Genesis.Cli
 
                 foreach (var line in _script)
                 {
-                    Text.WhiteLine($"Executing: '{line}' as {line.Split(" ").Length} arguments");
+                    Text.WhiteLine($"Executing: '{line}' as {line.ToArgs().Count()} arguments");
 
                     if (line.ToLower().StartsWith("break"))
                         _isScript = false; //cheesy, but can't set it from a command apparently, CommandLineApplication?
@@ -50,15 +50,17 @@ namespace Genesis.Cli
             
             if(!_isScript)
             {
-                Text.Yellow("HINT"); Text.White(": '"); Text.Green("?"); Text.White("' for a list of "); Text.Command("commands", false); Text.Line();
+                Text.Yellow("HINT"); Text.White(": '"); Text.Green("?"); Text.White("' for a list of "); Text.CliCommand("commands", false); Text.Line();
                 do
                 {
                     if (tokenSource.IsCancellationRequested)
                         Environment.Exit(-3);
 
-                    Console.Write($@"genesis{GenesisContext.Scope?.PromptString}>");
+                    Console.Write($@"genesis{GenesisContext.Scope?.PromptString}>"); //this could be interesting? or confusing, or stupid. :D
 
-                    args = Console.ReadLine().ToArgs().ToArray();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    args = Console.ReadLine().ToArgs().ToArray(); //TOOD: read key and stop coloring after a command is completed etc. 
+                    Console.ResetColor();
 
                     ProcessCommandLine(args, tokenSource);
                 }
