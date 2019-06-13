@@ -1,8 +1,11 @@
-# Genesis .Net
+ Genesis .Net
 A framework to generate (or act upon) code. Any source, to any destination as long as there is an executor that handles a specific situation. It may sound very arbitrary, and that's on purpose. There's always data that isn't normalized between sources / destinations etc. This aims to address that, or facilitate addressing that.
 
-# Demos are coming!
-There hasn't been a whole lot of time, but demos seem to be a hot topic. There are a few development <b>.genesis</b> script files used in testing, but need sanitized for connection string passwords etc. 
+## Typical (thus far) execution
+Run a "<b>scan</b>".
+Identify, init and configure executors that are able to be located.
+
+![picture of scan command executing](https://github.com/genesisdotnet/genesis/blob/master/docs/gifs/scan.gif "Scan Command")
 
 ## How does it work?
 Genesis is centered around a group of ObjectGraph objects and pieces of code that manipulate them, called Executors. 

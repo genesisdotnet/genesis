@@ -21,6 +21,8 @@ namespace Genesis.Cli.Commands
             Text.WhiteLine("Clearing the Chain");
             genesis.Chain.Clear();
 
+            Console.Clear();
+
             return await Task.FromResult(new BlankTaskResult()); //because nothing broke and we have nothing to report. :| (uh)
         }
     }
