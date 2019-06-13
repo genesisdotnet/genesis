@@ -5,7 +5,11 @@ A framework to generate (or act upon) code. Any source, to any destination as lo
 Run a "<b>scan</b>".
 Identify, init and configure executors that are able to be located.
 
-![picture of scan command executing](https://github.com/genesisdotnet/genesis/blob/master/docs/gifs/scan.gif "Scan Command")
+![gif](https://github.com/genesisdotnet/genesis/blob/master/docs/gifs/scanCommand.gif?raw=true "Scan Command")
+
+Add an 'mssql' executor, then add a 'poco' output executor. 
+![gif](https://github.com/genesisdotnet/genesis/blob/master/docs/gifs/demo.gif?raw=true "Here goes")
+This writes out .cs class files from a template that is whatever you put in it. 
 
 ## How does it work?
 Genesis is centered around a group of ObjectGraph objects and pieces of code that manipulate them, called Executors. 
@@ -32,7 +36,7 @@ commandName [argument1] [anotherArg="Some Value"]
 ```
 
 The '<b>?</b>' command will list all of the commands that have been discovered. (They're extensible)
-![alt text](https://github.com/genesisdotnet/genesis/blob/master/docs/images/commands.png?raw=true "Command List")
+![alt text](https://github.com/genesisdotnet/genesis/docs/images/commands.png?raw=true "Command List")
 
 ## Commands
 An example of the <b>scan</b> command. This loads configurations and initializes new executors. There's probably a case for it to automatically scan on startup, but for now you have to trigger it.
