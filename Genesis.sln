@@ -62,6 +62,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gifs", "gifs", "{A588CBB4-0
 		docs\gifs\scanCommand.gif = docs\gifs\scanCommand.gif
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genesis.Input.Excel", "src\Executors\Input\Genesis.Input.Excel\Genesis.Input.Excel.csproj", "{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -180,6 +182,18 @@ Global
 		{58162A95-BD9B-48D1-B297-8465FE5216FA}.Release|x64.Build.0 = Release|Any CPU
 		{58162A95-BD9B-48D1-B297-8465FE5216FA}.Release|x86.ActiveCfg = Release|Any CPU
 		{58162A95-BD9B-48D1-B297-8465FE5216FA}.Release|x86.Build.0 = Release|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Debug|x64.Build.0 = Debug|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Debug|x86.Build.0 = Debug|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Release|x64.ActiveCfg = Release|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Release|x64.Build.0 = Release|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Release|x86.ActiveCfg = Release|Any CPU
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -196,6 +210,7 @@ Global
 		{43570CDD-40A3-4D73-A1B7-22F24B8261A9} = {7064AAEF-D4AA-4CEB-A3AB-2588672FC1EE}
 		{6B22B7DE-B4BB-456C-B92A-F775B98CEFD7} = {5FBB60FF-ABE1-4316-B82E-3E2AA32AF8E6}
 		{A588CBB4-006F-4C4D-A0EF-2A2754982295} = {5FBB60FF-ABE1-4316-B82E-3E2AA32AF8E6}
+		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8} = {A4522569-85BB-4EF1-AC94-BE2978547AAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A29E004-0C17-4E72-AE88-F7EA03136D6E}
