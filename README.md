@@ -1,4 +1,4 @@
- Genesis .Net
+# Genesis .Net
 A framework to generate (or act upon) code. Any source, to any destination as long as there is an executor that handles a specific situation. It may sound very arbitrary, and that's on purpose. There's always data that isn't normalized between sources / destinations etc. This aims to address that, or facilitate addressing that.
 
 ## Typical (thus far) execution
