@@ -6,38 +6,41 @@ Genesis.Net is a code execution engine that produces an output based on an arbit
 * [<b>Visual Studio Preview installer</b>](https://www.visualstudio.com/preview "Download Visual Studio Preview")
 
 # Executors
-Executors are basically chunks of code you can configure and execute.
-They're broken up into two types as it stands, though this is arbitrary. 
+An executor is a plugin to Genesis. They execute whatever code around a pseudo-context, or shared state. (not inside of a context) 
+Each executor is free to manipulate the ObjectGraph as they choose. Obviously you could be a dick, but that's not the point. 
+
+There are currently two types of Executors:
 
 ## Input
-These are what feed an ObjectGraph array with data about objects. 
+These are what feed an ObjectGraph context with schema information describing objects. 
 
 * `Genesis.Input.MSSqlDb` 
     
-Reads MSSql database schema into ObjectGraphs
+Reads MSSql database schema into ObjectGraphs (max lengths, datatypes, names, etc.)
 
 * `Genesis.Input.YamlAddress` 
     
-Reads a web address for a /swagger.yaml into ObjectGraphs
+Reads a web address for a /swagger.yaml into ObjectGraphs (api calls, their models etc)
 
 * `Genesis.Input.DotNetAssembly`
 
-You could populate ObjectGraphs off of actual objects for whatever reason.
+You could populate ObjectGraphs off of actual objects for whatever reason. 
 
 ## Output
 There's a ton of things to potentially do and/or generate. Here's a few...
 
 * `Genesis.Output.Poco`
 
-Write out a (P)lain (O)ld (C)# (O)bject file according to whats in the ObjectGraphs
+Write out a (P)lain (O)ld (C)# (O)bject file according to whats in the ObjectGraphs. 
+Note: This will have come from whatever input preceded it in the execution. 
 
 * `Genesis.Output.AspNetMvcController`
 
-A .Net Controller class that is tailored to data found in the ObjectGraphs
+A .Net Controller class that is tailored to schema information from the ObjectGraphs
 
 * `Genesis.Output.AspNetDbContextCachedRepositories`
 
-Sample caching repository for an Entity that was build from the ObjectGraphs
+Sample caching repository for an Entity that was described in the ObjectGraphs
 
 * `Genesis.Output.XamarinViewModel`
 
@@ -45,4 +48,3 @@ Generate a Xamarin Forms based ViewModel with INotifyPropertyChanged support
 
 ## Executor Development
 Right now, all of the executors are referenced by the main Cli project to avoid build events and an overcomplicated dev process. They're still MEF'd in though.
-
