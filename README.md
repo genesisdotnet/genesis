@@ -1,33 +1,23 @@
 # Genesis .Net
-A framework to generate (or act upon) code. Any source, to any destination as long as there is an executor that handles a specific situation. It may sound very arbitrary, and that's on purpose. There's always data that isn't normalized between sources / destinations etc. This aims to address that, or facilitate addressing that.
-
-## Typical (thus far) execution
-Run a "<b>scan</b>".
-Identify, init and configure executors that are able to be located.
-
-![gif](https://github.com/genesisdotnet/genesis/blob/master/docs/gifs/scanCommand.gif?raw=true "Scan Command")
-
-Add an 'mssql' executor, then add a 'poco' output executor. 
-![gif](https://github.com/genesisdotnet/genesis/blob/master/docs/gifs/demo.gif?raw=true "Here goes")
-This writes out .cs class files from a template that is whatever you put in it. 
+Read a description of a service or schema from any source. Take that information and output the inevitable code that will have had to have been typed to interact. 
 
 ## How does it work?
 Genesis is centered around a group of ObjectGraph objects and pieces of code that manipulate them, called Executors. 
 
-There are currently two types of executors, though more could certainly be added.
+`Input` executors deal with a "source". (intentionally vague) 
+They're responsible for interrogating some data store (or weburl, or text file, or...) and populating a group of ObjectGraphs. They're available to all other executors at any point. (It's currently serial execution) 
 
-`Input` executors deal with a "source". They're responsible for interrogating some data store (or weburl, or text file, or...) and populating a group of ObjectGraphs. They're available to all other executors at any point. (It's currently serial execution) 
+`Output` executors do the other half of the work.
+They can use the data in the ObjectGraphs to write out classes, services, interfaces, clients, repositories etc. Anything really. They don't even have to write code. They could document...
 
-`Output` executors do the other half of the work. They can use the data in the ObjectGraphs to write out classes, services, interfaces, clients etc. Anything really. They don't even have to write code.
+* They each have their own configuration.json as well as an auto-mapped (not AutoMapper :D) & Typed Configuration object. 
 
-* They each have their own configuration.json as well as an auto-mapped & Typed Configuration object. 
+* OutputExecutors can have dependencies, or support files required to make the generated code work.
 
-* Generators can have dependencies, or support files required to make the generated code work.
-
-* Configuration of executors may also be done by commands at the Genesis Prompt. 
+* Configuration of executors may also be done by commands at the Genesis Prompt or from within a script. 
 
 ## genesis>
-Genesis is a console application based on Microsoft's .Net standard/core. The commands are fairly simple to implement and use. Its usage and syntax are common to a shell. 
+Genesis is a console application (REPL or scripted REPL) based on Microsoft's .Net standard/core. The commands are fairly simple to implement and use. Its usage and syntax are common to a shell. 
 
 Here is a basic syntax of console commands:
 
