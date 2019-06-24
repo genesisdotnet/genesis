@@ -34,17 +34,13 @@ namespace Genesis.Output.MvcController
             return result;
         }
 
-        public async Task ExecuteGraph(ObjectGraph objectGraph)
+        public Task ExecuteGraph(ObjectGraph objectGraph)
         {
             var tmp = this.Template;
 
             if (Directory.Exists(OutputPath))
                 Directory.CreateDirectory(OutputPath);
-
-            Thread.Sleep(100); //below fails saying directory doesn't exist... even though ^ runs fine?!
-
-            //TODO: Output types are still sourcetypes, not poco types
-
+            
             var output = tmp.Raw.Replace(Tokens.Namespace, Config.Namespace)    //TODO: Templating engine? / razor etc would be cool ..|., T4 
                                 .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular());
 
@@ -53,9 +49,9 @@ namespace Genesis.Output.MvcController
             if (!Directory.Exists(subPath))
                 Directory.CreateDirectory(subPath);
 
-            await Task.Delay(100); //timing or something weirdness
+            File.WriteAllText(Path.Combine(subPath, objectGraph.Name.ToSingular() + "Controller.cs"), output);
 
-            File.WriteAllText(Path.Combine(subPath, objectGraph.Name.ToSingular() + "Controller.cs"), output);            
+            return Task.CompletedTask;
         }
     }
 }

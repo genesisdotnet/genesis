@@ -63,7 +63,7 @@ namespace Genesis
 
         public async Task AddObject(ObjectGraph obj)
         {
-            if (Objects.Contains(obj))
+            if (Objects.Contains(obj)) //TODO: Way better compare needed
             {
                 Text.DarkYellowLine($"{obj.Name} exists, not adding.");
                 return;

@@ -10,7 +10,7 @@ namespace ~NAMESPACE~.Controllers
     [ApiController]
     public class ~OBJECT_NAME~Controller : ControllerBase
     {
-		public ~OBJECT_NAME~Controller() {}
+		public ~OBJECT_NAME~Controller() {} //TODO: Inject something useful
 		
         // GET api/~OBJECT_NAME~
         [HttpGet]

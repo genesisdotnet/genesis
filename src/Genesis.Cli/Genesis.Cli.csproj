@@ -48,4 +48,10 @@
     <ProjectReference Include="..\Genesis\Genesis.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="YamlToPocos.genesis">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

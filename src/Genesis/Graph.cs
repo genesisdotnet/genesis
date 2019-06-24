@@ -11,6 +11,6 @@
     }
     public abstract class Graph : IGraph
     {
-        public virtual GraphTypes GraphType { get; } = GraphTypes.Object;
+        public virtual GraphTypes GraphType { get; set; } = GraphTypes.Object;
     }
 }
