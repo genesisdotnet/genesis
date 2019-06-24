@@ -19,7 +19,8 @@ namespace Genesis.Cli
         static async Task Main(string[] args)
         {
             //comment to run the loop
-            args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
+            //args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
+            args = new string[] { "--script", "./YamlToPocos.genesis" };
 
             //NOTE:      --script "C:\Path\To\Script.genesis"
             if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
