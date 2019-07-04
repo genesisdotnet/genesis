@@ -45,7 +45,8 @@ namespace Genesis
             var cfgObjType = cfgObj.GetType();
 
             Text.WhiteLine();
-            Text.White($"Properties for '"); Text.Cyan($"{cfgObjType.Name}"); Text.WhiteLine("'");
+            Text.CliCommand(CommandText);
+            Text.White(" configuration type is: "); Text.Cyan($"{cfgObjType.Name}"); Text.WhiteLine("'");
 
             foreach (var p in cfgObjType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {

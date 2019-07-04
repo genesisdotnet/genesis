@@ -1,6 +1,3 @@
 ﻿scan
-add yaml
-add poco
-status
-exec chain
+exec yaml
 break

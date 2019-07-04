@@ -23,8 +23,8 @@ namespace Genesis.Input.YamlAddress
         {
             //TODO: Pull a yaml string off the web and parse it into object graphs representing the schema
 
-            //var net = new HttpClient();
-            //var yamlString = await net.GetStringAsync(Config.Address);
+            var net = new HttpClient();
+            var yamlString = await net.GetStringAsync(Config.Address);
             //Text.DarkYellowLine(yamlString);
 
             //https://swagger.io/docs/specification/basic-structure/
