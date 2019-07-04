@@ -1,0 +1,7 @@
+﻿{
+  "version": 3,
+  "namespace": "Genesis.Output.Proto",
+  "outputPath": "C:\\Temp\\Output\\roto",
+  "overwrite": "all",
+  "preserve": "none"
+}

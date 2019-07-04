@@ -114,5 +114,61 @@ namespace Genesis
 
             }
         }
+        /// <summary>
+        /// Basic datatypes like ints, bool, string etc. *Based on Google's Protocol Buffers
+        /// </summary>
+        /// <param name="dbDataType"></param>
+        /// <returns></returns>
+        public static string ToBasicDataType(this string dbDataType)
+        {
+            //https://developers.google.com/protocol-buffers/docs/proto#scalar
+
+            switch (dbDataType.ToLower()) //NOTE: Null?
+            {
+                case "datetime":
+                case "datetime2":
+                case "smalldatetime":
+                case "date":
+                case "datetimeoffset":
+                case "xml":
+                case "char":
+                case "nchar":
+                case "varchar":
+                case "nvarchar":                    //TODO: Move this somewhere sensible?
+                case "text":
+                case "ntext":
+                case "uniqueidentifier":
+                    return "string";
+
+                case "real": return "int32";
+                case "int": return "int32";
+                case "bigint": return "int64";
+                case "smallint": return "int32";
+                case "tinyint": return "int32";
+                case "money": return "double";
+
+                case "smallmoney":
+                case "decimal":
+                case "numeric":
+                    return "double";
+
+                case "float": return "float";
+                case "bit": return "bool";
+                
+                case "image":
+                case "rowversion":
+                case "timestamp":
+                case "varbinary":
+                case "varbinary(max)": //filestreams in sql
+                    return "bytes";
+
+                default:
+                    {
+                        Debug.WriteLine($@"Unknown Database Type {dbDataType}");
+                        return "UNKNOWN";
+                    }
+
+            }
+        }
     }
 }

@@ -42,5 +42,13 @@ namespace Genesis.Output
         /// Seperator characters for multiple output files in a template. This is kinda ghetto and lazy but for now, whatevs
         /// </summary>
         public static readonly string TemplateSeperator = "<!----->";
+        /// <summary>
+        /// Arbitrary version identifier
+        /// </summary>
+        public static readonly string Version = "~VERSION~";
+        /// <summary>
+        /// Each property will increment this
+        /// </summary>
+        public static readonly string PropertyCounter = "~COUNTER~";
     }
 }
