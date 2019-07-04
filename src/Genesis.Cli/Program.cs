@@ -20,7 +20,7 @@ namespace Genesis.Cli
         {
             //comment to run the loop
             //args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
-            args = new string[] { "--script", "./YamlToPocos.genesis" };
+            //args = new string[] { "--script", "./YamlToPocos.genesis" };
 
             //NOTE:      --script "C:\Path\To\Script.genesis"
             if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
@@ -74,8 +74,8 @@ namespace Genesis.Cli
             var version = typeof(Program).Assembly.GetName().Version;
 
             return (withAV)
-                           ? $"v{version.Major}.{version.Minor}.{version.Revision}"
-                           : $"{version.Major}.{version.Minor}.{version.Revision}";
+                           ? $"v{version.Major}.{version.Minor}.{version.Revision}.{version.Build}"
+                           : $"{version.Major}.{version.Minor}.{version.Revision}.{version.Build}";
         }
 
         /// <summary>

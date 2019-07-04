@@ -43,6 +43,7 @@
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetDbContextCachedRepositories\Genesis.Output.AspNetDbContextCachedRepositories.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.Poco\Genesis.Output.Poco.csproj" />
+    <ProjectReference Include="..\Executors\Output\Genesis.Output.ProtobufEntity\Genesis.Output.ProtobufEntity.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.XamarinViewModel\Genesis.Output.XamarinViewModel.csproj" />
     <ProjectReference Include="..\Genesis.Cli.Extensions\Genesis.Cli.Extensions.csproj" />
     <ProjectReference Include="..\Genesis\Genesis.csproj" />
