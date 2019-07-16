@@ -121,40 +121,28 @@ namespace Genesis
         /// </summary>
         /// <param name="rule">The rule.</param>
         /// <param name="replacement">The replacement.</param>
-        private static void AddPluralRule(string rule, string replacement)
-        {
-            plurals.Add(new InflectorRule(rule, replacement));
-        }
+        private static void AddPluralRule(string rule, string replacement) => plurals.Add(new InflectorRule(rule, replacement));
 
         /// <summary>
         /// Adds the singular rule.
         /// </summary>
         /// <param name="rule">The rule.</param>
         /// <param name="replacement">The replacement.</param>
-        private static void AddSingularRule(string rule, string replacement)
-        {
-            singles.Add(new InflectorRule(rule, replacement));
-        }
+        private static void AddSingularRule(string rule, string replacement) => singles.Add(new InflectorRule(rule, replacement));
 
         /// <summary>
         /// Makes the plural.
         /// </summary>
         /// <param name="word">The word.</param>
         /// <returns></returns>
-        internal static string MakePlural(this string word)
-        {
-            return ApplyRules(plurals, word);
-        }
+        internal static string MakePlural(this string word) => ApplyRules(plurals, word);
 
         /// <summary>
         /// Makes the singular.
         /// </summary>
         /// <param name="word">The word.</param>
         /// <returns></returns>
-        internal static string MakeSingular(this string word)
-        {
-            return ApplyRules(singles, word);
-        }
+        internal static string MakeSingular(this string word) => ApplyRules(singles, word);
 
         /// <summary>
         /// Applies the rules.
@@ -164,15 +152,14 @@ namespace Genesis
         /// <returns></returns>
         private static string ApplyRules(IList<InflectorRule> rules, string word)
         {
-            string result = word;
+            var result = word;
             if (!uncountables.Contains(word.ToLower()))
             {
-                for (int i = rules.Count - 1; i >= 0; i--)
+                for (var i = rules.Count - 1; i >= 0; i--)
                 {
-                    string currentPass = rules[i].Apply(word);
-                    if (currentPass != null)
+                    if (rules[i].Apply(word) != null)
                     {
-                        result = currentPass;
+                        result = rules[i].Apply(word);
                         break;
                     }
                 }
@@ -185,21 +172,17 @@ namespace Genesis
         /// </summary>
         /// <param name="word">The word.</param>
         /// <returns></returns>
-        internal static string ToTitleCase(this string word)
-        {
-            return Regex.Replace(ToHumanCase(AddUnderscores(word)), @"\b([a-z])",
+        internal static string ToTitleCase(this string word) 
+            => Regex.Replace(ToHumanCase(AddUnderscores(word)), @"\b([a-z])",
                 match => match.Captures[0].Value.ToUpper());
-        }
 
         /// <summary>
         /// Converts the string to human case.
         /// </summary>
         /// <param name="lowercaseAndUnderscoredWord">The lowercase and underscored word.</param>
         /// <returns></returns>
-        internal static string ToHumanCase(this string lowercaseAndUnderscoredWord)
-        {
-            return MakeInitialCaps(Regex.Replace(lowercaseAndUnderscoredWord, @"_", " "));
-        }
+        internal static string ToHumanCase(this string lowercaseAndUnderscoredWord) 
+            => MakeInitialCaps(Regex.Replace(lowercaseAndUnderscoredWord, @"_", " "));
 
         /// <summary>
         /// Convert string to proper case
@@ -207,20 +190,15 @@ namespace Genesis
         /// <param name="sourceString">The source string.</param>
         /// <returns></returns>
         internal static string ToProper(this string sourceString)
-        {
-            string propertyName = sourceString.ToPascalCase();
-            return propertyName;
-        }
+            => sourceString.ToPascalCase();
 
         /// <summary>
         /// Converts the string to pascal case.
         /// </summary>
         /// <param name="lowercaseAndUnderscoredWord">The lowercase and underscored word.</param>
         /// <returns></returns>
-        internal static string ToPascalCase(this string lowercaseAndUnderscoredWord)
-        {
-            return ToPascalCase(lowercaseAndUnderscoredWord, true);
-        }
+        internal static string ToPascalCase(this string lowercaseAndUnderscoredWord) 
+            => ToPascalCase(lowercaseAndUnderscoredWord, true);
 
         /// <summary>
         /// Converts text to pascal case...
@@ -234,21 +212,21 @@ namespace Genesis
                 return text;
 
             text = text.Replace("_", " ");
-            string joinString = removeUnderscores ? string.Empty : "_";
-            string[] words = text.Split(' ');
+            var joinString = removeUnderscores ? string.Empty : "_";
+            var words = text.Split(' ');
             if (words.Length > 1 || words[0].IsUpperCase())
             {
-                for (int i = 0; i < words.Length; i++)
+                for (var i = 0; i < words.Length; i++)
                 {
                     if (words[i].Length > 0)
                     {
-                        string word = words[i];
-                        string restOfWord = word.Substring(1);
+                        var word = words[i];
+                        var restOfWord = word.Substring(1);
 
                         if (restOfWord.IsUpperCase())
                             restOfWord = restOfWord.ToLower(CultureInfo.CurrentUICulture);
 
-                        char firstChar = char.ToUpper(word[0], CultureInfo.CurrentUICulture);
+                        var firstChar = char.ToUpper(word[0], CultureInfo.CurrentUICulture);
                         words[i] = string.Concat(firstChar, restOfWord);
                     }
                 }
@@ -270,43 +248,31 @@ namespace Genesis
         /// </summary>
         /// <param name="lowercaseAndUnderscoredWord">The lowercase and underscored word.</param>
         /// <returns></returns>
-        internal static string ToCamelCase(this string lowercaseAndUnderscoredWord)
-        {
-            return MakeInitialLowerCase(ToPascalCase(lowercaseAndUnderscoredWord));
-        }
+        internal static string ToCamelCase(this string lowercaseAndUnderscoredWord) 
+            => MakeInitialLowerCase(ToPascalCase(lowercaseAndUnderscoredWord));
 
         /// <summary>
         /// Adds the underscores.
         /// </summary>
         /// <param name="pascalCasedWord">The pascal cased word.</param>
         /// <returns></returns>
-        internal static string AddUnderscores(this string pascalCasedWord)
-        {
-            return
-                Regex.Replace(
-                    Regex.Replace(Regex.Replace(pascalCasedWord, @"([A-Z]+)([A-Z][a-z])", "$1_$2"), @"([a-z\d])([A-Z])",
-                        "$1_$2"), @"[-\s]", "_").ToLower();
-        }
+        internal static string AddUnderscores(this string pascalCasedWord) 
+            => Regex.Replace(Regex.Replace(Regex.Replace(pascalCasedWord, @"([A-Z]+)([A-Z][a-z])", "$1_$2"), @"([a-z\d])([A-Z])","$1_$2"), @"[-\s]", "_").ToLower();
 
         /// <summary>
         /// Makes the initial caps.
         /// </summary>
         /// <param name="word">The word.</param>
         /// <returns></returns>
-        internal static string MakeInitialCaps(this string word)
-        {
-            return string.Concat(word.Substring(0, 1).ToUpper(), word.Substring(1).ToLower());
-        }
+        internal static string MakeInitialCaps(this string word) 
+            => string.Concat(word.Substring(0, 1).ToUpper(), word.Substring(1).ToLower());
 
         /// <summary>
         /// Makes the initial lower case.
         /// </summary>
         /// <param name="word">The word.</param>
         /// <returns></returns>
-        internal static string MakeInitialLowerCase(this string word)
-        {
-            return string.Concat(word.Substring(0, 1).ToLower(), word.Substring(1));
-        }
+        internal static string MakeInitialLowerCase(this string word) => string.Concat(word.Substring(0, 1).ToLower(), word.Substring(1));
 
         /// <summary>
         /// Adds the ordinal suffix.
@@ -317,8 +283,8 @@ namespace Genesis
         {
             if (number.IsNumber())
             {
-                int n = int.Parse(number);
-                int nMod100 = n % 100;
+                var n = int.Parse(number);
+                var nMod100 = n % 100;
 
                 if (nMod100 >= 11 && nMod100 <= 13)
                     return string.Concat(number, "th");
@@ -344,17 +310,15 @@ namespace Genesis
         /// <param name="aNumber">string that potentially contains a number</param>
         /// <returns>true or false</returns>
         private static bool IsNumber(this string aNumber)
-            => decimal.TryParse(aNumber, out decimal _);
+            => decimal.TryParse(aNumber, out var _);
 
         /// <summary>
         /// Converts the underscores to dashes.
         /// </summary>
         /// <param name="underscoredWord">The underscored word.</param>
         /// <returns></returns>
-        internal static string ConvertUnderscoresToDashes(this string underscoredWord)
-        {
-            return underscoredWord.Replace('_', '-');
-        }
+        internal static string ConvertUnderscoresToDashes(this string underscoredWord) 
+            => underscoredWord.Replace('_', '-');
 
         #region Nested type: InflectorRule
 
@@ -364,12 +328,12 @@ namespace Genesis
         private class InflectorRule
         {
             /// <summary>
-            /// 
+            /// The regex pattern
             /// </summary>
             internal readonly Regex regex;
 
             /// <summary>
-            /// 
+            /// The replacement text.
             /// </summary>
             internal readonly string replacement;
 
@@ -394,7 +358,7 @@ namespace Genesis
                 if (!regex.IsMatch(word))
                     return null;
 
-                string replace = regex.Replace(word, replacement);
+                var replace = regex.Replace(word, replacement);
                 if (word == word.ToUpper())
                     replace = replace.ToUpper();
 
