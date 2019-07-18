@@ -289,17 +289,13 @@ namespace Genesis
                 if (nMod100 >= 11 && nMod100 <= 13)
                     return string.Concat(number, "th");
 
-                switch (n % 10)
+                return (n % 10) switch
                 {
-                    case 1:
-                        return string.Concat(number, "st");
-                    case 2:
-                        return string.Concat(number, "nd");
-                    case 3:
-                        return string.Concat(number, "rd");
-                    default:
-                        return string.Concat(number, "th");
-                }
+                    1 => string.Concat(number, "st"),
+                    2 => string.Concat(number, "nd"),
+                    3 => string.Concat(number, "rd"),
+                    _ => string.Concat(number, "th"),
+                };
             }
             return number;
         }
