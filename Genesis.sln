@@ -64,7 +64,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gifs", "gifs", "{A588CBB4-0
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.Excel", "src\Executors\Input\Genesis.Input.Excel\Genesis.Input.Excel.csproj", "{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genesis.Output.ProtobufEntity", "src\Executors\Output\Genesis.Output.ProtobufEntity\Genesis.Output.ProtobufEntity.csproj", "{0195AE48-AC67-4488-AA87-1EDB46A87068}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.ProtobufEntity", "src\Executors\Output\Genesis.Output.ProtobufEntity\Genesis.Output.ProtobufEntity.csproj", "{0195AE48-AC67-4488-AA87-1EDB46A87068}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genesis.Output.XamarinView", "src\Executors\Output\Genesis.Output.XamarinView\Genesis.Output.XamarinView.csproj", "{E05B3EBB-0433-4833-97ED-F77EA876C049}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -208,6 +210,18 @@ Global
 		{0195AE48-AC67-4488-AA87-1EDB46A87068}.Release|x64.Build.0 = Release|Any CPU
 		{0195AE48-AC67-4488-AA87-1EDB46A87068}.Release|x86.ActiveCfg = Release|Any CPU
 		{0195AE48-AC67-4488-AA87-1EDB46A87068}.Release|x86.Build.0 = Release|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Debug|x64.Build.0 = Debug|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Debug|x86.Build.0 = Debug|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Release|x64.ActiveCfg = Release|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Release|x64.Build.0 = Release|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Release|x86.ActiveCfg = Release|Any CPU
+		{E05B3EBB-0433-4833-97ED-F77EA876C049}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -226,6 +240,7 @@ Global
 		{A588CBB4-006F-4C4D-A0EF-2A2754982295} = {5FBB60FF-ABE1-4316-B82E-3E2AA32AF8E6}
 		{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8} = {A4522569-85BB-4EF1-AC94-BE2978547AAE}
 		{0195AE48-AC67-4488-AA87-1EDB46A87068} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
+		{E05B3EBB-0433-4833-97ED-F77EA876C049} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A29E004-0C17-4E72-AE88-F7EA03136D6E}
