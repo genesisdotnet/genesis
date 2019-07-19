@@ -9,17 +9,17 @@ using Genesis.Output;
 
 namespace Genesis.Output.Poco
 {
-    public class XvmGenerator : OutputExecutor
+    public class XVGenerator : OutputExecutor
     {
-        public override string CommandText => "xvm";
-        public override string Description => "Generates a basic ViewModel with property changed event / base";
-        public override string FriendlyName => "Xamarin.Forms CRUD ViewModel";
+        public override string CommandText => "xv";
+        public override string Description => "Generates a Xamarin.Forms View with fields for each property";
+        public override string FriendlyName => "Xamarin.Forms Create/Edit View (XAML)";
 
-        public XvmConfig Config { get; set; }
+        public XVConfig Config { get; set; }
 
         protected override void OnInitilized()
         {
-            Config = (XvmConfig)Configuration;
+            Config = (XVConfig)Configuration;
         }
 
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
@@ -48,10 +48,9 @@ namespace Genesis.Output.Poco
 
             var output = tmp.Raw.Replace(Tokens.Namespace, Config.Namespace)    //TODO: Templating engine? / razor etc would be cool ..|., T4 
                                 .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
-                                .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
-                                .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties));
+                                .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties));
 
-            var subPath = Path.Combine(OutputPath, "Xamarin.ViewModels");
+            var subPath = Path.Combine(OutputPath, "Xamarin.Views"); //use cli to change this...
 
             if (!Directory.Exists(subPath))
                 Directory.CreateDirectory(subPath);
@@ -63,12 +62,7 @@ namespace Genesis.Output.Poco
 
         private string GetPropertiesReplacement(List<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators
         {
-            string template = "\t\tprivate ~PROPERTY_DATATYPE~ ~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +     //TODO: This sucks
-                                "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~" + Environment.NewLine +
-                                "\t\t{" + Environment.NewLine +
-                                "\t\t\tget => ~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +
-                                "\t\t\tset => ~PROPERTY_MEMBER_NAME~; //Change property generator for xam viewmodels" + Environment.NewLine +
-                                "\t\t}" + Environment.NewLine;
+            string template = Environment.NewLine; //TODO: Properties for Xamarin Forms View XAML
 
             var sb = new StringBuilder();
 
@@ -78,24 +72,6 @@ namespace Genesis.Output.Poco
                     sb.AppendLine(template.Replace(Tokens.PropertyDataType, p.SourceType)
                         .Replace(Tokens.PropertyName, p.Name)
                         .Replace(Tokens.PropertyMemberName, p.Name.ToCorrectedCase()));
-            }
-
-            return sb.ToString();
-        }
-
-        private string GetConstructionReplacement(List<PropertyGraph> properties)
-        {
-            const string template = "            //this.~PROPERTY_MEMBER_NAME~ = default(~PROPERTY_DATATYPE~);";
-
-            var sb = new StringBuilder();
-
-            foreach (var p in properties)
-            {
-                if (p.SourceType == "sysname")
-                    continue;
-
-                sb.AppendLine(template.Replace(Tokens.PropertyMemberName, p.Name.ToCorrectedCase())
-                                    .Replace(Tokens.PropertyDataType, p.SourceType.ToCodeDataType()));
             }
 
             return sb.ToString();

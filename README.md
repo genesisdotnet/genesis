@@ -1,6 +1,6 @@
 # Genesis .Net
 Read a description of a service or schema from any source. Take that information and output the inevitable code that will have had to have been typed to interact. 
-
+ 
 ## How does it work?
 Genesis is centered around a group of ObjectGraph objects and pieces of code that manipulate them, called Executors. 
 
