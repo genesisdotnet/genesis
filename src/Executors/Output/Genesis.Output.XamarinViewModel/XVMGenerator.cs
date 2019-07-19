@@ -13,7 +13,7 @@ namespace Genesis.Output.Poco
     {
         public override string CommandText => "xvm";
         public override string Description => "Generates a basic ViewModel with property changed event / base";
-        public override string FriendlyName => "Xamarin ViewModel OutputExecutor";
+        public override string FriendlyName => "Xamarin.Forms CRUD ViewModel";
 
         public XvmConfig Config { get; set; }
 

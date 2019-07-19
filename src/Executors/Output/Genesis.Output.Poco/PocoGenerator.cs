@@ -13,8 +13,8 @@ namespace Genesis.Output.Poco
     public class PocoGenerator : OutputExecutor
     {
         public override string CommandText => "poco";
-        public override string Description => "Generates a (P)lain (O)ld (C)Sharp (O)bject .cs file";
-        public override string FriendlyName => "Poco OutputExecutor";
+        public override string Description => "(P)lain (O)ld (C)Sharp (O)bject .cs file";
+        public override string FriendlyName => "(P)lain (O)ld (C)Sharp (O)bject";
 
         public PocoConfig Config { get; set; }
 
