@@ -6,7 +6,7 @@ namespace ~NAMESPACE~
 {
     public class ~OBJECT_NAME~
     {
-        public ~OBJECT_NAME~()
+        public ~OBJECT_NAME~Entity()
         {
 ~CONSTRUCTION~
         }

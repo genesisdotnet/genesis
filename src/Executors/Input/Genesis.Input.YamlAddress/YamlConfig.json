@@ -1,3 +1,4 @@
 ﻿{
-  "Address": "https://localhost:44391/swagger/ui/index"
+  "Address": "https://localhost:44391/swagger/docs/v2",
+  "OutputNamespace": "Genesis.Rest.Clients"
 }

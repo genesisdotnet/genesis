@@ -18,5 +18,8 @@ namespace Genesis
         public Type ReturnDataType { get; set; }
         public MethodVisibilities MethodVisibility { get; set; } = MethodVisibilities.Public;
         public List<ParameterGraph> Parameters { get; } = new List<ParameterGraph>();
+        public string Name { get; set; }
+        public bool HasGenericParams { get; set; }
+        public bool IsGeneric { get; set; }
     }
 }

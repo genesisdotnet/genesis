@@ -1,0 +1,3 @@
+﻿{
+  "ConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ifcloud_dev;User=sa;Password=1qaz@WSX;Connect Timeout=10;"
+}
