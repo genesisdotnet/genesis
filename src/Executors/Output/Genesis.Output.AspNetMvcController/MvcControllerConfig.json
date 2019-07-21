@@ -1,7 +1,7 @@
 ﻿{
   "language": "C#",
-  "namespace": "Genesis.Output.MvcController",
-  "outputPath": "C:\\Temp\\Output",
+  "namespace": "DemoSite",
+  "outputPath": "../../../../DemoSite/Controllers",
   "overwrite": "all",
   "preserve": "none"
 }
