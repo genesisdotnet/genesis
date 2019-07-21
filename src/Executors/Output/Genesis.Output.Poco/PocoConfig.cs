@@ -17,7 +17,7 @@ namespace Genesis.Output.Poco
     public class PocoConfig : GeneratorConfiguration
     {
         public string Language { get; set; } = "C#";
-        public bool Overwrite { get; set; } = true;
-        public bool Preserve { get; set; } = true;
+        public string Overwrite { get; set; } = "all";
+        public string Preserve { get; set; } = "none";
     }
 }
