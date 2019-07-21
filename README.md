@@ -10,10 +10,10 @@ An input-agnostic code generation tool written in C# 8.0 on .Net 3.0 core/standa
 ## How does it work?
 Genesis is centered around a group of ObjectGraph objects and pieces of code that manipulate them, called Executors. 
 
-#####`Input` executors deal with a "source". (intentionally vague) 
+##### `Input` executors deal with a "source". (intentionally vague) 
 They're responsible for interrogating some data store (or weburl, or text file, or...) and populating a group of ObjectGraphs. They're available to all other executors at any point. (It's currently serial execution)
 
-#####`Output` executors do exactly that, output files.
+##### `Output` executors do exactly that, output files.
 They can use the data in the ObjectGraphs to write out classes, services, interfaces, clients, repositories etc. Anything really. They don't even have to write code. They could document...
 
 * They each have their own configuration.json as well as an auto-mapped (not AutoMapper :D) & Typed Configuration object. 
