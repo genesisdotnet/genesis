@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28902.138
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis", "src\Genesis\Genesis.csproj", "{B4061F28-2809-4E10-ADDB-F917F35C46A3}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Cli", "src\Genesis.Cli\Genesis.Cli.csproj", "{1223B118-ABB3-4F44-AC89-F4DD8EAA5853}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genesis.Cli", "src\Genesis.Cli\Genesis.Cli.csproj", "{1223B118-ABB3-4F44-AC89-F4DD8EAA5853}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Cli.Extensions", "src\Genesis.Cli.Extensions\Genesis.Cli.Extensions.csproj", "{1B5EEE3B-7194-4AF0-8E1F-7D09A8685B8A}"
 EndProject
@@ -43,6 +43,9 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{A4522569-85BB-4EF1-AC94-BE2978547AAE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Output", "Output", "{43570CDD-40A3-4D73-A1B7-22F24B8261A9}"
+	ProjectSection(SolutionItems) = preProject
+		src\Executors\Output\README.md = src\Executors\Output\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5FBB60FF-ABE1-4316-B82E-3E2AA32AF8E6}"
 EndProject
