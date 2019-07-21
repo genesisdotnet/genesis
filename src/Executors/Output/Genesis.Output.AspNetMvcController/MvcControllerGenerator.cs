@@ -24,13 +24,12 @@ namespace Genesis.Output.MvcController
 
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
         {
+            Text.DarkGrayLine($@"Generating MVC Controllers in: {Config.OutputPath}");
             var result = new OutputTaskResult(); //overridden just to loop over all the graphs
 
             foreach(var obj in genesis.Objects)
-            {
                 await ExecuteGraph(obj);
-            }
-
+            
             return result;
         }
 
@@ -38,18 +37,19 @@ namespace Genesis.Output.MvcController
         {
             var tmp = this.Template;
 
-            if (Directory.Exists(OutputPath))
+            if (Directory.Exists(Config.OutputPath))
                 Directory.CreateDirectory(OutputPath);
-            
+
+            var entityName = objectGraph.Name.ToSingular();
+
             var output = tmp.Raw.Replace(Tokens.Namespace, Config.Namespace)    //TODO: Templating engine? / razor etc would be cool ..|., T4 
-                                .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular());
+                                .Replace(Tokens.ObjectName, entityName);
 
-            var subPath = Path.Combine(OutputPath, "MvcControllers");
+            //TODO: Add logic to handle '/' or lack thereof at the end of Config.OutputPath
 
-            if (!Directory.Exists(subPath))
-                Directory.CreateDirectory(subPath);
+            Text.DarkCyanLine($@"{Config.OutputPath}/{entityName}Controller.cs");
 
-            File.WriteAllText(Path.Combine(subPath, objectGraph.Name.ToSingular() + "Controller.cs"), output);
+            File.WriteAllText(Path.Combine(Config.OutputPath, $"{entityName}Controller.cs"), output);
 
             return Task.CompletedTask;
         }
