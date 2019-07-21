@@ -1,18 +1,24 @@
 # Genesis .Net
-Read a description of a service or schema from any source. Take that information and output the inevitable code that will have had to have been typed to interact. 
- 
+An input-agnostic code generation tool written in C# 8.0 on .Net 3.0 core/standard. Data from pretty much any source that .Net is able to consume can be used to generate a variety of boilerplate code files. 
+
+**Preview bits are required**
+
+[.Net Core 3.0.100 Preview 6](https://github.com/dotnet/corefx/releases/tag/v3.0.0-preview6.19303.8) (or whatever version is current)
+
+[Visual Studio Win/Mac Preview](https://visualstudio.com/preview "Visual Studio Win/Mac Preview") This will **only** compile using a preview version of Visual Studio until 3.0 and C# 8.0 are released.
+
 ## How does it work?
 Genesis is centered around a group of ObjectGraph objects and pieces of code that manipulate them, called Executors. 
 
-`Input` executors deal with a "source". (intentionally vague) 
-They're responsible for interrogating some data store (or weburl, or text file, or...) and populating a group of ObjectGraphs. They're available to all other executors at any point. (It's currently serial execution) 
+#####`Input` executors deal with a "source". (intentionally vague) 
+They're responsible for interrogating some data store (or weburl, or text file, or...) and populating a group of ObjectGraphs. They're available to all other executors at any point. (It's currently serial execution)
 
-`Output` executors do the other half of the work.
+#####`Output` executors do exactly that, output files.
 They can use the data in the ObjectGraphs to write out classes, services, interfaces, clients, repositories etc. Anything really. They don't even have to write code. They could document...
 
 * They each have their own configuration.json as well as an auto-mapped (not AutoMapper :D) & Typed Configuration object. 
 
-* OutputExecutors can have dependencies, or support files required to make the generated code work.
+* OutputExecutors can have dependencies, or support files required to make the generated code work. This is open to refactoring
 
 * Configuration of executors may also be done by commands at the Genesis Prompt or from within a script. 
 
