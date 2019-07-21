@@ -18,9 +18,9 @@ These are what feed an ObjectGraph context with schema information describing ob
     
 Reads MSSql database schema into ObjectGraphs (max lengths, datatypes, names, etc.)
 
-* `Genesis.Input.YamlAddress` 
+* `Genesis.Input.SwaggerUrl` 
     
-Reads a web address for a /swagger.yaml into ObjectGraphs (api calls, their models etc)
+Reads a swagger web address into ObjectGraphs (api calls, their models etc)
 
 * `Genesis.Input.DotNetAssembly`
 
@@ -31,8 +31,7 @@ There's a ton of things to potentially do and/or generate. Here's a few...
 
 * `Genesis.Output.Poco`
 
-Write out a (P)lain (O)ld (C)# (O)bject file according to whats in the ObjectGraphs. 
-Note: This will have come from whatever input preceded it in the execution. 
+Write out a (P)lain (O)ld (C)# (O)bject file according to whats in the ObjectGraphs.
 
 * `Genesis.Output.AspNetMvcController`
 
@@ -45,6 +44,14 @@ Sample caching repository for an Entity that was described in the ObjectGraphs
 * `Genesis.Output.XamarinViewModel`
 
 Generate a Xamarin Forms based ViewModel with INotifyPropertyChanged support
+
+* `Genesis.Output.XamarinView`
+
+Generate the .xaml markup for a Xamarin Forms Create/Edit view.
+
+* `Genesis.Output.ProrobufEntitiy`
+
+Generate a simple .proto file with CRUD actions and an entity
 
 ## Executor Development
 Right now, all of the executors are referenced by the main Cli project to avoid build events and an overcomplicated dev process. They're still MEF'd in though.
