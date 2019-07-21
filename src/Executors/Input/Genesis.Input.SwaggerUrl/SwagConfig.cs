@@ -3,9 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Genesis.Input.YamlAddress
+namespace Genesis.Input.SwaggerUrl
 {
-    public class YamlConfig : InputConfiguration
+    public class SwagConfig : InputConfiguration
     {
         public string Address { get; set; } = string.Empty;
         public string OutputNamespace { get; set; } = "Genesis.Rest.Clients";

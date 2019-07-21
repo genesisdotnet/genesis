@@ -36,7 +36,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Executors\Input\Genesis.Input.Excel\Genesis.Input.Excel.csproj" />
     <ProjectReference Include="..\Executors\Input\Genesis.Input.MSSqlDB\Genesis.Input.MSSqlDb.csproj" />
-    <ProjectReference Include="..\Executors\Input\Genesis.Input.YamlAddress\Genesis.Input.YamlAddress.csproj" />
+    <ProjectReference Include="..\Executors\Input\Genesis.Input.SwaggerUrl\Genesis.Input.SwaggerUrl.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetDbContextCachedRepositories\Genesis.Output.AspNetDbContextCachedRepositories.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.Poco\Genesis.Output.Poco.csproj" />

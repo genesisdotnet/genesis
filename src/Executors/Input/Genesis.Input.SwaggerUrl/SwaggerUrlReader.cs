@@ -1,37 +1,28 @@
-﻿using Genesis;
-using Genesis.Input;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CSharp;
 using NJsonSchema.CodeGeneration.CSharp;
 using NSwag;
-using NSwag.CodeGeneration;
 using NSwag.CodeGeneration.CSharp;
 using System;
-using System.CodeDom.Compiler;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
 using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Runtime.Loader;
 using System.Threading.Tasks;
 
-namespace Genesis.Input.YamlAddress
+namespace Genesis.Input.SwaggerUrl
 {
-    public class YamlAddressReader : InputExecutor
+    public class SwaggerUrlReader : InputExecutor
     {
-        public override string CommandText => "yaml";
-        public override string FriendlyName => "YAML Endpoint";
-        public override string Description => "A YAML source via address";
+        public override string CommandText => "swag";
+        public override string FriendlyName => "Swagger Endpoint";
+        public override string Description => "Swagger data via URL";
 
-        public YamlConfig Config { get; set; }
+        public SwagConfig Config { get; set; }
         
         protected override void OnInitilized(/*, string[] args */) //TODO: Pass args to the init 
         {
-            Config = (YamlConfig)Configuration; //TODO: configuration is wonky
+            Config = (SwagConfig)Configuration; //TODO: configuration is wonky
         }
 
         public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
