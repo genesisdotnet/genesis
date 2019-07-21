@@ -49,7 +49,7 @@ Generate a Xamarin Forms based ViewModel with INotifyPropertyChanged support
 
 Generate the .xaml markup for a Xamarin Forms Create/Edit view.
 
-* `Genesis.Output.ProrobufEntitiy`
+* `Genesis.Output.ProtobufEntitiy`
 
 Generate a simple .proto file with CRUD actions and an entity
 
