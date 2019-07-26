@@ -12,9 +12,9 @@ namespace Genesis.Cli.Commands
         public override string Name { get => "update"; }
         public override string Description => "Eventually download latest and restart";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            return await Task.FromResult(new BlankTaskResult());
+            return await Task.FromResult(new BlankGenesisExecutionResult());
         }
     }
 }

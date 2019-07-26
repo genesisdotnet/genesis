@@ -22,10 +22,10 @@ namespace Genesis.Output.MvcController
             Config = (MvcControllerConfig)Configuration;
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             Text.DarkGrayLine($@"Generating MVC Controllers in: {Config.OutputPath}");
-            var result = new OutputTaskResult(); //overridden just to loop over all the graphs
+            var result = new OutputGenesisExecutionResult(); //overridden just to loop over all the graphs
 
             foreach(var obj in genesis.Objects)
                 await ExecuteGraph(obj);

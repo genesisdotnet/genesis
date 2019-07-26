@@ -15,10 +15,10 @@ namespace Genesis.Cli.Commands
         public override string Name { get => "status"; }
         public override string Description => "Display information about the configuration";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             Text.Line();
-            Text.White("Known Inputs:"); Text.Line();
+            Text.WhiteLine("Known Inputs:");
 
             if (InputManager.Inputs.Count == 0)
             {
@@ -28,7 +28,7 @@ namespace Genesis.Cli.Commands
             {
                 var tmp = new List<string>(args);
 
-                if(tmp.Contains("detailed") || tmp.Contains("-d") || tmp.Contains("d"))
+                if (tmp.Contains("detailed") || tmp.Contains("--detailed") || tmp.Contains("-d"))
                 {
                     foreach (var exe in InputManager.Inputs)
                         DisplayDetail(exe);
@@ -41,7 +41,7 @@ namespace Genesis.Cli.Commands
             }
 
             Text.Line();
-            Text.White("Known Outputs:"); Text.Line();
+            Text.WhiteLine("Known Outputs:"); 
 
             if (OutputManager.Outputs.Count == 0)
             {
@@ -51,7 +51,7 @@ namespace Genesis.Cli.Commands
             {
                 var tmp = new List<string>(args);
 
-                if (tmp.Contains("detailed") || tmp.Contains("-d") || tmp.Contains("d"))
+                if (tmp.Contains("detailed") || tmp.Contains("--detailed") || tmp.Contains("-d"))
                 {
                     foreach (var exe in OutputManager.Outputs)
                         DisplayDetail(exe);
@@ -63,14 +63,37 @@ namespace Genesis.Cli.Commands
                 }
             }
 
+            Text.Line();
+            Text.WhiteLine("Known Generals:");
+
+            if (ExecutorManager.Current.Count == 0)
+            {
+                Text.RedLine("\t no general executors found");
+            }
+            else
+            {
+                var tmp = new List<string>(args);
+
+                if (tmp.Contains("detailed") || tmp.Contains("--detailed") || tmp.Contains("-d"))
+                {
+                    foreach (var exe in ExecutorManager.Current)
+                        DisplayDetail(exe);
+                }
+                else
+                {
+                    foreach (var exe in ExecutorManager.Current)
+                        DisplayQuick(exe);
+                }
+            }
+
             Console.ResetColor();
 
             genesis.WriteContextInfo();
 
-            return await Task.FromResult(new BlankTaskResult() { Success = true, Message = "" });
+            return await Task.FromResult(new BlankGenesisExecutionResult() { Success = true, Message = "" });
         }
 
-        private static void DisplayDetail(IGenesisExecutor<ITaskResult> exe)
+        private static void DisplayDetail(IGenesisExecutor<IGenesisExecutionResult> exe)
         {
             Text.White("\tCommand: "); Text.CliCommand(exe.CommandText, false); Text.Line();
             Text.White("\tSource: "); Text.Yellow(exe.GetType().Assembly.GetName().Name); Text.White("."); Text.Blue(exe.GetType().Name); Text.Line();
@@ -79,7 +102,7 @@ namespace Genesis.Cli.Commands
             Text.Line();
         }
 
-        private static void DisplayQuick(IGenesisExecutor<ITaskResult> exe)
+        private static void DisplayQuick(IGenesisExecutor<IGenesisExecutionResult> exe)
         {
             Text.White("\t"); Text.CliCommand(exe.CommandText, true); Text.White(" ("); Text.FriendlyText(exe.FriendlyName); Text.White(") found on "); Text.Blue(exe.GetType().Name); Text.Line();
         }

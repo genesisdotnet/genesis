@@ -23,9 +23,9 @@ namespace Genesis.Output.Poco
             Config = (PocoConfig)Configuration;
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var result = new OutputTaskResult();
+            var result = new OutputGenesisExecutionResult();
 
             try
             {
@@ -66,7 +66,6 @@ namespace Genesis.Output.Poco
             File.WriteAllText(outPath, output);
 
             Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".cs"); Text.WhiteLine("'");
-            Text.Line();
 
             await Task.CompletedTask;
         }

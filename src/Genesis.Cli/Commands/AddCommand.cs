@@ -14,9 +14,9 @@ namespace Genesis.Cli.Commands
         public override string Name { get => "add"; }
         public override string Description => "Add an executor to the chain";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var result = new BlankTaskResult();
+            var result = new BlankGenesisExecutionResult();
 
             //TODO: Move help text to override in AddCommand
             if (args.Length == 1 || HelpWasRequested(args)) //just 'add' or 'add --help,-?'
@@ -43,7 +43,7 @@ namespace Genesis.Cli.Commands
                         Text.White("Input: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.DarkCyanLine($"{item.GetType().Assembly.GetName().Name}"); 
                     }
                     Console.WriteLine();
-                    Console.WriteLine("Known Outputs:"); //TODO: Get rid of OutputExecutor / InputExecutor concept
+                    Console.WriteLine("Known Current:"); //TODO: Get rid of OutputExecutor / InputExecutor concept
                     foreach (var item in OutputManager.Outputs)
                     {
                         Text.White("Output: "); Text.Green($@"{item.CommandText}"); Text.White(" From: "); Text.DarkCyanLine($"{item.GetType().Assembly.GetName().Name}");

@@ -12,7 +12,7 @@ namespace Genesis.Cli.Commands
         public override string Name { get => "?"; }
         public override string Description => "Inception, display this information";
         public override string Usage => "?";
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             await CommandLoader.InitAsync(args);
 
@@ -30,7 +30,7 @@ namespace Genesis.Cli.Commands
 
             Text.Line();
 
-            return await Task.FromResult(new BlankTaskResult() { Success = true, Message = "" });
+            return await Task.FromResult(new BlankGenesisExecutionResult() { Success = true, Message = "" });
         }
     }
 }

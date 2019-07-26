@@ -12,7 +12,7 @@ namespace Genesis.Cli.Commands
 
         public override string Description => "Stop a script";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             //NOTE: This apparently can't affect anything on the Program class itself. (without some voodoo)
             //So, just dump some text and check for this command in Program. 
@@ -22,7 +22,7 @@ namespace Genesis.Cli.Commands
             Text.YellowLine($"] was called.");
             Text.Line();
 
-            return await Task.FromResult(new BlankTaskResult());
+            return await Task.FromResult(new BlankGenesisExecutionResult());
         }
     }
 }

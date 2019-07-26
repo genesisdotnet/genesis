@@ -14,14 +14,14 @@ namespace Genesis.Cli.Commands
 
         public override string Description => "Exit the app";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             Debug.WriteLine($@"{GetType().Name}.{nameof(Execute)}");
             Console.WriteLine("Exiting");
 
             Environment.Exit(0); //untz
 
-            return await Task.FromResult(new BlankTaskResult());
+            return await Task.FromResult(new BlankGenesisExecutionResult());
         }
     }
 }

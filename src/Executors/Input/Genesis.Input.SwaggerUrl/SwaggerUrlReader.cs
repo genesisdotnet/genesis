@@ -2,13 +2,17 @@
 using Microsoft.CodeAnalysis.CSharp;
 using NJsonSchema.CodeGeneration.CSharp;
 using NSwag;
+using NSwag.CodeGeneration;
 using NSwag.CodeGeneration.CSharp;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using System.Text;
 using System.Threading.Tasks;
+using NJsonSchema.Infrastructure;
 
 namespace Genesis.Input.SwaggerUrl
 {
@@ -19,13 +23,21 @@ namespace Genesis.Input.SwaggerUrl
         public override string Description => "Swagger data via URL";
 
         public SwagConfig Config { get; set; }
-        
+
+        // kinda lame for now
+        private const string ENTRY_POINT = @"
+        public static int Main(string[] args)
+        {
+            return 0;
+        }
+        ";
+
         protected override void OnInitilized(/*, string[] args */) //TODO: Pass args to the init 
         {
             Config = (SwagConfig)Configuration; //TODO: configuration is wonky
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             Text.WhiteLine($"Downloading from [{Config.Address}]");
 
@@ -46,10 +58,13 @@ namespace Genesis.Input.SwaggerUrl
                 "Newtonsoft.Json",
             };
 
-            var settings = new CSharpClientGeneratorSettings { GenerateDtoTypes = true};
-            settings.AdditionalContractNamespaceUsages = usings;
-            settings.AdditionalNamespaceUsages = usings;
-            settings.CodeGeneratorSettings.InlineNamedAny = false;
+            var settings = new CSharpClientGeneratorSettings
+            {
+                GenerateDtoTypes = true,
+                AdditionalContractNamespaceUsages = usings,
+                AdditionalNamespaceUsages = usings
+            };
+            settings.CodeGeneratorSettings.InlineNamedAny = true;
             settings.CSharpGeneratorSettings.Namespace = Config.OutputNamespace;
             settings.CSharpGeneratorSettings.ClassStyle = CSharpClassStyle.Inpc;
 
@@ -62,13 +77,12 @@ namespace Genesis.Input.SwaggerUrl
             csgen.Settings.OperationNameGenerator = generator;
 
             Text.White($"Processing contents... ");
-            var code = csgen.GenerateFile();
-            File.WriteAllText(@"C:\Temp\GeneratedCode.cs", code);
-
+            var code = csgen.GenerateFile(ClientGeneratorOutputType.Full);
+            
             Text.GreenLine("OK");
 
             var trustedAssembliesPaths = ((string)AppContext.GetData("TRUSTED_PLATFORM_ASSEMBLIES")).Split(Path.PathSeparator);
-            var neededLibs = new string[] {
+            var neededLibs = new [] {
                 "mscorlib",
                 "netstandard",
                 "System.Core",
@@ -90,6 +104,7 @@ namespace Genesis.Input.SwaggerUrl
                 "System.Composition.AttributedModel",
                 "System.Composition.Convention",
                 "System.Composition.Runtime",
+                "System.Diagnostics.Tools",
                 "Microsoft.CodeAnalysis.CSharp",
                 "NJsonSchema",
                 "Newtonsoft.Json",
@@ -106,13 +121,29 @@ namespace Genesis.Input.SwaggerUrl
 
             var options = new CSharpParseOptions(LanguageVersion.CSharp8, DocumentationMode.Parse, SourceCodeKind.Regular);
 
+            Text.WhiteLine("Defining entry point");
+            var rdr = new StringReader(code);
+            var lines = new StringBuilder();
+            var i = 0;
+            string line;
+            while ((line = await rdr.ReadLineAsync()) != null)
+            {
+                lines.AppendLine(line);
+                if (i == 26) //lol lame
+                    lines.AppendLine(ENTRY_POINT);
+                i++;
+            }
+       
+            code = lines.ToString();
+            File.WriteAllText(@"C:\Temp\GeneratedCode.cs", code);
+
             Text.WhiteLine("Creating Syntax Tree");
             var syntax = CSharpSyntaxTree.ParseText(code, options: options);
 
             Text.WhiteLine("Preprocessing");
-            var comp = CSharpCompilation.Create("genesis-temp.dll", new[] { syntax }, refs.ToArray());
+            var comp = CSharpCompilation.Create("swag-gen-temp.dll", new[] { syntax }, refs.ToArray());
             
-            using var stream = new MemoryStream();
+            await using var stream = new MemoryStream();
 
             Text.White("Creating temporary objects... ");
             var result = comp.Emit(stream);
@@ -126,7 +157,7 @@ namespace Genesis.Input.SwaggerUrl
                 foreach (var diagnostic in failures)
                     Text.RedLine($@"\t{diagnostic.Id}: {diagnostic.GetMessage()}");
               
-                return new InputTaskResult { Success = false, Message = "Errors occurred" };
+                return new InputGenesisExecutionResult { Success = false, Message = "Errors occurred" };
             }
 
             stream.Seek(0, SeekOrigin.Begin);
@@ -145,11 +176,18 @@ namespace Genesis.Input.SwaggerUrl
                 };
 
                 foreach(var p in c.GetProperties().Where(w=>w.MemberType == MemberTypes.Property)) {
+
+                    if (!p.CanWrite || !p.GetSetMethod( /*nonPublic*/ true).IsPublic)
+                        continue; //for now;
+
                     var pg = new PropertyGraph {
                         Name = p.Name,
-                        Accesibility = "public",
                         SourceType = p.PropertyType.Name,
                         IsKeyProperty = p.Name.EndsWith("Id", StringComparison.CurrentCultureIgnoreCase), //NOTE: cheesy
+                        Accesibility = (p.CanWrite 
+                                        && p.GetSetMethod(/*nonPublic*/ true).IsPublic) 
+                                        ? "public"
+                                        : "protected"
                     };
 
                     obj.Properties.Add(pg);
@@ -160,7 +198,7 @@ namespace Genesis.Input.SwaggerUrl
                 {
                     var meth = new MethodGraph
                     {
-                        Name = m.Name,
+                        Name = m.Name.Replace("get_", string.Empty),
                         MethodVisibility = MethodVisibilities.Public,
                         ReturnDataType = m.ReturnType,
                         HasGenericParams = m.ContainsGenericParameters,
@@ -183,11 +221,12 @@ namespace Genesis.Input.SwaggerUrl
                         Text.GrayLine($"\tMethod: {c.Name}");
                     }
                 }
+                genesis.Objects.Add(obj);
             }
 
             Text.SuccessGraffiti();
 
-            return await base.Execute(genesis, args); //TODO: fix the whole ITaskResult "stuff"
+            return await base.Execute(genesis, args); //TODO: fix the whole IGenesisExecutionResult "stuff"
         }
     }
 }

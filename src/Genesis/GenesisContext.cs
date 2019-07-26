@@ -7,10 +7,10 @@ namespace Genesis
     public class GenesisScope //INotifyPropertyChanged?
     {
         public string PromptString { get; private set; }
-        public List<IGenesisExecutor<ITaskResult>> Executors { get; } = new List<IGenesisExecutor<ITaskResult>>();
+        public List<IGenesisExecutor<IGenesisExecutionResult>> Executors { get; } = new List<IGenesisExecutor<IGenesisExecutionResult>>();
 
-        private IGenesisExecutor<ITaskResult> _currentExecutor;
-        public IGenesisExecutor<ITaskResult> CurrentTask
+        private IGenesisExecutor<IGenesisExecutionResult> _currentExecutor;
+        public IGenesisExecutor<IGenesisExecutionResult> CurrentTask
         {
             get => _currentExecutor;
             private set
@@ -51,7 +51,7 @@ namespace Genesis
             Chain = new ExecutionChain(this);
         }
         /*
-         This whole ITaskResult thing is worthless and annoying. 
+         This whole IGenesisExecutionResult thing is worthless and annoying. 
         */
         public static GenesisScope Scope { get; } = null;
         public static GenesisContext Current { get; } = new GenesisContext();

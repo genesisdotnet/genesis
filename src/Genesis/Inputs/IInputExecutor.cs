@@ -6,7 +6,7 @@ using Genesis;
 
 namespace Genesis.Input
 {
-    public interface IInputExecutor : IGenesisExecutor<ITaskResult>
+    public interface IInputExecutor : IGenesisExecutor<IGenesisExecutionResult>
     {
         IInputConfiguration Configuration { get; set; }
     }

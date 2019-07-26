@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Genesis.Executors;
 
 namespace Genesis.Cli.Extensions
 {
@@ -13,7 +14,7 @@ namespace Genesis.Cli.Extensions
 
         public abstract string Name { get; }
         public virtual string HelpTemplate { get; } = "-?|-h|--help";
-        public abstract Task<ITaskResult> Execute(GenesisContext genesis, string[] args);
+        public abstract Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args);
         public virtual string Usage { get; } = "command parameter [[0] [1] [2]]"; //or something
         public abstract string Description { get; }
 
@@ -57,12 +58,15 @@ namespace Genesis.Cli.Extensions
             return Task.CompletedTask;
         }
 
-        public IGenesisExecutor<ITaskResult> GetExecutor(string executorName)
+        public IGenesisExecutor<IGenesisExecutionResult> GetExecutor(string executorName)
         {
-            var exe = (IGenesisExecutor<ITaskResult>)InputManager.Inputs.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
+            var exe = (IGenesisExecutor<IGenesisExecutionResult>)InputManager.Inputs.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
 
             if (exe == null)
                 exe = OutputManager.Outputs.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
+
+            if(exe == null)
+                exe = GeneralManager.Current.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
 
             return exe;
         }

@@ -15,7 +15,7 @@ namespace Genesis.Output
     /// The primary class responsible for writing out generated code and imported via the core Extensibility Framework (MEF) 
     /// </summary>
     [Export(nameof(IOutputExecutor), typeof(IOutputExecutor))]
-    public abstract class OutputExecutor : GenesisExecutor<OutputTaskResult>, IOutputExecutor
+    public abstract class OutputExecutor : GenesisExecutor<OutputGenesisExecutionResult>, IOutputExecutor
     {
         private readonly string commandText = "newgenerator";
         public override string CommandText { get => commandText; }

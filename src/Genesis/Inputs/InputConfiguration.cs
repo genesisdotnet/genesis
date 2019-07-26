@@ -3,7 +3,7 @@
 namespace Genesis.Input
 {
     /// <summary>
-    /// Primary configuration class for individual Outputs
+    /// Primary configuration class for individual Current
     /// </summary>
     [Export(nameof(IInputConfiguration), typeof(IInputConfiguration))]
     public class InputConfiguration : IInputConfiguration

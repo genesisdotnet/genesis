@@ -13,9 +13,9 @@ namespace Genesis.Cli.Commands
         public override string Name => "";
         public override string Description => "";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            return await Task.FromResult(new OutputTaskResult() { Success = true, Message = "Bad command or file name" }); //heh
+            return await Task.FromResult(new OutputGenesisExecutionResult() { Success = true, Message = "Bad command or file name" }); //heh
         }
     }
 }

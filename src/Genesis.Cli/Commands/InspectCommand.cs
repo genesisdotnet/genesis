@@ -13,9 +13,9 @@ namespace Genesis.Cli.Commands
 
         public override string Description => "Inspect an IGenesisExecutor";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var btr = new BlankTaskResult();
+            var btr = new BlankGenesisExecutionResult();
 
             var exeName = args[1];
 
