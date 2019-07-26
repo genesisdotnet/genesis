@@ -1,4 +1,4 @@
 ﻿{
-  "Address": "https://localhost:44391/swagger/docs/v2",
+  "Address": "https://petstore.swagger.io/v2/swagger.json",
   "OutputNamespace": "Genesis.Rest.Clients"
 }

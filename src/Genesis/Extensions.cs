@@ -66,6 +66,7 @@ namespace Genesis
         {
             switch (dbDataType.ToLower()) //NOTE: Null?
             {
+                case "string":
                 case "char":
                 case "nchar":
                 case "varchar":
@@ -76,19 +77,26 @@ namespace Genesis
 
                 case "xml": return "Xml";
                 case "int": return "int";
+                case "long":
                 case "bigint": return "long";
+                case "short":
                 case "smallint": return "short";
+                case "byte":
                 case "tinyint": return "byte";
+                case "double":
                 case "money": return "double";
 
                 case "smallmoney":
                 case "decimal":
                 case "numeric":
                     return "decimal";
-
+                case "guid":
                 case "uniqueidentifier": return "Guid";
                 case "float": return "float";
+                case "boolean":
+                case "bool":
                 case "bit": return "bool";
+                case "single":
                 case "real": return "single";
 
                 case "datetime":

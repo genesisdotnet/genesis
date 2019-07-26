@@ -13,7 +13,7 @@ namespace Genesis.Cli.Commands
 
         public override string Description => "Clear the execution Chain";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             genesis.Objects.Clear();
             Text.GrayLine("Objects have been reset");
@@ -23,7 +23,7 @@ namespace Genesis.Cli.Commands
 
             Console.Clear();
 
-            return await Task.FromResult(new BlankTaskResult()); //because nothing broke and we have nothing to report. :| (uh)
+            return await Task.FromResult(new BlankGenesisExecutionResult()); //because nothing broke and we have nothing to report. :| (uh)
         }
     }
 }

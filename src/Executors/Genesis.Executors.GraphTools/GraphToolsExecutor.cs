@@ -2,46 +2,56 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using Genesis.Cli;
+using System.Xml.Serialization;
 using Genesis.Output;
 
-namespace Genesis.Output.Poco
+namespace Genesis.Executors.GraphTools
 {
-    public class PocoGenerator : OutputExecutor
+    public class GraphToolsExecutor : OutputExecutor
     {
-        public override string CommandText => "poco";
-        public override string Description => "(P)lain (O)ld (C)Sharp (O)bject .cs file";
-        public override string FriendlyName => "(P)lain (O)ld (C)Sharp (O)bject";
+        public override string CommandText => "tools";
+        public override string Description => "Tools and utilities for ObjectGraph interaction";
+        public override string FriendlyName => "ObjectGraph Tools & Utilities";
 
-        public PocoConfig Config { get; set; }
+        public GraphToolsConfig Config { get; set; }
 
         protected override void OnInitilized()
         {
-            Config = (PocoConfig)Configuration;
+            Config = (GraphToolsConfig)Configuration;
         }
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var result = new OutputGenesisExecutionResult();
+            _ = args[0].ToLower() switch 
+            {
+                "--dump" => WriteObjectGraphToStorage(genesis, args),
+                _ => WriteUsage()
+            };
+            return await Task.FromResult(new BlankGenesisExecutionResult());
+        }
 
-            try
-            {
-                foreach (var obj in genesis.Objects)
-                {
-                    await ExecuteGraph(obj);
-                }
-                result.Success = true;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                result.Message = e.Message;
-            }
+        private static bool WriteUsage()
+        {
+            Text.YellowLine("Graph Tools Usage");
+            Text.WhiteLine();
+            Text.WhiteLine("--dump              Writes the ObjectGraphs content to Xml");
+            Text.WhiteLine("--clear             Empties the current ObjectGraphs collection");
+            Text.WhiteLine();
+            return true; // wanted to use the new switch syntax ;P
+        }
+
+        private bool WriteObjectGraphToStorage(GenesisContext genesis, string[] args)
+        {
+            var s = new XmlSerializerFactory().CreateSerializer(typeof(ObjectGraph));
+            var outputFilePath = Path.Combine(Config.OutputPath, $"ObjectGraphDump_{DateTime.UtcNow.ToShortDateString() + DateTime.UtcNow.ToShortTimeString()}");
+            using var stream = File.OpenWrite(outputFilePath);
+            s?.Serialize(stream, genesis.Objects);
             
-            return result;
+            Text.YellowLine($"ObjectGraph written to [{outputFilePath}]");
+            return true;
         }
 
         public async Task ExecuteGraph(ObjectGraph objectGraph)

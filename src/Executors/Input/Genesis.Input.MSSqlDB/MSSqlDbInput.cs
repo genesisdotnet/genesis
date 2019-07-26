@@ -28,7 +28,7 @@ namespace Genesis.Input.MSSqlDb
             Config = (SqlConfig)Configuration; //TODO: configuration is wonky
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             var tmp = GetSchema();
 
@@ -42,7 +42,7 @@ namespace Genesis.Input.MSSqlDb
             }
 
             Text.CyanLine("Populated "+genesis.Objects.Count().ToString()+" object(s).");
-            return await Task.FromResult(new InputTaskResult {
+            return await Task.FromResult(new InputGenesisExecutionResult {
                 Success = true,
             });
         }

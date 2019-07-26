@@ -19,17 +19,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		LICENSE = LICENSE
 		README.md = README.md
+		src\ToDo.md = src\ToDo.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.XamarinViewModel", "src\Executors\Output\Genesis.Output.XamarinViewModel\Genesis.Output.XamarinViewModel.csproj", "{702CB7D8-F99E-430F-89A7-4C189D36ABCC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetMvcController", "src\Executors\Output\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj", "{DBA6938E-4793-4CD5-8A27-6C58C3724FDA}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Source Items", "Source Items", "{A6966624-8465-4A19-B9D6-5C279D089F61}"
-	ProjectSection(SolutionItems) = preProject
-		src\LocalDBSqlToCSharp.genesis = src\LocalDBSqlToCSharp.genesis
-		src\ToDo.md = src\ToDo.md
-	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetDbContextCachedRepositories", "src\Executors\Output\Genesis.Output.AspNetDbContextCachedRepositories\Genesis.Output.AspNetDbContextCachedRepositories.csproj", "{CBB9B927-2472-4CF6-AF7D-E771C9721228}"
 EndProject
@@ -74,6 +69,14 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DemoSite", "DemoSite", "{1A3D1154-C606-4FB4-AE19-95A0290BB36A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoSite.Web", "src\DemoSite\DemoSite.Web.csproj", "{3B0A4BEB-4595-499C-B29F-E79931728C3D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9BB5B785-CA7F-4AC3-86E5-88513C768B14}"
+	ProjectSection(SolutionItems) = preProject
+		src\LocalDBSqlToCSharp.genesis = src\LocalDBSqlToCSharp.genesis
+		SwaggerToPoco.genesis = SwaggerToPoco.genesis
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genesis.Executors.GraphTools", "src\Executors\Genesis.Executors.GraphTools\Genesis.Executors.GraphTools.csproj", "{EA2B8335-2F4F-43CB-9133-6B45165002B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -241,6 +244,18 @@ Global
 		{3B0A4BEB-4595-499C-B29F-E79931728C3D}.Release|x64.Build.0 = Release|Any CPU
 		{3B0A4BEB-4595-499C-B29F-E79931728C3D}.Release|x86.ActiveCfg = Release|Any CPU
 		{3B0A4BEB-4595-499C-B29F-E79931728C3D}.Release|x86.Build.0 = Release|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Debug|x64.Build.0 = Debug|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Debug|x86.Build.0 = Debug|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Release|x64.ActiveCfg = Release|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Release|x64.Build.0 = Release|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Release|x86.ActiveCfg = Release|Any CPU
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -250,7 +265,6 @@ Global
 		{D259BD61-4078-45BF-B4D0-B8C2BCF4E875} = {A4522569-85BB-4EF1-AC94-BE2978547AAE}
 		{702CB7D8-F99E-430F-89A7-4C189D36ABCC} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{DBA6938E-4793-4CD5-8A27-6C58C3724FDA} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
-		{A6966624-8465-4A19-B9D6-5C279D089F61} = {A5DA5AE7-9B54-439A-8AD6-E3BEB08D2A99}
 		{CBB9B927-2472-4CF6-AF7D-E771C9721228} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{58162A95-BD9B-48D1-B297-8465FE5216FA} = {A4522569-85BB-4EF1-AC94-BE2978547AAE}
 		{A4522569-85BB-4EF1-AC94-BE2978547AAE} = {7064AAEF-D4AA-4CEB-A3AB-2588672FC1EE}
@@ -261,6 +275,7 @@ Global
 		{0195AE48-AC67-4488-AA87-1EDB46A87068} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{E05B3EBB-0433-4833-97ED-F77EA876C049} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{3B0A4BEB-4595-499C-B29F-E79931728C3D} = {1A3D1154-C606-4FB4-AE19-95A0290BB36A}
+		{EA2B8335-2F4F-43CB-9133-6B45165002B6} = {7064AAEF-D4AA-4CEB-A3AB-2588672FC1EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A29E004-0C17-4E72-AE88-F7EA03136D6E}

@@ -15,6 +15,6 @@ namespace Genesis.Cli.Extensions
 
         Task ProcessHelpCommand(string[] args);
 
-        Task<ITaskResult> Execute(GenesisContext genesis, string[] args);
+        Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args);
     }
 }

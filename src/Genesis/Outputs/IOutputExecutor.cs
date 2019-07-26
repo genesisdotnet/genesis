@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Genesis.Output
 {
-    public interface IOutputExecutor : IGenesisExecutor<ITaskResult>
+    public interface IOutputExecutor : IGenesisExecutor<IGenesisExecutionResult>
     {
         Task AttachDependencies(IList<IOutputDependency> deps);
         Task<bool> DepositDependencies(string outputRoot);

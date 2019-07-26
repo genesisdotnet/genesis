@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Genesis
 {
-    public interface IGenesisExecutor<IGenesisExecutionResult> 
+    public interface IGenesisExecutor<TGenesisExecutionResult> 
     {
         string CommandText { get; }
         string Description { get; }
@@ -13,6 +13,6 @@ namespace Genesis
         Task Initialize();
         Task DisplayConfiguration();
         Task<bool> EditConfig<TPropertyType>(string propertyName, TPropertyType value);
-        Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args);
+        Task<TGenesisExecutionResult> Execute(GenesisContext genesis, string[] args);
     }
 }

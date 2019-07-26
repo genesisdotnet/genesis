@@ -17,7 +17,7 @@ namespace Genesis.Input.Excel
             Config = (ExcelSheetConfig)Configuration; //TODO: configuration is wonky
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             var source = File.ReadAllText(Config.SourcePath);
 

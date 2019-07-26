@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Genesis
 {
-    public class ErrorTaskResult : ITaskResult
+    public class ErrorGenesisExecutionResult : IGenesisExecutionResult
     {
         public bool Success { get; set; }
         public string Message { get; set; }

@@ -11,17 +11,16 @@ using System.Threading.Tasks;
 
 namespace Genesis.Cli
 {
-    static class Program
+    internal static class Program
     {
-        public static bool _isScript = false;
+        public static bool IsScript = false;
         private static string[] _script = new string[] { };
 
         static async Task Main(string[] args)
         {
-            //comment to run the loop
+            //comment to run the loop - OR - use the project properties to pass in args
             //args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
-            //args = new string[] { "--script", "./YamlToPocos.genesis" };
-
+            
             //NOTE:      --script "C:\Path\To\Script.genesis"
             if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
                 await InitializeScript(args[1]);
@@ -33,7 +32,7 @@ namespace Genesis.Cli
 
             await CommandLoader.InitAsync(args);
 
-            if (_isScript)
+            if (IsScript)
             {
                 Text.WhiteLine($"Processing script '{args[1]}' with {_script.Length} lines");
                 Text.YellowLine($"----- {DateTimeOffset.UtcNow}]-----");
@@ -43,13 +42,13 @@ namespace Genesis.Cli
                     Text.WhiteLine($"Executing: '{line}' as {line.ToArgs().Count()} arguments");
 
                     if (line.ToLower().StartsWith("break"))
-                        _isScript = false; //cheesy, but can't set it from a command apparently, CommandLineApplication?
+                        IsScript = false; //cheesy, but can't set it from a command apparently, CommandLineApplication?
 
                     ProcessCommandLine(line.ToArgs().ToArray(), tokenSource);
                 }
             }
             
-            if(!_isScript)
+            if(!IsScript)
             {
                 Text.Yellow("HINT"); Text.White(": '"); Text.Green("?"); Text.White("' for a list of "); Text.CliCommand("commands", false); Text.Line();
                 do
@@ -99,7 +98,7 @@ namespace Genesis.Cli
             for (var i = 0; i < _script.Length; i++)
                 _script[i] = _script[i].Trim(); //cheesy strip off 
 
-            _isScript = true;
+            IsScript = true;
             //TODO: Pre-parse or something to validate it?
         }
 
@@ -158,7 +157,7 @@ namespace Genesis.Cli
                 }, false) //false so it doesn't throw on unknown args, pop and gen commands have no way to know the args ahead of time
                 .OnExecute((async () =>
                 {
-                    Genesis.ITaskResult result;
+                    Genesis.IGenesisExecutionResult result;
                     try
                     {
                         result = await cmd.Execute(GenesisContext.Current, args);
@@ -166,7 +165,7 @@ namespace Genesis.Cli
                     }
                     catch (Exception exception)
                     {
-                        result = new Genesis.BlankTaskResult();
+                        result = new Genesis.BlankGenesisExecutionResult();
                         Text.RedLine(exception.Message);
                     }
 

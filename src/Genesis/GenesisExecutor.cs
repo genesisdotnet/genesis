@@ -8,7 +8,7 @@ using Genesis.Output;
 
 namespace Genesis
 {
-    public abstract class GenesisExecutor<TResultType> : IGenesisExecutor<ITaskResult> where TResultType : ITaskResult, new()
+    public abstract class GenesisExecutor<TResultType> : IGenesisExecutor<IGenesisExecutionResult> where TResultType : IGenesisExecutionResult, new()
     {
         public virtual string CommandText => throw new NotImplementedException();
 
@@ -95,6 +95,6 @@ namespace Genesis
         protected object ConfigObject() 
             => GetType().GetProperty("Config").GetValue(this);
 
-        public abstract Task<ITaskResult> Execute(GenesisContext genesis, string[] args);
+        public abstract Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args);
     }
 }

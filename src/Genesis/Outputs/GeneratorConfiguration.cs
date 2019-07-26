@@ -4,7 +4,7 @@ using System.Composition;
 namespace Genesis.Output
 {
     /// <summary>
-    /// Primary configuration class for individual Outputs
+    /// Primary configuration class for individual Current
     /// </summary>
     [Export(nameof(IOutputConfiguration), typeof(IOutputConfiguration))]
     public class GeneratorConfiguration : IOutputConfiguration

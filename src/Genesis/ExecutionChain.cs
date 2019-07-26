@@ -9,17 +9,17 @@ namespace Genesis
     public class ExecutionChain 
     {
         protected GenesisContext _ctx;
-        protected LinkedList<IGenesisExecutor<ITaskResult>> ll;
+        protected LinkedList<IGenesisExecutor<IGenesisExecutionResult>> ll;
 
         public int Count { get => ll.Count; }
 
         public ExecutionChain(GenesisContext genesisContext)
         {
             _ctx = genesisContext;
-            ll = new LinkedList<IGenesisExecutor<ITaskResult>>();
+            ll = new LinkedList<IGenesisExecutor<IGenesisExecutionResult>>();
         }
 
-        public Task Append(IGenesisExecutor<ITaskResult> executor)
+        public Task Append(IGenesisExecutor<IGenesisExecutionResult> executor)
         {
             ll.AddLast(executor);
 
@@ -34,7 +34,7 @@ namespace Genesis
                     Text.WhiteLine(".");
                 });        
 
-        public Task ForEach(Action<IGenesisExecutor<ITaskResult>> action)
+        public Task ForEach(Action<IGenesisExecutor<IGenesisExecutionResult>> action)
         {
             var node = ll.First;
             while (node != null && node.Value != null)
@@ -46,15 +46,15 @@ namespace Genesis
             return Task.CompletedTask;
         }
 
-        public List<ITaskResult> Execute(string[] args)
+        public List<IGenesisExecutionResult> Execute(string[] args)
         {
             Text.Line();
             Text.WhiteLine($"Beginning serial execution of {ll.Count} executors.");
 
-            var results = new List<ITaskResult>();
+            var results = new List<IGenesisExecutionResult>();
 
             ForEach(e => {
-                ITaskResult result = null;
+                IGenesisExecutionResult result = null;
                 try
                 {
                     Text.Execute($"{e.GetType().Name}"); Text.Line();
