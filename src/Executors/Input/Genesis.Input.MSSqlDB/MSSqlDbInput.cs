@@ -28,7 +28,7 @@ namespace Genesis.Input.MSSqlDb
             Config = (SqlConfig)Configuration; //TODO: configuration is wonky
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             var tmp = GetSchema();
 
@@ -42,7 +42,7 @@ namespace Genesis.Input.MSSqlDb
             }
 
             Text.CyanLine("Populated "+genesis.Objects.Count().ToString()+" object(s).");
-            return await Task.FromResult(new InputTaskResult {
+            return await Task.FromResult(new InputGenesisExecutionResult {
                 Success = true,
             });
         }
@@ -56,76 +56,70 @@ namespace Genesis.Input.MSSqlDb
             var objs = new List<ObjectGraph>();
             using (var con = new SqlConnection(Config.ConnectionString))
             {
-                using (var r = new SqlCommand("SELECT * FROM [sys].[Tables] WHERE [type_desc] = 'USER_TABLE'", con))
+                using var r = new SqlCommand("SELECT * FROM [sys].[Tables] WHERE [type_desc] = 'USER_TABLE'", con);
+                con.Open();
+
+                using var rdr = r.ExecuteReader(CommandBehavior.CloseConnection);
+                if (!rdr.HasRows)
+                    return objs; //TODO: This could suck, user won't see anything new. Needs message stating no rows.
+
+                objs.Clear();
+
+                while (rdr.Read())
                 {
-                    con.Open();
+                    if (rdr["name"].ToString().StartsWith("_")) //just removing EF migrations etc, should make a toggle
+                        continue;
 
-                    using (var rdr = r.ExecuteReader(CommandBehavior.CloseConnection))
+                    objs.Add(new ObjectGraph
                     {
-                        if (!rdr.HasRows)
-                            return objs; //TODO: This could suck, user won't see anything new. Needs message stating no rows.
-
-                        objs.Clear();
-
-                        while (rdr.Read())
-                        {
-                            if (rdr["name"].ToString().StartsWith("_")) //just removing EF migrations etc, should make a toggle
-                                continue;
-
-                            objs.Add(new ObjectGraph
-                            {
-                                Name = rdr["name"].ToString(),
-                                SourceType = rdr["type"].ToString(),
-                                KeyId = int.Parse(rdr["object_id"].ToString()),
-                            });
-                        }
-                    }
+                        Name = rdr["name"].ToString(),
+                        SourceType = rdr["type"].ToString(),
+                        KeyId = int.Parse(rdr["object_id"].ToString()),
+                    });
                 }
             }
             foreach (var obj in objs)
             {
-                using (var con = new SqlConnection(Config.ConnectionString))
-                {
+                using var con = new SqlConnection(Config.ConnectionString);
+
+                con.Open();
+
+                using var cmd = new SqlCommand(Q_TABLE_PROPERTIES, con);
+
+                cmd.Parameters.AddWithValue("@objectID", obj.KeyId);
+
+                if (con.State != ConnectionState.Open)
                     con.Open();
-                    using (var cmd = new SqlCommand(Q_TABLE_PROPERTIES, con))
+
+                using var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+                if (!rdr.HasRows)
+                    continue;
+
+                obj.Properties.Clear();
+
+                while (rdr.Read())
+                {
+                    if (rdr["name"].ToString().StartsWith("_")) //migrations-ish table(s), skip them
+                        continue;
+
+                    obj.Properties.Add(new PropertyGraph
                     {
-                        cmd.Parameters.AddWithValue("@objectID", obj.KeyId);
-
-                        if (con.State != ConnectionState.Open)
-                            con.Open();
-
-                        using (var rdr = cmd.ExecuteReader(CommandBehavior.CloseConnection))
-                        {
-                            if (!rdr.HasRows)
-                                continue;
-
-                            obj.Properties.Clear();
-
-                            while (rdr.Read())
-                            {
-                                if (rdr["name"].ToString().StartsWith("_")) //migrations-ish table(s), skip them
-                                    continue;
-
-                                obj.Properties.Add(new PropertyGraph
-                                {
-                                    Name = rdr["name"].ToString(),
-                                    SourceType = rdr["SqlTypeName"].ToString(),
-                                    TypeGuess = "convert me 2 c#", //TODO: Convert this to something csharpy for the generators, yeah assuming a lot
-                                    //ColumnID = rdr.GetInt32(rdr.GetOrdinal("column_id")), //don't need yet?
-                                    IsNullable = rdr.GetBoolean(rdr.GetOrdinal("is_nullable")),
-                                    //IsRowGuid = rdr.GetBoolean(rdr.GetOrdinal("is_rowguidcol")),
-                                    IsKeyProperty = rdr.GetBoolean(rdr.GetOrdinal("is_identity")),
-                                    //IsComputed = rdr.GetBoolean(rdr.GetOrdinal("is_computed")),
-                                    //MaxLength = rdr.GetInt16(rdr.GetOrdinal("max_length")),
-                                    //Precision = rdr.GetByte(rdr.GetOrdinal("precision")),
-                                    //Scale = rdr.GetByte(rdr.GetOrdinal("scale")),
-                                    //SystemTypeID = rdr.GetByte(rdr.GetOrdinal("system_type_id")),
-                                    //ObjectID = rdr.GetInt32(rdr.GetOrdinal("object_id")),
-                                });
-                            }
-                        }
-                    }
-                }                
+                        Name = rdr["name"].ToString(),
+                        SourceType = rdr["SqlTypeName"].ToString(),
+                        TypeGuess = "convert me 2 c#", //TODO: Convert this to something csharpy for the generators, yeah assuming a lot
+                                                       //ColumnID = rdr.GetInt32(rdr.GetOrdinal("column_id")), //don't need yet?
+                        IsNullable = rdr.GetBoolean(rdr.GetOrdinal("is_nullable")),
+                        //IsRowGuid = rdr.GetBoolean(rdr.GetOrdinal("is_rowguidcol")),
+                        IsKeyProperty = rdr.GetBoolean(rdr.GetOrdinal("is_identity")),
+                        //IsComputed = rdr.GetBoolean(rdr.GetOrdinal("is_computed")),
+                        //MaxLength = rdr.GetInt16(rdr.GetOrdinal("max_length")),
+                        //Precision = rdr.GetByte(rdr.GetOrdinal("precision")),
+                        //Scale = rdr.GetByte(rdr.GetOrdinal("scale")),
+                        //SystemTypeID = rdr.GetByte(rdr.GetOrdinal("system_type_id")),
+                        //ObjectID = rdr.GetInt32(rdr.GetOrdinal("object_id")),
+                    });
+                }
             }
             return objs;
         }

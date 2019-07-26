@@ -14,9 +14,9 @@ namespace Genesis.Cli.Commands
 
         public override string Description => "Execute!";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var r = new BlankTaskResult();
+            var r = new BlankGenesisExecutionResult();
 
             if(args.Length == 1)
             {
@@ -35,7 +35,7 @@ namespace Genesis.Cli.Commands
             if(exe != null) //executor name
             {
                 await exe.Execute(genesis, args);
-                return new BlankTaskResult(); //whatever for now
+                return new BlankGenesisExecutionResult(); //whatever for now
             }
             else if (args[1] == "chain")
             {
@@ -50,22 +50,22 @@ namespace Genesis.Cli.Commands
                 if (errorCount == 0)
                 {
                     Text.SuccessGraffiti();
-                    return new OutputTaskResult { Success = true };
+                    return new OutputGenesisExecutionResult { Success = true };
                 }
 
                 if (errorCount < genesis.Chain.Count)
                 {
                     Text.WarningGraffiti();
-                    return new OutputTaskResult { Success = false };
+                    return new OutputGenesisExecutionResult { Success = false };
                 }
 
                 if (errorCount == genesis.Chain.Count)
                 {
                     Text.ErrorGraffiti();
-                    return new OutputTaskResult { Success = false };
+                    return new OutputGenesisExecutionResult { Success = false };
                 }
 
-                return new BlankTaskResult(); //whatever for now
+                return new BlankGenesisExecutionResult(); //whatever for now
             }
             else
             {

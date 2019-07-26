@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Genesis
 {
-    public class BlankTaskResult : ITaskResult
+    public class BlankGenesisExecutionResult : IGenesisExecutionResult
     {
-        public BlankTaskResult()
+        public BlankGenesisExecutionResult()
         {
 
         }

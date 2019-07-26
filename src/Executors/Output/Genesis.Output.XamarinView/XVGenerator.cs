@@ -22,9 +22,9 @@ namespace Genesis.Output.Poco
             Config = (XVConfig)Configuration;
         }
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var result = new OutputTaskResult();
+            var result = new OutputGenesisExecutionResult();
 
             foreach (var obj in genesis.Objects)
             {

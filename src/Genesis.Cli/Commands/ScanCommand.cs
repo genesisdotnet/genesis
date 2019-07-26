@@ -6,17 +6,18 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Genesis.Executors;
 
 namespace Genesis.Cli.Commands
 {
     public class ScanCommand : GenesisCommand
     {
         public override string Name { get => "scan"; }
-        public override string Description => "Scan the filesystem for Producers and Outputs within assemblies";
+        public override string Description => "Scan the filesystem for Inputs, Outputs and general Executors within assemblies";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var result = new BlankTaskResult() { Success = true, Message = "" };
+            var result = new BlankGenesisExecutionResult() { Success = true, Message = "" };
 
             Text.Line();
             Text.YellowLine("Scanning for Inputs:");
@@ -29,13 +30,22 @@ namespace Genesis.Cli.Commands
 
             Text.Line();
 
+            Text.YellowLine("Scanning for General Executors: ");
+            await GeneralManager.InitializeGeneratorsAsync(true);
+
+            Text.Line();
+
             Console.ForegroundColor = (InputManager.Inputs.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
             Text.White($@"{InputManager.Inputs.Count}");
-            Text.WhiteLine($" Potential Inputs(s)");
+            Text.WhiteLine($" Potential Input(s)");
 
             Console.ForegroundColor = (OutputManager.Outputs.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
             Text.White($"{OutputManager.Outputs.Count}");
-            Text.WhiteLine(" Possible Outputs(s)");
+            Text.WhiteLine(" Possible Output(s)");
+
+            Console.ForegroundColor = (GeneralManager.Current.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
+            Text.White($"{GeneralManager.Current.Count}");
+            Text.WhiteLine(" General Executor(s)");
 
             Text.Line();
             Text.White("The ");Text.Green("green"); Text.WhiteLine(" text is how you reference an Executor. ");

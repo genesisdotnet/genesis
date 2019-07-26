@@ -12,7 +12,7 @@ namespace Genesis.Cli.Commands
         public override string Name => "deps";
         public override string Description => "Manipulate generator dependencies";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             var exe = (IOutputExecutor)GetExecutor(args[1]);
             switch (args[2])
@@ -40,7 +40,7 @@ namespace Genesis.Cli.Commands
                     break;
             }
 
-            return await Task.FromResult(new OutputTaskResult() { Success = true }); //heh
+            return await Task.FromResult(new OutputGenesisExecutionResult() { Success = true }); //heh
         }
     }
 }

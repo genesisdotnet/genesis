@@ -12,7 +12,7 @@ namespace Genesis.Cli.Commands
         public override string Name { get => "help"; }
         public override string Description => "We'll try to";
 
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             Text.Line();
             Text.DarkCyanLine("How this works:");
@@ -29,7 +29,7 @@ namespace Genesis.Cli.Commands
             Text.Line();
             Text.GrayLine("This effectively reads sql schema so that a poco generator can access that schema and do what it needs to. In this case, it's to write c# class files for each of the Sql Table objects.");
 
-            return await Task.FromResult(new BlankTaskResult { Success = true, Message = "" }); ;
+            return await Task.FromResult(new BlankGenesisExecutionResult { Success = true, Message = "" }); ;
         }
     }
 }

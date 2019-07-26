@@ -22,7 +22,7 @@ namespace Genesis.Cli.Commands
             Console.ResetColor();
             Console.WriteLine();
 
-            if (OutputManager.Outputs.Count == 0 && InputManager.Inputs.Count == 0) //NO Outputs Found
+            if (OutputManager.Outputs.Count == 0 && InputManager.Inputs.Count == 0) //NO Current Found
             {
                 Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.Write("There are no Executors discovered yet. Run a '");
@@ -45,9 +45,9 @@ namespace Genesis.Cli.Commands
 
             return base.OnHelpRequested(args);
         }
-        public override async Task<ITaskResult> Execute(GenesisContext genesis, string[] args)
+        public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var result = new OutputTaskResult { Success = true };
+            var result = new OutputGenesisExecutionResult { Success = true };
 
             if (args.Length == 1) //config
             {
