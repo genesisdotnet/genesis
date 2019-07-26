@@ -26,7 +26,7 @@ namespace Genesis.Cli
             if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
                 await InitializeScript(args[1]);
 
-            var tokenSource = new CancellationTokenSource(); //TODO: Is this even necessary here? 
+            using var tokenSource = new CancellationTokenSource();
 
             Text.White($"Genesis Creation Engine "); Text.GrayLine(GetVersionDisplayString());
             Text.Line();
@@ -48,8 +48,8 @@ namespace Genesis.Cli
                     ProcessCommandLine(line.ToArgs().ToArray(), tokenSource);
                 }
             }
-            
-            if(!_isScript)
+
+            if (!_isScript)
             {
                 Text.Yellow("HINT"); Text.White(": '"); Text.Green("?"); Text.White("' for a list of "); Text.CliCommand("commands", false); Text.Line();
                 do
@@ -57,12 +57,10 @@ namespace Genesis.Cli
                     if (tokenSource.IsCancellationRequested)
                         Environment.Exit(-3);
 
-                    Console.Write($@"genesis{GenesisContext.Scope?.PromptString}>"); //this could be interesting? or confusing, or stupid. :D
+                    Text.White($@"genesis{GenesisContext.Scope?.PromptString}>"); //this could be interesting? or confusing, or stupid. :D
 
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    args = Console.ReadLine().ToArgs().ToArray(); //TOOD: read key and stop coloring after a command is completed etc. 
-                    Console.ResetColor();
-
+                    args = Console.ReadLine().ToArgs().ToArray();
+                    
                     ProcessCommandLine(args, tokenSource);
                 }
                 while (!tokenSource.IsCancellationRequested);
@@ -113,23 +111,14 @@ namespace Genesis.Cli
             if (tokenSource.IsCancellationRequested)
                 Environment.Exit(-2);
 
-            CommandLineApplication app = ExecuteContext(args);
+            var ctx = ExecuteContext(args);
             try
             {
-                if (0 == app.Execute(args)) //command executed successfully '0' is success, all others are errors
-                {
-
-                }
-                else
-                {
-
-                }
+                _ = ctx.Execute(args); //results are ignored
             }
             catch (Exception cliex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($@"{cliex.Message}"); //displayed to the console
-                Console.ResetColor();
+                Text.RedLine($@"{cliex.Message}"); //displayed to the console
             }
         }
         /// <summary>
