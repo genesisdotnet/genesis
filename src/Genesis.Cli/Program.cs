@@ -147,7 +147,7 @@ namespace Genesis.Cli
                 }, false) //false so it doesn't throw on unknown args, pop and gen commands have no way to know the args ahead of time
                 .OnExecute((async () =>
                 {
-                    Genesis.ITaskResult result;
+                    IGenesisExecutionResult result;
                     try
                     {
                         result = await cmd.Execute(GenesisContext.Current, args);
@@ -155,7 +155,7 @@ namespace Genesis.Cli
                     }
                     catch (Exception exception)
                     {
-                        result = new Genesis.BlankTaskResult();
+                        result = new BlankGenesisExecutionResult();
                         Text.RedLine(exception.Message);
                     }
 
