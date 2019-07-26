@@ -16,6 +16,9 @@ They're responsible for interrogating some data store (or weburl, or text file, 
 ##### `Output` executors do exactly that, output files.
 They can use the data in the ObjectGraphs to write out classes, services, interfaces, clients, repositories etc. Anything really. They don't even have to write code. They could document...
 
+##### `General` executors do everything else.
+General executors don't necessarily "read" something like an input, and don't necessarily "write" something as an output. They do have access to the "current" ObjectGraphs in memory.
+
 * They each have their own configuration.json as well as an auto-mapped (not AutoMapper :D) & Typed Configuration object. 
 
 * OutputExecutors can have dependencies, or support files required to make the generated code work. This is open to refactoring
