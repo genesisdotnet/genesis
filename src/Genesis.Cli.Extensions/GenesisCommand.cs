@@ -4,6 +4,7 @@ using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Genesis.Executors;
 
 namespace Genesis.Cli.Extensions
 {
@@ -63,6 +64,9 @@ namespace Genesis.Cli.Extensions
 
             if (exe == null)
                 exe = OutputManager.Outputs.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
+
+            if(exe == null)
+                exe = GeneralManager.Current.Where(w => w.CommandText.Equals(executorName, StringComparison.Ordinal)).SingleOrDefault();
 
             return exe;
         }

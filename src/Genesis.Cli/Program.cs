@@ -25,7 +25,7 @@ namespace Genesis.Cli
             if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
                 await InitializeScript(args[1]);
 
-            var tokenSource = new CancellationTokenSource(); //TODO: Is this even necessary here? 
+            using var tokenSource = new CancellationTokenSource(); //TODO: Is this even necessary here? 
 
             Text.White($"Genesis Creation Engine "); Text.GrayLine(GetVersionDisplayString());
             Text.Line();
@@ -155,9 +155,9 @@ namespace Genesis.Cli
                     cfg.ShowInHelpText = true;
                     /* arguments and options */
                 }, false) //false so it doesn't throw on unknown args, pop and gen commands have no way to know the args ahead of time
-                .OnExecute((async () =>
+                .OnExecute((Func<Task<int>>)(async () =>
                 {
-                    Genesis.IGenesisExecutionResult result;
+                    IGenesisExecutionResult result;
                     try
                     {
                         result = await cmd.Execute(GenesisContext.Current, args);

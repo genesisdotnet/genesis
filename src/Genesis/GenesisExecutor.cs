@@ -8,7 +8,7 @@ using Genesis.Output;
 
 namespace Genesis
 {
-    public abstract class GenesisExecutor<TResultType> : IGenesisExecutor<IGenesisExecutionResult> where TResultType : IGenesisExecutionResult, new()
+    public abstract class GenesisExecutor<GenesisExecutionResult> : IGenesisExecutor<IGenesisExecutionResult>
     {
         public virtual string CommandText => throw new NotImplementedException();
 

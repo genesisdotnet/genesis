@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Genesis.Output
 {
-    public class OutputGenesisExecutionResult : BlankGenesisExecutionResult
+    public class OutputGenesisExecutionResult : BlankGenesisExecutionResult, IGenesisExecutionResult
     {
         public override bool Success { get; set; } = false;
         public override string Message { get; set; } = "Fail";

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Genesis.Executors;
 
 namespace Genesis.Cli.Commands
 {
@@ -30,7 +31,7 @@ namespace Genesis.Cli.Commands
             Text.Line();
 
             Text.YellowLine("Scanning for General Executors: ");
-            await OutputManager.InitializeGeneratorsAsync(true);
+            await GeneralManager.InitializeGeneratorsAsync(true);
 
             Text.Line();
 
@@ -42,8 +43,8 @@ namespace Genesis.Cli.Commands
             Text.White($"{OutputManager.Outputs.Count}");
             Text.WhiteLine(" Possible Output(s)");
 
-            Console.ForegroundColor = (OutputManager.Outputs.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
-            Text.White($"{OutputManager.Outputs.Count}");
+            Console.ForegroundColor = (GeneralManager.Current.Count > 0) ? ConsoleColor.Green : ConsoleColor.Yellow;
+            Text.White($"{GeneralManager.Current.Count}");
             Text.WhiteLine(" General Executor(s)");
 
             Text.Line();

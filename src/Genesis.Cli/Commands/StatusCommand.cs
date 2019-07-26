@@ -28,7 +28,7 @@ namespace Genesis.Cli.Commands
             {
                 var tmp = new List<string>(args);
 
-                if(tmp.Contains("detailed") || tmp.Contains("-d") || tmp.Contains("d"))
+                if (tmp.Contains("detailed") || tmp.Contains("--detailed") || tmp.Contains("-d"))
                 {
                     foreach (var exe in InputManager.Inputs)
                         DisplayDetail(exe);
@@ -51,7 +51,7 @@ namespace Genesis.Cli.Commands
             {
                 var tmp = new List<string>(args);
 
-                if (tmp.Contains("detailed") || tmp.Contains("-d") || tmp.Contains("d"))
+                if (tmp.Contains("detailed") || tmp.Contains("--detailed") || tmp.Contains("-d"))
                 {
                     foreach (var exe in OutputManager.Outputs)
                         DisplayDetail(exe);
@@ -64,7 +64,7 @@ namespace Genesis.Cli.Commands
             }
 
             Text.Line();
-            Text.WhiteLine("Known Outputs:");
+            Text.WhiteLine("Known Generals:");
 
             if (ExecutorManager.Current.Count == 0)
             {

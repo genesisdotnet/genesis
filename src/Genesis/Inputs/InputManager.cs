@@ -40,56 +40,54 @@ namespace Genesis.Input
 
             //TODO: Post-build steps for InputExecutor assemblies
 
-            using (var container = configuration.CreateContainer())
+            using var container = configuration.CreateContainer();
+            var populators = container.GetExports<IInputExecutor>();
+
+            Inputs.Clear();
+
+            foreach (var populator in populators)
             {
-                var populators = container.GetExports<IInputExecutor>();
+                Inputs.Add(populator);
 
-                Inputs.Clear();
-
-                foreach (var populator in populators)
+                var configType = populator.GetType().GetRuntimeProperty("Config").PropertyType ?? typeof(InputConfiguration);
+                var config = configType.IsInstanceOfType(typeof(InputConfiguration));
+                var cfgWarning = false;
+                try
                 {
-                    Inputs.Add(populator);
+                    //cmdtext was located from friendlyname and is available if it succeedes
+                    if (typeof(InputConfiguration).IsAssignableFrom(configType)) //Make sure we can use it
+                        populator.Configuration = (IInputConfiguration)Activator.CreateInstance(configType, true);
 
-                    var configType = populator.GetType().GetRuntimeProperty("Config").PropertyType ?? typeof(InputConfiguration);
-                    var config = configType.IsInstanceOfType(typeof(InputConfiguration));
-                    var cfgWarning = false;
-                    try
+                    //bind the configuration json to the config instance
+                    if (writeOutputMessages && !GenesisConfiguration.ApplyFromJson(configType, $"{configType.Name}.json", populator.Configuration))
                     {
-                        //cmdtext was located from friendlyname and is available if it succeedes
-                        if (typeof(InputConfiguration).IsAssignableFrom(configType)) //Make sure we can use it
-                            populator.Configuration = (IInputConfiguration)Activator.CreateInstance(configType, true);
-
-                        //bind the configuration json to the config instance
-                        if (writeOutputMessages && !GenesisConfiguration.ApplyFromJson(configType, $"{configType.Name}.json", populator.Configuration))
-                        {
-                            cfgWarning = true;
-                            Text.RedLine($"Unable to configure from {configType.Name}.json for {populator.GetType().Name}");
-                        }
-
-                        await populator.Initialize();
-
-                        if (!writeOutputMessages)
-                            continue;
-
-                        Text.White($"'"); Text.Green(populator.CommandText); Text.White("' (");Text.Cyan(populator.FriendlyName);Text.White(") was found in '"); Text.Blue(populator.GetType().Name); Text.White("'... ");
-
-                        if (cfgWarning)
-                            Text.YellowLine("warning");
-                        else
-                            Text.GreenLine("OK");
-
-                        Console.ResetColor();
+                        cfgWarning = true;
+                        Text.RedLine($"Unable to configure from {configType.Name}.json for {populator.GetType().Name}");
                     }
-                    catch (Exception exc)
-                    {
-                        if (!writeOutputMessages)
-                            continue;
 
-                        Console.Write($"'{populator.FriendlyName}': ");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine(exc.Message);
-                        Console.ResetColor();
-                    }
+                    await populator.Initialize();
+
+                    if (!writeOutputMessages)
+                        continue;
+
+                    Text.White($"'"); Text.Green(populator.CommandText); Text.White("' ("); Text.Cyan(populator.FriendlyName); Text.White(") was found in '"); Text.Blue(populator.GetType().Name); Text.White("'... ");
+
+                    if (cfgWarning)
+                        Text.YellowLine("warning");
+                    else
+                        Text.GreenLine("OK");
+
+                    Console.ResetColor();
+                }
+                catch (Exception exc)
+                {
+                    if (!writeOutputMessages)
+                        continue;
+
+                    Console.Write($"'{populator.FriendlyName}': ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(exc.Message);
+                    Console.ResetColor();
                 }
             }
         }

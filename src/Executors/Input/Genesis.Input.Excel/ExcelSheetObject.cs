@@ -19,8 +19,6 @@ namespace Genesis.Input.Excel
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var source = File.ReadAllText(Config.SourcePath);
-
             //TODO: Use some open source library to read from an .xls(x) file
 
             return await base.Execute(genesis, args);

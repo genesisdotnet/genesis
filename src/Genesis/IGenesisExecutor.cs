@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Genesis
 {
-    public interface IGenesisExecutor<TGenesisExecutionResult> 
+    public interface IGenesisExecutor<TGenesisExecutionResult> where TGenesisExecutionResult : IGenesisExecutionResult
     {
         string CommandText { get; }
         string Description { get; }
