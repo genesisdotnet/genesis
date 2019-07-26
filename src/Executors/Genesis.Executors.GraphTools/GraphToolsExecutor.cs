@@ -53,12 +53,16 @@ namespace Genesis.Executors.GraphTools
         {
             var s = new XmlSerializerFactory().CreateSerializer(typeof(List<ObjectGraph>));
 
-            var outDir = @"Output";
+            var outDir = Path.Combine(Environment.CurrentDirectory, @"Output");
             if (!Directory.Exists(outDir))
                 Directory.CreateDirectory(outDir);
 
-            var outputFilePath = Path.Combine(outDir, $"ObjectGraphDump_{DateTime.UtcNow.ToShortDateString() + DateTime.UtcNow.Ticks.ToString()}.xml");
+            var d = DateTime.UtcNow;
+            var fileName = $"ObjectGraphDump_{d.Day}{ d.Hour}{d.Minute}{d.Second}{d.Millisecond}.xml";
+            var outputFilePath = Path.Combine(outDir, fileName);
+
             using var stream = File.OpenWrite(outputFilePath);
+
             s?.Serialize(stream, genesis.Objects);
 
             Text.YellowLine($"ObjectGraph written to [{outputFilePath}]");
