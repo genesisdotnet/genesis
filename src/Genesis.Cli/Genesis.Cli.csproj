@@ -39,6 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Executors\Genesis.Executors.GraphTools\Genesis.Executors.GraphTools.csproj" />
     <ProjectReference Include="..\Executors\Input\Genesis.Input.Excel\Genesis.Input.Excel.csproj" />
     <ProjectReference Include="..\Executors\Input\Genesis.Input.MSSqlDB\Genesis.Input.MSSqlDb.csproj" />
     <ProjectReference Include="..\Executors\Input\Genesis.Input.SwaggerUrl\Genesis.Input.SwaggerUrl.csproj" />
