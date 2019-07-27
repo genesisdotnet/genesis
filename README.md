@@ -1,9 +1,9 @@
 # Genesis .Net
-An input-agnostic code generation tool written in C# 8.0 on .Net 3.0 core/standard. Data from pretty much any source that .Net is able to consume can be used to generate a variety of boilerplate code files. 
+An orchestration-based code generation tool. Data from pretty much any source that .Net is able to consume can be used to generate a variety of boilerplate code files. 
 
 **Preview bits are required**
 
-[.Net Core 3.0.100 Preview 6](https://github.com/dotnet/corefx/releases/tag/v3.0.0-preview6.19303.8) (or whatever version is current)
+[.Net Core 3.0.100 Preview 7](https://github.com/dotnet/core/blob/master/release-notes/3.0/preview/3.0.0-preview7-download.md) (or whatever version is current)
 
 [Visual Studio Win/Mac Preview](https://visualstudio.com/preview "Visual Studio Win/Mac Preview") This will **only** compile using a preview version of Visual Studio until 3.0 and C# 8.0 are released.
 
