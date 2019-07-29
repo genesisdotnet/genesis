@@ -11,28 +11,25 @@ using System.Threading.Tasks;
 
 namespace Genesis.Cli
 {
-    internal static class Program
+    static class Program
     {
-        public static bool IsScript = false;
+        public static bool _isScript = false;
         private static string[] _script = new string[] { };
 
         static async Task Main(string[] args)
         {
-            //comment to run the loop - OR - use the project properties to pass in args
-            //args = new string[] { "--script", "./LocalDBSqlToCSharp.genesis" };
-            
             //NOTE:      --script "C:\Path\To\Script.genesis"
             if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
                 await InitializeScript(args[1]);
 
-            using var tokenSource = new CancellationTokenSource(); //TODO: Is this even necessary here? 
+            using var tokenSource = new CancellationTokenSource();
 
             Text.White($"Genesis Creation Engine "); Text.GrayLine(GetVersionDisplayString());
             Text.Line();
 
             await CommandLoader.InitAsync(args);
 
-            if (IsScript)
+            if (_isScript)
             {
                 Text.WhiteLine($"Processing script '{args[1]}' with {_script.Length} lines");
                 Text.YellowLine($"----- {DateTimeOffset.UtcNow}]-----");
@@ -42,13 +39,13 @@ namespace Genesis.Cli
                     Text.WhiteLine($"Executing: '{line}' as {line.ToArgs().Count()} arguments");
 
                     if (line.ToLower().StartsWith("break"))
-                        IsScript = false; //cheesy, but can't set it from a command apparently, CommandLineApplication?
+                        _isScript = false; //cheesy, but can't set it from a command apparently, CommandLineApplication?
 
                     ProcessCommandLine(line.ToArgs().ToArray(), tokenSource);
                 }
             }
-            
-            if(!IsScript)
+
+            if (!_isScript)
             {
                 Text.Yellow("HINT"); Text.White(": '"); Text.Green("?"); Text.White("' for a list of "); Text.CliCommand("commands", false); Text.Line();
                 do
@@ -56,12 +53,10 @@ namespace Genesis.Cli
                     if (tokenSource.IsCancellationRequested)
                         Environment.Exit(-3);
 
-                    Console.Write($@"genesis{GenesisContext.Scope?.PromptString}>"); //this could be interesting? or confusing, or stupid. :D
+                    Text.White($@"genesis{GenesisContext.Scope?.PromptString}>"); //this could be interesting? or confusing, or stupid. :D
 
-                    Console.ForegroundColor = ConsoleColor.Green;
-                    args = Console.ReadLine().ToArgs().ToArray(); //TOOD: read key and stop coloring after a command is completed etc. 
-                    Console.ResetColor();
-
+                    args = Console.ReadLine().ToArgs().ToArray();
+                    
                     ProcessCommandLine(args, tokenSource);
                 }
                 while (!tokenSource.IsCancellationRequested);
@@ -98,7 +93,7 @@ namespace Genesis.Cli
             for (var i = 0; i < _script.Length; i++)
                 _script[i] = _script[i].Trim(); //cheesy strip off 
 
-            IsScript = true;
+            _isScript = true;
             //TODO: Pre-parse or something to validate it?
         }
 
@@ -112,23 +107,14 @@ namespace Genesis.Cli
             if (tokenSource.IsCancellationRequested)
                 Environment.Exit(-2);
 
-            CommandLineApplication app = ExecuteContext(args);
+            var ctx = ExecuteContext(args);
             try
             {
-                if (0 == app.Execute(args)) //command executed successfully '0' is success, all others are errors
-                {
-
-                }
-                else
-                {
-
-                }
+                _ = ctx.Execute(args); //results are ignored
             }
             catch (Exception cliex)
             {
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($@"{cliex.Message}"); //displayed to the console
-                Console.ResetColor();
+                Text.RedLine($@"{cliex.Message}"); //displayed to the console
             }
         }
         /// <summary>
@@ -155,7 +141,7 @@ namespace Genesis.Cli
                     cfg.ShowInHelpText = true;
                     /* arguments and options */
                 }, false) //false so it doesn't throw on unknown args, pop and gen commands have no way to know the args ahead of time
-                .OnExecute((Func<Task<int>>)(async () =>
+                .OnExecute((async () =>
                 {
                     IGenesisExecutionResult result;
                     try
@@ -165,7 +151,7 @@ namespace Genesis.Cli
                     }
                     catch (Exception exception)
                     {
-                        result = new Genesis.BlankGenesisExecutionResult();
+                        result = new BlankGenesisExecutionResult();
                         Text.RedLine(exception.Message);
                     }
 
