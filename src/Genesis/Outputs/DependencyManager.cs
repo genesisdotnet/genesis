@@ -22,15 +22,14 @@ namespace Genesis.Output
 
             foreach (var i in chunks)
             {
-                using (var rdr = new StringReader(i))
-                {
-                    var pathFragment = rdr.ReadLine();
-                    var content = rdr.ReadToEnd();
+                using var rdr = new StringReader(i);
 
-                    result.Add(new GenesisDependency(pathFragment, content));
+                var pathFragment = rdr.ReadLine();
+                var content = rdr.ReadToEnd();
 
-                    rdr.Dispose();
-                }
+                result.Add(new GenesisDependency(pathFragment, content));
+
+                rdr.Dispose();
             }
 
             return result;

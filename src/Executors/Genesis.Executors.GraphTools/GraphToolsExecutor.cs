@@ -18,7 +18,7 @@ namespace Genesis.Executors.GraphTools
 
         public GraphToolsConfig Config { get; set; } = new GraphToolsConfig();
 
-        protected override void OnInitilized()
+        protected override void OnInitialized()
         {
             Config = (GraphToolsConfig)Configuration;
         }

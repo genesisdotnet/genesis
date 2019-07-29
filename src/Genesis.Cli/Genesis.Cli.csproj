@@ -22,12 +22,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\SwaggerToPoco.genesis" Link="SwaggerToPoco.genesis">
+    <None Include="..\LocalDBSqlToCSharp.genesis" Link="LocalDBSqlToCSharp.genesis">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\LocalDBSqlToCSharp.genesis" Link="LocalDBSqlToCSharp.genesis">
+    <None Include="..\SwaggerToPoco.genesis" Link="SwaggerToPoco.genesis">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

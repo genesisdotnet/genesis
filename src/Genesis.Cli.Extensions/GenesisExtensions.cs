@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Genesis.Cli.Extensions
 {
-    public static class GenesisExtensions
-    {
-        public static void Yes(this GenesisCommand command)
-        {
-            //just
-        }
-    }
+    //public static class GenesisExtensions
+    //{
+    //    public static void Yes(this GenesisCommand command)
+    //    {
+    //        //just
+    //    }
+    //}
 }

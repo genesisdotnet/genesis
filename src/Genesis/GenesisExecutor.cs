@@ -16,26 +16,20 @@ namespace Genesis
 
         public virtual string FriendlyName => throw new NotImplementedException();
 
-        private bool _init;
-
-        public virtual bool Initialized
-        {
-            get { return _init; }
-            protected set { _init = value; }
-        }
+        public virtual bool Initialized { get; protected set; }
 
         public Task Initialize()
         {
             Initialized = false;
 
-            OnInitilized();
+            OnInitialized();
 
             Initialized = true;
 
             return Task.CompletedTask;
         }
 
-        protected virtual void OnInitilized()//TODO: Pass args[] to OutputExecutor.OnInitialized
+        protected virtual void OnInitialized()//TODO: Pass args[] to OutputExecutor.OnInitialized
         {
 
         }
@@ -64,7 +58,7 @@ namespace Genesis
 
         public async virtual Task<bool> EditConfig<TPropertyType>(string propertyName, TPropertyType value)
         {
-            bool err = false;
+            var err = false;
             Type cfgType = null;
             try
             {
@@ -74,11 +68,11 @@ namespace Genesis
                 if (value.GetType().IsAssignableFrom(typeof(string)))
                 {
                     var bsalloc = value.ToString().TrimStart('"').TrimEnd('"');
-                    cfgType.GetProperty(propertyName).SetValue(cfg, bsalloc);
+                    cfgType.GetProperty(propertyName)?.SetValue(cfg, bsalloc);
                 }
                 else //feels ghetto to remove quotes like this... 
                 {
-                    cfgType.GetProperty(propertyName).SetValue(cfg, value);
+                    cfgType.GetProperty(propertyName)?.SetValue(cfg, value);
                 }
 
                 Text.Green(cfgType.Name); Text.White("."); Text.Cyan(propertyName); Text.WhiteLine(" was updated.");

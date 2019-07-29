@@ -73,10 +73,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9BB5B785-CA7F-4AC3-86E5-88513C768B14}"
 	ProjectSection(SolutionItems) = preProject
 		src\LocalDBSqlToCSharp.genesis = src\LocalDBSqlToCSharp.genesis
-		SwaggerToPoco.genesis = SwaggerToPoco.genesis
+		src\SwaggerToPoco.genesis = src\SwaggerToPoco.genesis
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genesis.Executors.GraphTools", "src\Executors\Genesis.Executors.GraphTools\Genesis.Executors.GraphTools.csproj", "{EA2B8335-2F4F-43CB-9133-6B45165002B6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Executors.GraphTools", "src\Executors\Genesis.Executors.GraphTools\Genesis.Executors.GraphTools.csproj", "{EA2B8335-2F4F-43CB-9133-6B45165002B6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

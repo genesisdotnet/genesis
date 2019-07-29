@@ -21,5 +21,6 @@ namespace Genesis
         public string Name { get; set; }
         public bool HasGenericParams { get; set; }
         public bool IsGeneric { get; set; }
+        public string ReturnTypeFormattedName { get; set; }
     }
 }

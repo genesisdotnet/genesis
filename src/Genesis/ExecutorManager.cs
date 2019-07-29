@@ -18,6 +18,7 @@ namespace Genesis
     {
         public static List<IGenesisExecutor<IGenesisExecutionResult>> Current { get; set; } = new List<IGenesisExecutor<IGenesisExecutionResult>>();
 
+        //TODO: Consolidate all three executor managers into one
         public static async Task InitializeExecutorsAsync(bool writeOutputMessages = false)
         {
             Current.Clear();

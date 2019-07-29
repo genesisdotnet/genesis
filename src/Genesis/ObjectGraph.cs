@@ -16,5 +16,7 @@ namespace Genesis
         public object KeyId { get; set; } = "0";
         public string SourceType { get; set; } = "object";
         public bool IsDefault { get { return Properties.Count == 0 && Methods.Count == 0; } }
+        public Type BaseType { get; set; }
+        public string BaseTypeFormattedName { get; set; }
     }
 }

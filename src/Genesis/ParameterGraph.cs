@@ -14,5 +14,7 @@ namespace Genesis
         public bool IsOut { get; set; }
         public bool IsOptional { get; set; }
         public int Position { get; set; }
+        public string DataTypeFormattedName { get; set; }
+        public bool IsIn { get; set; }
     }
 }

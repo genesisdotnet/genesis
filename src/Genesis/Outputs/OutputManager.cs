@@ -36,84 +36,81 @@ namespace Genesis.Output
 
             var configuration = new ContainerConfiguration().WithAssemblies(assemblies, conventions);
 
-            using (var container = configuration.CreateContainer())
+            using var container = configuration.CreateContainer();
+
+            var generators = container.GetExports<IOutputExecutor>();
+
+            Outputs.Clear();
+
+            foreach (var generator in generators)
             {
-                var generators = container.GetExports<IOutputExecutor>();
+                Outputs.Add(generator);
 
-                Outputs.Clear();
-
-                foreach (var generator in generators)
+                var configType = generator.GetType().GetRuntimeProperty("Config").PropertyType ?? typeof(GeneratorConfiguration);
+                var cfgWarning = false;
+                try
                 {
-                    Outputs.Add(generator);
+                    if (typeof(GeneratorConfiguration).IsAssignableFrom(configType)) //Make sure we can use it
+                        generator.Configuration = (IOutputConfiguration)Activator.CreateInstance(configType, true);
 
-                    var configType = generator.GetType().GetRuntimeProperty("Config").PropertyType ?? typeof(GeneratorConfiguration);
-                    var config = configType.IsInstanceOfType(typeof(GeneratorConfiguration));
-                    var cfgWarning = false;
+                    //bind the configuration json to the config instance
+                    if (writeOutputMessages && !GenesisConfiguration.ApplyFromJson(configType, $"{configType.Name}.json", generator.Configuration))
+                    {
+                        cfgWarning = true;
+                        Text.RedLine($"Unable to configure from {configType.Name}.json for {generator.GetType().Name}");
+                    }
+
                     try
                     {
-                        //cmdtext was located from friendlyname and is available if it succeedes
-                        if (typeof(GeneratorConfiguration).IsAssignableFrom(configType)) //Make sure we can use it
-                            generator.Configuration = (IOutputConfiguration)Activator.CreateInstance(configType, true);
-
-                        //bind the configuration json to the config instance
-                        if (writeOutputMessages && !GenesisConfiguration.ApplyFromJson(configType, $"{configType.Name}.json", generator.Configuration))
-                        {
-                            cfgWarning = true;
-                            Text.RedLine($"Unable to configure from {configType.Name}.json for {generator.GetType().Name}");
-                        }
-
-                        try
-                        {
-                            generator.Template = TemplateLoader.LoadTemplateFor(generator);
-                        }
-                        catch (Exception ex)
-                        {
-                            Debug.WriteLine(ex.Message);
-                            Text.DarkYellow($"Could not load template for ");
-                            Text.CliCommand(generator.CommandText);
-                            Text.Line();
-
-                            cfgWarning = true;
-                        }
-
-                        try
-                        {
-                            await generator.AttachDependencies(DependencyManager.LoadDependencies(generator));
-                        }
-                        catch (Exception dx)
-                        {
-                            Text.DarkYellow($"Could not load or parse dependencies for");
-                            Text.CliCommand(generator.CommandText);
-                            Text.Line();
-
-                            Debug.WriteLine(dx.Message);
-
-                            cfgWarning = true;
-                        }
-                        await generator.Initialize();
-
-                        if (!writeOutputMessages)
-                            continue;
-
-                        Text.White($"'"); Text.Green(generator.CommandText); Text.White("' ("); Text.Cyan(generator.FriendlyName); Text.White(") was found in '"); Text.Blue(generator.GetType().Name); Text.White("'... ");
-
-                        if (cfgWarning)
-                            Text.YellowLine("warning");
-                        else
-                            Text.GreenLine("OK");
-
-                        Console.ResetColor();
+                        generator.Template = TemplateLoader.LoadTemplateFor(generator);
                     }
-                    catch (Exception exc)
+                    catch (Exception ex)
                     {
-                        if (!writeOutputMessages)
-                            continue;
+                        Debug.WriteLine(ex.Message);
+                        Text.DarkYellow($"Could not load template for ");
+                        Text.CliCommand(generator.CommandText);
+                        Text.Line();
 
-                        Console.Write($"'{generator.FriendlyName}': ");
-                        Console.ForegroundColor = ConsoleColor.Red;
-                        Console.WriteLine(exc.Message);
-                        Console.ResetColor();
+                        cfgWarning = true;
                     }
+
+                    try
+                    {
+                        await generator.AttachDependencies(DependencyManager.LoadDependencies(generator));
+                    }
+                    catch (Exception dx)
+                    {
+                        Text.DarkYellow($"Could not load or parse dependencies for");
+                        Text.CliCommand(generator.CommandText);
+                        Text.Line();
+
+                        Debug.WriteLine(dx.Message);
+
+                        cfgWarning = true;
+                    }
+                    await generator.Initialize();
+
+                    if (!writeOutputMessages)
+                        continue;
+
+                    Text.White($"'"); Text.Green(generator.CommandText); Text.White("' ("); Text.Cyan(generator.FriendlyName); Text.White(") was found in '"); Text.Blue(generator.GetType().Name); Text.White("'... ");
+
+                    if (cfgWarning)
+                        Text.YellowLine("warning");
+                    else
+                        Text.GreenLine("OK");
+
+                    Console.ResetColor();
+                }
+                catch (Exception exc)
+                {
+                    if (!writeOutputMessages)
+                        continue;
+
+                    Console.Write($"'{generator.FriendlyName}': ");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine(exc.Message);
+                    Console.ResetColor();
                 }
             }
         }
