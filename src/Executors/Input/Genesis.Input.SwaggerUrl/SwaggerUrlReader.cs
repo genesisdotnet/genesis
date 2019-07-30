@@ -1,27 +1,26 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using System;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Reflection.Metadata;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
+using Namotion.Reflection;
 using NJsonSchema.CodeGeneration.CSharp;
 using NSwag;
 using NSwag.CodeGeneration;
 using NSwag.CodeGeneration.CSharp;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.Loader;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Genesis;
-using NJsonSchema.Infrastructure;
 
 namespace Genesis.Input.SwaggerUrl
 {
     public class SwaggerUrlReader : InputExecutor
     {
-        private static Regex _nullableRegex = new Regex("(?<=<)[^>]*(?=>)");
-
+        private static readonly Regex _nullableRegex = new Regex("(?<=<)[^>]*(?=>)"); // all text between <>, could be improved I'm sure
+        
         public override string CommandText => "swag";
         public override string FriendlyName => "Swagger Endpoint";
         public override string Description => "Swagger data via URL";
@@ -168,17 +167,15 @@ namespace Genesis.Input.SwaggerUrl
 
             stream.Seek(0, SeekOrigin.Begin);
 
-            var tmpAss = AssemblyLoadContext.Default.LoadFromStream(stream);
-            
-            // loop classes
+            var tmpAss = GenesisAssembly.FromStream(stream, out var ctx);
+
             foreach(var c in tmpAss.GetTypes().Where(w=>w.IsClass))
             {
-                var cls = c.GetTypeInfo();
-                if (cls.IsGenericType)
-                {
-                    
-                }
+                if (c.Name.StartsWith("<>c", StringComparison.OrdinalIgnoreCase) || c.Name.Contains("__"))
+                    continue;
 
+                var cls = c.GetTypeInfo();
+                
                 var obj = new ObjectGraph {
                     Name = cls.GetFormattedName(), //ext method to parse for Generics
                     Namespace = Config.OutputNamespace,
@@ -187,13 +184,20 @@ namespace Genesis.Input.SwaggerUrl
                     BaseTypeFormattedName = cls.BaseType?.GetFormattedName()
                 };
 
+                if (cls.IsGenericType)
+                {
+                    var genericArgs = cls.GetGenericArguments().ToFormattedNames();
+                    obj.IsGeneric = true;
+                    obj.GenericArgumentTypes = genericArgs;
+                }
+
                 Text.GrayLine($"Class: {cls.Name}, Base:{obj.BaseTypeFormattedName}, Generic:{cls.IsGenericType}, Access:{(cls.IsPublic ? cls.IsVisible ? "public" : "internal" : "private")}");
 
                 foreach (var p in cls.GetProperties().Where(w=>w.MemberType == MemberTypes.Property))
                 {
                     var pg = new PropertyGraph {
-                        Name = p.Name,
-                        SourceType = p.PropertyType.GetFormattedName(),
+                        Name = _nullableRegex.IsMatch(p.Name) ? _nullableRegex.Match(p.Name).Value : p.Name,
+                        SourceType = p.PropertyType.GetFormattedName(true),
                         IsKeyProperty = p.Name.EndsWith("Id", StringComparison.CurrentCultureIgnoreCase), //NOTE: cheesy
                     };
 
@@ -211,35 +215,52 @@ namespace Genesis.Input.SwaggerUrl
 
                 foreach (var m in cls.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
                 {
-                    var meth = new MethodGraph
+                    if (m.Name.StartsWith("get_") || m.Name.StartsWith("set_"))
+                        continue; //already did property accessors
+
+                    Debug.WriteLine($@"Method:{(_nullableRegex.IsMatch(m.Name) ? _nullableRegex.Match(m.Name).Value : m.Name)}");
+                    var methodGraph = new MethodGraph
                     {
-                        Name = m.Name.Replace("get_", string.Empty),
+                        Name = _nullableRegex.IsMatch(m.Name) ? _nullableRegex.Match(m.Name).Value : m.Name,
                         MethodVisibility = MethodVisibilities.Public,
                         ReturnDataType = m.ReturnType,
                         ReturnTypeFormattedName = m.ReturnType.GetFormattedName(),
                         HasGenericParams = m.ContainsGenericParameters,
                         IsGeneric = m.IsGenericMethod,
+                        FormattedGenericArguments = m.GetGenericArguments().ToFormattedNames(),
                     };
-
+                    
                     foreach (var par in m.GetParameters().OrderBy(o=>o.Position))
                     {
                         var mp = new ParameterGraph {
                             DataType = par.ParameterType,
                             DataTypeFormattedName = par.ParameterType.GetFormattedName(),
+                            DisplayName = par.ParameterType.GetDisplayName(),
                             Name = par.Name,
                             IsOut = par.IsOut,
                             IsIn = par.IsIn,
                             IsOptional = par.IsOptional,
-                            Position = par.Position
+                            Position = par.Position,
+                            IsGeneric = par.ParameterType.IsGenericType,
+                            IsGenericMethodParameter = par.ParameterType.IsGenericMethodParameter,
+                            GenericArgumentFormattedTypeNames = par.ParameterType.GetGenericArguments().ToFormattedNames(),
                         };
                         
-                        meth.Parameters.Add(mp);
+                        methodGraph.Parameters.Add(mp);
                     }
 
-                    Text.GrayLine($"\tMethod: {m.Name}, Return: {meth.ReturnTypeFormattedName}, Visibility: {(m.IsPublic ? "public" : m.IsPrivate ? "private" : "protected")}");
+                    obj.Methods.Add(methodGraph);
+
+                    Text.GrayLine($"\tMethod: {m.Name}, Return: {methodGraph.ReturnTypeFormattedName}, Visibility: {(m.IsPublic ? "public" : m.IsPrivate ? "private" : "protected")}");
                 }
                 genesis.Objects.Add(obj);
             }
+
+            Text.White("Unloading temporary assembly... ");
+            
+            ctx.UnloadAssembly(/*waits for it to unload*/);
+            
+            Text.GreenLine("OK");
 
             Text.SuccessGraffiti();
 

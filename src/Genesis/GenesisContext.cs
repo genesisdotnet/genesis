@@ -59,7 +59,7 @@ namespace Genesis
         public int ScanCount { get; set; } = 0;
 
         public List<ObjectGraph> Objects { get; set; } = new List<ObjectGraph>();
-        public ExecutionChain Chain { get; private set; }
+        public ExecutionChain Chain { get; }
 
         public async Task AddObject(ObjectGraph obj)
         {

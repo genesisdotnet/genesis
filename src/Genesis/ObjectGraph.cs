@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Genesis
 {
@@ -16,7 +17,10 @@ namespace Genesis
         public object KeyId { get; set; } = "0";
         public string SourceType { get; set; } = "object";
         public bool IsDefault { get { return Properties.Count == 0 && Methods.Count == 0; } }
+        [XmlIgnore]
         public Type BaseType { get; set; }
         public string BaseTypeFormattedName { get; set; }
+        public bool IsGeneric { get; set; }
+        public string[] GenericArgumentTypes { get; set; }
     }
 }

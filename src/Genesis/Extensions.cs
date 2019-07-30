@@ -8,30 +8,39 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Loader;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Genesis
 {
     public static class Extensions
     {
+        private static readonly Regex _nullableRegex = new Regex("(?<=<)[^>]*(?=>)"); // all text between <>, could be improved I'm sure
+
         /// <summary>
         /// Returns a c# parseable name for a type, beautifying generics.
-        /// <example>List`<SomeType></example>
+        /// <example>List{Type}</example>
         /// </summary>
         /// <param name="type">The <see cref="Type"/> whose name may need formatted for generic types.</param>
         /// <returns>a c# parseable string representing the <see cref="Type"/> passed in.</returns>
-        public static string GetFormattedName(this Type type)
+        public static string GetFormattedName(this Type type, bool useNullableReferenceTypes = false)
         {
             if (!type.IsGenericType)
                 return type.Name;
 
             var sb = new StringBuilder();
             sb.Append(type.Name.Substring(0, type.Name.LastIndexOf("`", StringComparison.Ordinal)));
-            sb.Append(type.GetGenericArguments().Aggregate("<",
-                (aggregate, innerType) => aggregate + (aggregate == "<" ? "" : ",") + GetFormattedName(innerType)
-            ));
+            sb.Append(type.GetGenericArguments()
+                .Aggregate("<",(aggregate, innerType) => aggregate + (aggregate == "<" ? "" : ",") + GetFormattedName(innerType)));
             sb.Append(">");
 
-            return sb.ToString();
+            var result = sb.ToString();
+
+            if (useNullableReferenceTypes)
+                return _nullableRegex.IsMatch(result)
+                    ? _nullableRegex.Match(result).Value + "?" // Returns Whatever?
+                    : result;
+
+            return sb.ToString(); // Returns Nullable<Whatever>
         }
 
         /// <summary>
@@ -158,7 +167,6 @@ namespace Genesis
 
                 default:
                     {
-                        Debug.WriteLine($@"Unhandled DataType: {dbDataType}, using it literally.");
                         return dbDataType;
                     }
             }
@@ -213,11 +221,38 @@ namespace Genesis
 
                 default:
                     {
-                        Debug.WriteLine($@"Unknown source Type {dbDataType}, using it literally.");
                         return dbDataType;
                     }
 
             }
         }
+
+        /// <summary>
+        /// Unloads the inner <see cref="GenesisAssemblyLoadContext"/> object and optionally waits until the GC cleans it up
+        /// </summary>
+        /// <param name="weakRef">The current <see cref="WeakReference"/> object.</param>
+        /// <param name="waitUntilFinished"><c>true</c> to wait for GC to clean up references, otherwise <c>false</c>.</param>
+        public static void UnloadAssembly(this WeakReference weakRef, bool waitUntilFinished = true)
+        {
+            ((GenesisAssemblyLoadContext)weakRef.Target).Unload();
+
+            if (!waitUntilFinished)
+                return;
+
+            for (var i = 0; weakRef.IsAlive && (i < 10); i++) //NOTE: Don't have to wait if we don't want to, GC will eventually get it. 
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+
+        /// <summary>
+        /// Gets the human readable type names for each type in the array. These are presumed to be generic types
+        /// </summary>
+        /// <param name="types">an array of generic type descriptors</param>
+        /// <returns>an array of formatted type names</returns>
+        public static string[] ToFormattedNames(this Type[] types) 
+            => types.Select(s => s.GetFormattedName())
+                .ToArray();
     }
 }

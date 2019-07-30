@@ -72,6 +72,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoSite.Web", "src\DemoSit
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9BB5B785-CA7F-4AC3-86E5-88513C768B14}"
 	ProjectSection(SolutionItems) = preProject
+		src\Debug.genesis = src\Debug.genesis
 		src\LocalDBSqlToCSharp.genesis = src\LocalDBSqlToCSharp.genesis
 		src\SwaggerToPoco.genesis = src\SwaggerToPoco.genesis
 	EndProjectSection
