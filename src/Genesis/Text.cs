@@ -169,6 +169,25 @@ namespace Genesis
             Console.ResetColor();
         }
 
+        public static void DarkGreen(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+            if (parameters is null) { Console.Write(message); }
+            else { Console.Write(message, parameters); }
+
+            Console.ResetColor();
+        }
+        public static void DarkGreenLine(string message = "", params string[] parameters)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkGreen;
+
+            if (parameters is null) { Console.WriteLine(message); }
+            else { Console.WriteLine(message, parameters); }
+
+            Console.ResetColor();
+        }
+
         public static void Red(string message = "", params string[] parameters)
         {
             Console.ForegroundColor = ConsoleColor.Red;
