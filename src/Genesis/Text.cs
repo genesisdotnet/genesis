@@ -30,6 +30,12 @@ namespace Genesis
         public static void Line(string text) 
             => Console.WriteLine(text);
 
+        public static void CliCommandLine(string v)
+        {
+            CliCommand(v);
+            Line();
+        }
+
         public static void ErrorGraffiti()
         {
             //ATTRIB: http://www.patorjk.com/software/taag/#p=display&f=Graffiti&t=Genesis (with tweaks)

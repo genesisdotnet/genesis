@@ -17,6 +17,12 @@ namespace Genesis.Cli.Commands
         {
             var btr = new BlankGenesisExecutionResult();
 
+            if (args.Length < 2)
+            {
+                Text.White("Specify an Executor "); Text.CliCommandLine("Name");
+                return btr;
+            }
+
             var exeName = args[1];
 
             //NOTE: Added that default help stuff for commands. Copy / Pasted 'gen' command here ;)

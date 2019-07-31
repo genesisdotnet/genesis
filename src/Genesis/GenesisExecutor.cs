@@ -44,13 +44,12 @@ namespace Genesis
 
             foreach (var p in cfgObjType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
-                var val = cfgObjType.GetProperty(p.Name)?.GetValue(cfgObj)?.ToString();
+                var val = cfgObjType.GetProperty(p.Name)?.GetValue(cfgObj);
+
 
                 Text.Yellow($"\t{p.Name}: ");
-                Text.DarkBlue(p.PropertyType.Name);
-                Text.White("   (");
-                Text.DarkYellow($"{((val is string) ? $"\"{val}\"":val)}");
-                Text.WhiteLine(")");
+                Text.DarkBlue(p.PropertyType.Name);Text.White(":");
+                Text.DarkYellowLine($"{(val != null ? val is string ? $"\"{val}\"":val:$"")}");
             }
 
             await Task.CompletedTask;

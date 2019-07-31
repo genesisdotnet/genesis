@@ -63,8 +63,7 @@ namespace Genesis.Output.Protos
             File.WriteAllText(outPath, output);
 
             Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".proto"); Text.WhiteLine("'");
-            Text.Line();
-
+            
             await Task.CompletedTask;
         }
 
