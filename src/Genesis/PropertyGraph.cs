@@ -4,6 +4,7 @@ namespace Genesis
 {
     public class PropertyGraph : Graph, IKeyable //TODO: make observable?
     {
+        public PropertyGraph() : base(GraphTypes.Property) { }
         public override GraphTypes GraphType => GraphTypes.Property;
 
         public string Name { get; set; }

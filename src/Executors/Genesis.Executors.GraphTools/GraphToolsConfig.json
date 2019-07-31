@@ -1,3 +1,4 @@
 ﻿{
-  "outputPath": "C:\\Temp\\Output"
+  "outputPath": "C:\\Temp\\Output",
+  "languageVersion": "CSharp8"
 }

@@ -10,6 +10,7 @@ service ~OBJECT_NAME~Handler {
   rpc Get~OBJECT_NAME~ (int32) returns (~OBJECT_NAME~) {}
   rpc Put~OBJECT_NAME~ (~OBJECT_NAME~) returns (SuccessOrFailResult) {}
   rpc Delete~OBJECT_NAME~ (int32) returns (SuccessOrFailResult) {}
+  ~METHODS~
 }
 
 message SuccessOrFailResult { // make global somehow?

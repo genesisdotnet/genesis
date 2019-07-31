@@ -39,7 +39,7 @@ namespace Genesis.Output
         /// </summary>
         public static readonly string EditorRowsStub = "~EDITOR_ROWS~";
         /// <summary>
-        /// Seperator characters for multiple output files in a template. This is kinda ghetto and lazy but for now, whatevs
+        /// Separator characters for multiple output files in a template. This is kinda ghetto and lazy but for now, whatevs
         /// </summary>
         public static readonly string TemplateSeperator = "<!----->";
         /// <summary>
@@ -54,5 +54,9 @@ namespace Genesis.Output
         /// Name of the base type for an object
         /// </summary>
         public static readonly string BaseTypeName = "~BASE_CLASS~";
+        /// <summary>
+        /// Methods block placeholder (if supported by the Generator)
+        /// </summary>
+        public static readonly string MethodsStub = "~METHODS~";
     }
 }

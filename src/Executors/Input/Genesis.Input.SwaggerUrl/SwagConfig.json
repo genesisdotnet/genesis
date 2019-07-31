@@ -1,4 +1,5 @@
 ﻿{
   "Address": "https://petstore.swagger.io/v2/swagger.json",
-  "OutputNamespace": "Genesis.Rest.Clients"
+  "OutputNamespace": "Genesis.Rest.Clients",
+  "LanguageVersion": "CSharp8" 
 }

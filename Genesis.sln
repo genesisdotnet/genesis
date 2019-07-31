@@ -74,6 +74,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9BB5
 	ProjectSection(SolutionItems) = preProject
 		src\Debug.genesis = src\Debug.genesis
 		src\LocalDBSqlToCSharp.genesis = src\LocalDBSqlToCSharp.genesis
+		src\ScanAndBreak.genesis = src\ScanAndBreak.genesis
 		src\SwaggerToPoco.genesis = src\SwaggerToPoco.genesis
 	EndProjectSection
 EndProject

@@ -1,7 +1,7 @@
 ﻿namespace Genesis
 {
     public enum GraphTypes
-    { //maybe? 
+    { 
         Object,
         Property,
         Method,
@@ -11,6 +11,9 @@
     }
     public abstract class Graph : IGraph
     {
-        public virtual GraphTypes GraphType { get; set; } = GraphTypes.Object;
+        protected Graph(GraphTypes eventGraphType) 
+            => GraphType = eventGraphType;
+
+        public virtual GraphTypes GraphType { get; private set; } = GraphTypes.Object;
     }
 }
