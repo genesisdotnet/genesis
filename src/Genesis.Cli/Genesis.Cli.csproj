@@ -22,7 +22,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="..\Debug.genesis" Link="Debug.genesis">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="..\LocalDBSqlToCSharp.genesis" Link="LocalDBSqlToCSharp.genesis">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="..\ScanAndBreak.genesis" Link="ScanAndBreak.genesis">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="..\SwaggerToPoco.genesis" Link="SwaggerToPoco.genesis">

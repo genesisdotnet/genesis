@@ -51,12 +51,17 @@ namespace Genesis.Output.Poco
             if (!Directory.Exists(OutputPath))
                 Directory.CreateDirectory(OutputPath);
 
+            // don't write out object base classes since it's redundant
+            var baseTypeString = (objectGraph.BaseType == typeof(object))
+                ? string.Empty
+                : ": " + objectGraph.BaseTypeFormattedName;
+
             var output = tmp.Raw
                 .Replace(Tokens.Namespace,Config.Namespace) //TODO: Templating engine? / razor etc would be cool ..|., T4 
                 .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
                 .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
                 .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties))
-                .Replace(Tokens.BaseTypeName, ": " + objectGraph.BaseTypeFormattedName)
+                .Replace(Tokens.BaseTypeName, baseTypeString)
                 ; 
 
             var subPath = Path.Combine(OutputPath, "Pocos");
@@ -75,7 +80,7 @@ namespace Genesis.Output.Poco
             await Task.CompletedTask;
         }
 
-        private string GetPropertiesReplacement(List<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators
+        private string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators
         {
             string template = "\t\tprivate ~PROPERTY_DATATYPE~ ~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +
                                 "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~" + Environment.NewLine +

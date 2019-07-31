@@ -15,7 +15,7 @@ namespace Genesis
 
     public class MethodGraph : Graph
     {
-        public override GraphTypes GraphType => GraphTypes.Method;
+        public MethodGraph() : base(GraphTypes.Method) { }
         [XmlIgnore]
         public Type ReturnDataType { get; set; }
         public MethodVisibilities MethodVisibility { get; set; } = MethodVisibilities.Public;

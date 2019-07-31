@@ -7,11 +7,12 @@ namespace Genesis
 {
     public class ParameterGraph : Graph
     {
+        public ParameterGraph() : base(GraphTypes.Parameter) { }
+
         [XmlIgnore]
         public Type DataType { get; set; }
         [XmlIgnore]
         public object Value { get; set; }
-        public override GraphTypes GraphType => GraphTypes.Parameter;
 
         public string Name { get; set; }
         public bool IsOut { get; set; }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -104,7 +105,7 @@ namespace Genesis.Input.SwaggerUrl
                 if (c.IsReflectionClosure()) // skip the reflection only types
                     continue;
 
-                var (cls, obj) = CreateObjectGraph(c);
+                var (cls, obj) = CreateObjectGraph(c, Config.OutputNamespace);
 
                 CreateObjectPropertyGraphs(cls, obj);
 
@@ -131,10 +132,21 @@ namespace Genesis.Input.SwaggerUrl
 
         private static void CreateObjectMethodGraphs(GenesisContext genesis, TypeInfo cls, ObjectGraph obj)
         {
+            var events = new List<string>();
+
             foreach (var m in cls.GetMethods(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
             {
                 if (m.Name.StartsWith("get_") || m.Name.StartsWith("set_"))
                     continue; //already did property accessors
+
+                if (m.Name.StartsWith("add_") || m.Name.StartsWith("remove_"))
+                {
+                    var name = m.Name.Split('_')[1]; //just get the event Name
+                    if (!events.Contains(name))
+                    {
+                        events.Add(name);
+                    }
+                }
 
                 Debug.WriteLine($@"Method:{(_nullableRegex.IsMatch(m.Name) ? _nullableRegex.Match(m.Name).Value : m.Name)}");
                 var methodGraph = new MethodGraph
@@ -205,16 +217,15 @@ namespace Genesis.Input.SwaggerUrl
             }
         }
 
-        private (TypeInfo cls, ObjectGraph obj) CreateObjectGraph(Type c)
+        private static (TypeInfo cls, ObjectGraph obj) CreateObjectGraph(Type c, string ns)
         {
             var cls = c.GetTypeInfo();
 
             var obj = new ObjectGraph
             {
                 Name = cls.GetFormattedName(), //ext method to parse for Generics
-                Namespace = Config.OutputNamespace,
-                GraphType = GraphTypes.Object,
-                BaseType = cls.BaseType,
+                Namespace = ns,
+                BaseType = typeof(object) == cls.BaseType ? null : cls.BaseType,
                 BaseTypeFormattedName = cls.BaseType?.GetFormattedName()
             };
 

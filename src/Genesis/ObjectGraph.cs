@@ -7,11 +7,13 @@ namespace Genesis
 {
     public class ObjectGraph : Graph, IKeyable
     {
+        public ObjectGraph() : base(GraphTypes.Object) { }
         public override GraphTypes GraphType => GraphTypes.Object;
         public string Namespace { get; set; }
         public List<AttributeGraph> Attributes { get; set; } = new List<AttributeGraph>();
         public List<PropertyGraph> Properties { get; set; } = new List<PropertyGraph>();
         public List<MethodGraph> Methods { get; set; } = new List<MethodGraph>();
+        public List<EventGraph> Events { get; set; } = new List<EventGraph>();
         public string Name { get; set; } = "OG";
         public bool IsKeyProperty { get; set; }
         public object KeyId { get; set; } = "0";
