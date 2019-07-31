@@ -17,6 +17,15 @@ namespace Genesis
         private static readonly Regex _nullableRegex = new Regex("(?<=<)[^>]*(?=>)"); // all text between <>, could be improved I'm sure
 
         /// <summary>
+        /// Gets a value indicating whether or not this type is a runtime-generated type to assist with debugging purposes
+        /// <example>`<>c` or `xxx__42`</example>
+        /// </summary>
+        /// <param name="type"><see cref="Type"/> object to test.</param>
+        /// <returns>true or false</returns>
+        public static bool IsReflectionClosure(this Type type) //neat
+            => type.Name.StartsWith("<>c", StringComparison.OrdinalIgnoreCase) || type.Name.Contains("__");
+
+        /// <summary>
         /// Returns a c# parseable name for a type, beautifying generics.
         /// <example>List{Type}</example>
         /// </summary>

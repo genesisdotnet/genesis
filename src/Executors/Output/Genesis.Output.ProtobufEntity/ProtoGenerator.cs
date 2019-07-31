@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -51,6 +52,7 @@ namespace Genesis.Output.Protos
             var output = tmp.Raw.Replace(Tokens.Version, Config.Version.ToString())
                                 .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
                                 .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
+                                .Replace(Tokens.MethodsStub, GetMethodsReplacement(objectGraph.Methods))
                                 ;
 
             var subPath = Path.Combine(OutputPath, "Protos");
@@ -65,6 +67,17 @@ namespace Genesis.Output.Protos
             Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".proto"); Text.WhiteLine("'");
             
             await Task.CompletedTask;
+        }
+
+        private string GetMethodsReplacement(List<MethodGraph> methods)
+        {
+            var rows = new List<string>();
+            foreach (var m in methods)
+            {
+                rows.Add($"rpc {m.Name} ({((m.Parameters.Count > 0)?m.Parameters[0].DataTypeFormattedName:"void")}) returns ({m.ReturnTypeFormattedName}) {{}}");
+            }
+
+            return string.Join(Environment.NewLine, rows.ToArray());
         }
 
         private string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties)

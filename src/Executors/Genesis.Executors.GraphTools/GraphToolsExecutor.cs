@@ -13,7 +13,7 @@ namespace Genesis.Executors.GraphTools
 {
     public class GraphToolsExecutor : GeneralExecutor
     {
-        private static XmlSerializer _serializer = new XmlSerializerFactory().CreateSerializer(typeof(List<ObjectGraph>));
+        private static readonly XmlSerializer _serializer = new XmlSerializerFactory().CreateSerializer(typeof(List<ObjectGraph>));
 
         public override string CommandText => "tools";
         public override string Description => "Tools and utilities for ObjectGraph interaction";

@@ -9,5 +9,6 @@ namespace Genesis.Input.SwaggerUrl
     {
         public string Address { get; set; } = string.Empty;
         public string OutputNamespace { get; set; } = "Genesis.Rest.Clients";
+        public string LanguageVersion { get; set; } = "CSharp8";
     }
 }
