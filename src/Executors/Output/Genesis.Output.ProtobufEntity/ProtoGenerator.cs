@@ -15,7 +15,7 @@ namespace Genesis.Output.Protos
 
         public ProtoConfig Config { get; set; }
 
-        protected override void OnInitilized()
+        protected override void OnInitialized()
         {
             Config = (ProtoConfig)Configuration;
         }
@@ -63,12 +63,11 @@ namespace Genesis.Output.Protos
             File.WriteAllText(outPath, output);
 
             Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".proto"); Text.WhiteLine("'");
-            Text.Line();
-
+            
             await Task.CompletedTask;
         }
 
-        private string GetPropertiesReplacement(List<PropertyGraph> properties)
+        private string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties)
         {
             string template = "\t\t~PROPERTY_DATATYPE~ ~PROPERTY_MEMBER_NAME~ = ~COUNTER~" + Environment.NewLine;
 

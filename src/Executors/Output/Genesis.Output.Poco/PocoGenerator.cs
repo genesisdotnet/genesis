@@ -18,7 +18,7 @@ namespace Genesis.Output.Poco
 
         public PocoConfig Config { get; set; }
 
-        protected override void OnInitilized()
+        protected override void OnInitialized()
         {
             Config = (PocoConfig)Configuration;
         }
@@ -51,10 +51,13 @@ namespace Genesis.Output.Poco
             if (!Directory.Exists(OutputPath))
                 Directory.CreateDirectory(OutputPath);
 
-            var output = tmp.Raw.Replace(Tokens.Namespace, Config.Namespace)    //TODO: Templating engine? / razor etc would be cool ..|., T4 
-                                .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
-                                .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
-                                .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties));
+            var output = tmp.Raw
+                .Replace(Tokens.Namespace,Config.Namespace) //TODO: Templating engine? / razor etc would be cool ..|., T4 
+                .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
+                .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
+                .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties))
+                .Replace(Tokens.BaseTypeName, ": " + objectGraph.BaseTypeFormattedName)
+                ; 
 
             var subPath = Path.Combine(OutputPath, "Pocos");
 
@@ -63,7 +66,9 @@ namespace Genesis.Output.Poco
 
             var outPath = Path.Combine(subPath, objectGraph.Name.ToSingular() + ".cs");
 
-            File.WriteAllText(outPath, output);
+            //TODO: Handle generics better while writing out .cs pocos
+
+            File.WriteAllText(outPath.Replace('<', '_').Replace('>', '_'), output); //hacky, can't save fileNames with '<' or '>' in the name
 
             Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".cs"); Text.WhiteLine("'");
 

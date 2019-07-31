@@ -17,7 +17,7 @@ namespace Genesis.Output.CachedRepo
 
         public CachedRepoConfig Config { get; set; }
 
-        protected override void OnInitilized()
+        protected override void OnInitialized()
         {
             Config = (CachedRepoConfig)Configuration;
         }

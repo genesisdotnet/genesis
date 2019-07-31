@@ -53,5 +53,12 @@ Generate the .xaml markup for a Xamarin Forms Create/Edit view.
 
 Generate a simple .proto file with CRUD actions and an entity
 
+## General
+General executors basically just inspect and/or manipulate the data in the ObjectGraphs at any point. For debug purposes there is a tools -> dump command that simply writes out the current ObjectGraphs schema to an .xml file in the `Config.OutputDir` of your choice.
+
+* `Genesis.Executors.GraphTools`
+
+Tools library for the ObjectGraphs.
+
 ## Executor Development
 Right now, all of the executors are referenced by the main Cli project to avoid build events and an overcomplicated dev process. They're still MEF'd in though.

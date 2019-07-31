@@ -23,7 +23,7 @@ namespace Genesis.Input.MSSqlDb
 
         public SqlConfig Config { get; set; }
 
-        protected override void OnInitilized(/*, string[] args */) //TODO: Pass args to the init 
+        protected override void OnInitialized(/*, string[] args */) //TODO: Pass args to the init 
         {
             Config = (SqlConfig)Configuration; //TODO: configuration is wonky
         }

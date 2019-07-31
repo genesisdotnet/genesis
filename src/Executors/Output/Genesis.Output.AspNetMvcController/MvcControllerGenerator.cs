@@ -17,7 +17,7 @@ namespace Genesis.Output.MvcController
 
         public MvcControllerConfig Config { get; set; } 
 
-        protected override void OnInitilized()
+        protected override void OnInitialized()
         {
             Config = (MvcControllerConfig)Configuration;
         }

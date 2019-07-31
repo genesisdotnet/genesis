@@ -50,5 +50,9 @@ namespace Genesis.Output
         /// Each property will increment this
         /// </summary>
         public static readonly string PropertyCounter = "~COUNTER~";
+        /// <summary>
+        /// Name of the base type for an object
+        /// </summary>
+        public static readonly string BaseTypeName = "~BASE_CLASS~";
     }
 }

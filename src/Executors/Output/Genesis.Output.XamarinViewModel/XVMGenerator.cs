@@ -17,7 +17,7 @@ namespace Genesis.Output.Poco
 
         public XvmConfig Config { get; set; }
 
-        protected override void OnInitilized()
+        protected override void OnInitialized()
         {
             Config = (XvmConfig)Configuration;
         }

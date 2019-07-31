@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -12,13 +13,15 @@ namespace Genesis.Executors.GraphTools
 {
     public class GraphToolsExecutor : GeneralExecutor
     {
+        private static XmlSerializer _serializer = new XmlSerializerFactory().CreateSerializer(typeof(List<ObjectGraph>));
+
         public override string CommandText => "tools";
         public override string Description => "Tools and utilities for ObjectGraph interaction";
         public override string FriendlyName => "ObjectGraph Tools & Utilities";
 
         public GraphToolsConfig Config { get; set; } = new GraphToolsConfig();
 
-        protected override void OnInitilized()
+        protected override void OnInitialized()
         {
             Config = (GraphToolsConfig)Configuration;
         }
@@ -51,19 +54,18 @@ namespace Genesis.Executors.GraphTools
 
         private bool WriteObjectGraphToStorage(GenesisContext genesis)
         {
-            var s = new XmlSerializerFactory().CreateSerializer(typeof(List<ObjectGraph>));
-
+            
             var outDir = Path.Combine(Environment.CurrentDirectory, @"Output");
             if (!Directory.Exists(outDir))
                 Directory.CreateDirectory(outDir);
 
             var d = DateTime.UtcNow;
-            var fileName = $"ObjectGraphDump_{d.Day}{ d.Hour}{d.Minute}{d.Second}{d.Millisecond}.xml";
+            var fileName = $"ObjectGraphDump_{d.Day}d-{d.Hour}h-{d.Minute}m-{d.Second}s-{d.Millisecond}ms.xml";
             var outputFilePath = Path.Combine(outDir, fileName);
 
             using var stream = File.OpenWrite(outputFilePath);
-
-            s?.Serialize(stream, genesis.Objects);
+            stream.Seek(0, SeekOrigin.Begin);
+            _serializer.Serialize(stream, genesis.Objects);
 
             Text.YellowLine($"ObjectGraph written to [{outputFilePath}]");
             return true;

@@ -12,7 +12,7 @@ namespace Genesis.Input.Excel
 
         public ExcelSheetConfig Config { get; set; }
 
-        protected override void OnInitilized(/*, string[] args */) //TODO: Pass args to the init 
+        protected override void OnInitialized(/*, string[] args */) //TODO: Pass args to the init 
         {
             Config = (ExcelSheetConfig)Configuration; //TODO: configuration is wonky
         }

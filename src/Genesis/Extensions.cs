@@ -8,11 +8,41 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Loader;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Genesis
 {
     public static class Extensions
     {
+        private static readonly Regex _nullableRegex = new Regex("(?<=<)[^>]*(?=>)"); // all text between <>, could be improved I'm sure
+
+        /// <summary>
+        /// Returns a c# parseable name for a type, beautifying generics.
+        /// <example>List{Type}</example>
+        /// </summary>
+        /// <param name="type">The <see cref="Type"/> whose name may need formatted for generic types.</param>
+        /// <returns>a c# parseable string representing the <see cref="Type"/> passed in.</returns>
+        public static string GetFormattedName(this Type type, bool useNullableReferenceTypes = false)
+        {
+            if (!type.IsGenericType)
+                return type.Name;
+
+            var sb = new StringBuilder();
+            sb.Append(type.Name.Substring(0, type.Name.LastIndexOf("`", StringComparison.Ordinal)));
+            sb.Append(type.GetGenericArguments()
+                .Aggregate("<",(aggregate, innerType) => aggregate + (aggregate == "<" ? "" : ",") + GetFormattedName(innerType)));
+            sb.Append(">");
+
+            var result = sb.ToString();
+
+            if (useNullableReferenceTypes)
+                return _nullableRegex.IsMatch(result)
+                    ? _nullableRegex.Match(result).Value + "?" // Returns Whatever?
+                    : result;
+
+            return sb.ToString(); // Returns Nullable<Whatever>
+        }
+
         /// <summary>
         /// Converts a string containing a variable name to correct casing. Ex.   string firstName = string.empty; from FirstName
         /// </summary>
@@ -20,7 +50,9 @@ namespace Genesis
         /// <returns>string containing a formatted 'variableName'</returns>
         public static string ToCorrectedCase(this string variableString)
             => (variableString.Length > 2) //longer than two letter properties, like ID
+#pragma warning disable IDE0057 // Use range operator
                 ? variableString.ToLower(CultureInfo.CurrentCulture)[0] + variableString.Substring(1, variableString.Length - 1)
+#pragma warning restore IDE0057 // Use range operator
                 : variableString; //TODO: This feels off return what was passed in?
 
         /// <summary>
@@ -70,19 +102,36 @@ namespace Genesis
                 case "char":
                 case "nchar":
                 case "varchar":
-                case "nvarchar":                    //TODO: Move this somewhere sensible?
+                case "nvarchar":                    
                 case "text":
                 case "ntext":
                     return "string";
 
                 case "xml": return "Xml";
+
+                case "nullable<tinyint>": 
+                case "nullable<byte>": return "byte?";
+
+                case "nullable<int16>": return "short?";
+
+                case "nullable<int64>": return "long?";
+
+                case "nullable<int32>": return "int?";
+
+                case "nullable<boolean>": return "bool?";
+
+                case "int32":
                 case "int": return "int";
+
                 case "long":
                 case "bigint": return "long";
+
                 case "short":
                 case "smallint": return "short";
+
                 case "byte":
                 case "tinyint": return "byte";
+
                 case "double":
                 case "money": return "double";
 
@@ -90,12 +139,16 @@ namespace Genesis
                 case "decimal":
                 case "numeric":
                     return "decimal";
+
                 case "guid":
                 case "uniqueidentifier": return "Guid";
+
                 case "float": return "float";
+
                 case "boolean":
                 case "bool":
                 case "bit": return "bool";
+
                 case "single":
                 case "real": return "single";
 
@@ -104,8 +157,6 @@ namespace Genesis
                 case "smalldatetime":
                 case "date":
                     return "DateTime";
-
-                case "datetimeoffset": return "DateTimeOffset";
 
                 case "image":
                 case "rowversion":
@@ -116,10 +167,8 @@ namespace Genesis
 
                 default:
                     {
-                        Debug.WriteLine($@"Unknown Database Type {dbDataType}");
-                        return "UNKNOWN";
+                        return dbDataType;
                     }
-
             }
         }
         /// <summary>
@@ -172,11 +221,38 @@ namespace Genesis
 
                 default:
                     {
-                        Debug.WriteLine($@"Unknown Database Type {dbDataType}");
-                        return "UNKNOWN";
+                        return dbDataType;
                     }
 
             }
         }
+
+        /// <summary>
+        /// Unloads the inner <see cref="GenesisAssemblyLoadContext"/> object and optionally waits until the GC cleans it up
+        /// </summary>
+        /// <param name="weakRef">The current <see cref="WeakReference"/> object.</param>
+        /// <param name="waitUntilFinished"><c>true</c> to wait for GC to clean up references, otherwise <c>false</c>.</param>
+        public static void UnloadAssembly(this WeakReference weakRef, bool waitUntilFinished = true)
+        {
+            ((GenesisAssemblyLoadContext)weakRef.Target).Unload();
+
+            if (!waitUntilFinished)
+                return;
+
+            for (var i = 0; weakRef.IsAlive && (i < 10); i++) //NOTE: Don't have to wait if we don't want to, GC will eventually get it. 
+            {
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+
+        /// <summary>
+        /// Gets the human readable type names for each type in the array. These are presumed to be generic types
+        /// </summary>
+        /// <param name="types">an array of generic type descriptors</param>
+        /// <returns>an array of formatted type names</returns>
+        public static string[] ToFormattedNames(this Type[] types) 
+            => types.Select(s => s.GetFormattedName())
+                .ToArray();
     }
 }

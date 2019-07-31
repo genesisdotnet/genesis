@@ -17,16 +17,16 @@ namespace Genesis.Executors
     {
         public static List<IGeneralExecutor> Current { get; set; } = new List<IGeneralExecutor>();
 
-        public static async Task InitializeGeneratorsAsync(bool writeOutputMessages = false)
+        public static async Task InitializeExecutorsAsync(bool writeOutputMessages = false)
         {
             Current.Clear();
 
             Debug.WriteLine($@"Scanning local directory for OutputExecutor libraries");
 
-            var assemblies = new List<Assembly>();
-
-            foreach (var file in Directory.EnumerateFiles(Environment.CurrentDirectory, "*" + GenesisDefaults.LibraryExtension, SearchOption.TopDirectoryOnly))
-                assemblies.Add(Assembly.LoadFile(file)); //doesn't seem to mind loading everything... for now
+            var assemblies = Directory
+                .EnumerateFiles(Environment.CurrentDirectory, "*" + GenesisDefaults.LibraryExtension, SearchOption.TopDirectoryOnly)
+                .Select(Assembly.LoadFile)
+                .ToList();
 
             var conventions = new ConventionBuilder();
 

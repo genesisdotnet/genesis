@@ -13,7 +13,7 @@ namespace Genesis.Cli.Commands
     public class ScanCommand : GenesisCommand
     {
         public override string Name { get => "scan"; }
-        public override string Description => "Scan the filesystem for Inputs, Outputs and general Executors within assemblies";
+        public override string Description => "Scan the filesystem for all Executor types within assemblies";
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
@@ -31,7 +31,7 @@ namespace Genesis.Cli.Commands
             Text.Line();
 
             Text.YellowLine("Scanning for General Executors: ");
-            await GeneralManager.InitializeGeneratorsAsync(true);
+            await GeneralManager.InitializeExecutorsAsync(true);
 
             Text.Line();
 

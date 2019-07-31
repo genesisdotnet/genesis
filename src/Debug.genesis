@@ -1,0 +1,5 @@
+scan
+add swag
+exec swag
+exec tools dump
+break

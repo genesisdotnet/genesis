@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Genesis.Executors;
 
 namespace Genesis.Cli.Commands
 {
@@ -66,7 +67,7 @@ namespace Genesis.Cli.Commands
             Text.Line();
             Text.WhiteLine("Known Generals:");
 
-            if (ExecutorManager.Current.Count == 0)
+            if (GeneralManager.Current.Count == 0)
             {
                 Text.RedLine("\t no general executors found");
             }
@@ -76,12 +77,12 @@ namespace Genesis.Cli.Commands
 
                 if (tmp.Contains("detailed") || tmp.Contains("--detailed") || tmp.Contains("-d"))
                 {
-                    foreach (var exe in ExecutorManager.Current)
+                    foreach (var exe in GeneralManager.Current)
                         DisplayDetail(exe);
                 }
                 else
                 {
-                    foreach (var exe in ExecutorManager.Current)
+                    foreach (var exe in GeneralManager.Current)
                         DisplayQuick(exe);
                 }
             }
