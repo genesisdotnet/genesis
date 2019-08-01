@@ -95,8 +95,6 @@ namespace Genesis.Cli.Commands
             Text.WhiteLine("ObjectGraph Contents:");
             foreach (var og in genesis.Objects)
             {
-                Text.GreenLine("-=+<" + og.Name + ">+=-");
-
                 Text.BlueLine(t + og.Name + ((og.KeyId != null && int.TryParse(og.KeyId.ToString(), out var o) && (int.Parse(og.KeyId.ToString())) > 0) ? " KeyId: " + og.KeyId : string.Empty)); //lame
 
                 if(og.Properties.Count > 0)
