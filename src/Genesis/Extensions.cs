@@ -17,6 +17,32 @@ namespace Genesis
         private static readonly Regex _nullableRegex = new Regex("(?<=<)[^>]*(?=>)"); // all text between <>, could be improved I'm sure
 
         /// <summary>
+        /// Gets a string representing the right half of a method signature for output to the user
+        /// </summary>
+        /// <param name="mg">A <see cref="MethodGraph"/> object.</param>
+        /// <returns>A string like <code>"(Param1Type p1Type, Param2Type p2Type)</code> .</returns>
+        public static void WriteMethodSignature(this MethodGraph mg) //TODO: Make this a .To?
+        {
+            Text.White("(");
+
+            for (var i = 0; i < mg.Parameters.Count(); i++)
+            {
+                if (mg.Parameters.Count > 1 && i != mg.Parameters.Count - 1)
+                {
+                    Text.DarkGreen(mg.Parameters[i].DataTypeFormattedName);
+                    Text.DarkGray(" " + mg.Parameters[i].Name + ", ");
+                }
+                else
+                {
+                    Text.DarkGreen(mg.Parameters[i].DataTypeFormattedName);
+                    Text.DarkGray(" " + mg.Parameters[i].Name);
+                }
+            }
+
+            Text.WhiteLine(")");
+        }
+
+        /// <summary>
         /// Gets a value indicating whether or not this type is a runtime-generated type to assist with debugging purposes
         /// <example>`<>c` or `xxx__42`</example>
         /// </summary>

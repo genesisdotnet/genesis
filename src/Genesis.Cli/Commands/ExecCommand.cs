@@ -16,21 +16,9 @@ namespace Genesis.Cli.Commands
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
-            var r = new BlankGenesisExecutionResult();
+            var tmp = (args.Length==1) ? args[0] : args[1];
 
-            if(args.Length == 1)
-            {
-                Text.White("Specify something to execute. A ");
-                Text.CliCommand("command");
-                Text.White(" or ");
-                Text.Yellow("chain");
-                Text.WhiteLine(" to execute the chain");
-                Text.Line();
-
-                return r;
-            }
-
-            var exe = GetExecutor(args[1]);
+            var exe = GetExecutor(tmp);
 
             if(exe != null) //executor name
             {
@@ -69,12 +57,12 @@ namespace Genesis.Cli.Commands
             }
             else
             {
-                var tmp = GetExecutor(args[1]);
+                var temp = GetExecutor(args[1]);
 
-                if (tmp == null)
+                if (temp == null)
                     throw new InvalidOperationException("Invalid execution: " + args[0] + " " + args[1]);
 
-                return await tmp.Execute(genesis, args);
+                return await temp.Execute(genesis, args);
             }
         }
     }

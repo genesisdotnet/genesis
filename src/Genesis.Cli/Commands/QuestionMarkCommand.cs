@@ -25,7 +25,7 @@ namespace Genesis.Cli.Commands
                 if (cmd.Name == string.Empty) //default command leaves an empty line otherwise
                     continue;
 
-                Text.Green($"\t{cmd.Name}"); Text.WhiteLine($"\t{cmd.Description}");
+                Text.Green($"\t{cmd.Name}"); Text.WhiteLine($"\t\t{cmd.Description}");
             }
 
             Text.Line();

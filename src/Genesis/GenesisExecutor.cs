@@ -33,6 +33,7 @@ namespace Genesis
         {
 
         }
+
         public async virtual Task DisplayConfiguration()
         {
             var cfgObj = ConfigObject();
@@ -40,16 +41,16 @@ namespace Genesis
 
             Text.WhiteLine();
             Text.CliCommand(CommandText);
-            Text.White(" configuration type is: "); Text.Cyan($"{cfgObjType.Name}"); Text.WhiteLine("'");
+            Text.White(" configuration type is: "); Text.CyanLine($"{cfgObjType.Name}");
 
             foreach (var p in cfgObjType.GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 var val = cfgObjType.GetProperty(p.Name)?.GetValue(cfgObj);
 
-
                 Text.Yellow($"\t{p.Name}: ");
-                Text.DarkBlue(p.PropertyType.Name);Text.White(":");
-                Text.DarkYellowLine($"{(val != null ? val is string ? $"\"{val}\"":val:$"")}");
+                Text.DarkBlue(p.PropertyType.Name);
+                Text.White(":");
+                Text.DarkYellowLine($"{(val != null ? val is string ? $"\"{val}\"" : val : $"")}");
             }
 
             await Task.CompletedTask;
