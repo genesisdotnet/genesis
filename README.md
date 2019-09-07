@@ -3,9 +3,9 @@ An orchestration-based code generation tool. Data from pretty much any source th
 
 **Preview bits are required**
 
-[.Net Core 3.0.100 Preview 7](https://github.com/dotnet/core/blob/master/release-notes/3.0/preview/3.0.0-preview7-download.md)
+[.Net Core 3 Preview 9](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 
-[Visual Studio Win/Mac Preview](https://visualstudio.com/preview "Visual Studio Win/Mac Preview") This will **only** compile using a preview version of Visual Studio until 3.0 and C# 8.0 are released.
+[Visual Studio Win/Mac Preview](https://visualstudio.com/preview "Visual Studio Win/Mac Preview") This will **only** compile using a preview version of Visual Studio until 3.0 and C# 8.0 are released. (For now)
 
 ## How does it work?
 Genesis is centered around a group of ObjectGraph objects and pieces of code that manipulate them, called Executors. 
