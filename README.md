@@ -3,7 +3,7 @@ An orchestration-based code generation tool. Data from pretty much any source th
 
 **Preview bits are required**
 
-[.Net Core 3 Preview 9](https://dotnet.microsoft.com/download/dotnet-core/3.0)
+[.Net Core 3 Release Candidate](https://dotnet.microsoft.com/download/dotnet-core/3.0)
 
 [Visual Studio Win/Mac Preview](https://visualstudio.com/preview "Visual Studio Win/Mac Preview") This will **only** compile using a preview version of Visual Studio until 3.0 and C# 8.0 are released. (For now)
 
