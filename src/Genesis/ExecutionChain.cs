@@ -31,7 +31,7 @@ namespace Genesis
                     Text.CliCommand(e.CommandText);
                     Text.White(" from ");
                     Text.Assembly(e.GetType().Assembly.GetName().Name);
-                    Text.WhiteLine(".");
+                    Text.GrayLine(".");
                 });        
 
         public Task ForEach(Action<IGenesisExecutor<IGenesisExecutionResult>> action)

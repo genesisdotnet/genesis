@@ -10,7 +10,7 @@ namespace Genesis.Cli.Commands
 {
     public class ExecCommand : GenesisCommand
     {
-        public override string Name { get => "exec"; } //I keep typing 'exec' whatever, and it's annoying. 
+        public override string Name { get => "exec"; }
 
         public override string Description => "Execute!";
 
