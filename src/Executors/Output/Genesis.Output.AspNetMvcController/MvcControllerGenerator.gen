@@ -2,46 +2,70 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Net;
+using System.Web.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Web.Http;
 
-namespace ~NAMESPACE~.Controllers
+namespace ~NAMESPACE~
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class ~OBJECT_NAME~Controller : ControllerBase
+    [ApiVersion("2")]
+    [RoutePrefix("api/v{version:apiVersion}/[controller]")]
+    public class ~OBJECT_NAME~Controller : BaseApiController
     {
-		public ~OBJECT_NAME~Controller() {} //TODO: Inject something useful
+~INJECTION_MEMBERS~
+
+		public ~OBJECT_NAME~Controller(
+~INJECTIONS~
+		) 
+		{
+~INJECTION_ASSIGNMENT~
+		}
 		
-        // GET api/~OBJECT_NAME~
+        // GET api/v#/~OBJECT_NAME~
         [HttpGet]
-        public ActionResult<IEnumerable<~OBJECT_NAME~>> Get()
+        public IHttpActionResult Get()
         {
-            return new ~OBJECT_NAME~[] { default(~OBJECT_NAME~), default(~OBJECT_NAME~) };
+            return Ok(new ~OBJECT_NAME~[] { default(~OBJECT_NAME~), default(~OBJECT_NAME~) });
         }
 
-        // GET api/~OBJECT_NAME~/5
+        // GET api/v#/~OBJECT_NAME~/5
         [HttpGet("{id}")]
-        public ActionResult<~OBJECT_NAME~> Get(int id)
+        public IHttpActionResult Get(int id)
         {
-            return new ~OBJECT_NAME~();
+            return Ok(new ~OBJECT_NAME~());
         }
 
-        // POST api/~OBJECT_NAME~
+        // POST api/v#/~OBJECT_NAME~
         [HttpPost]
-        public void Post([FromBody] ~OBJECT_NAME~ value)
+        public IHttpActionResult Post([FromBody] ~OBJECT_NAME~ obj)
         {
+			if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+			return Ok(obj.Id);
         }
 
-        // PUT api/~OBJECT_NAME~/5
+        // PUT api/v#/~OBJECT_NAME~/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] ~OBJECT_NAME~ value)
+        public IHttpActionResult Put([FromUrl] int id, [FromBody] ~OBJECT_NAME~ obj)
         {
+			if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+			return Ok(id);
         }
 
-        // DELETE api/~OBJECT_NAME~/5
+        // DELETE api/v#/~OBJECT_NAME~/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IHttpActionResult Delete([FromUrl] int id)
         {
+			return Ok(id);
         }
     }
 }
