@@ -82,11 +82,11 @@ namespace Genesis.Output.Poco
 
         private string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators
         {
-            string template = "\t\tprivate ~PROPERTY_DATATYPE~ ~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +
+            string template = "\t\tprivate ~PROPERTY_DATATYPE~ _~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +
                                 "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~" + Environment.NewLine +
                                 "\t\t{" + Environment.NewLine +
-                                "\t\t\tget => ~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +
-                                "\t\t\tset => ~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +
+                                "\t\t\tget => _~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +
+                                "\t\t\tset => _~PROPERTY_MEMBER_NAME~ = value;" + Environment.NewLine +
                                 "\t\t}" + Environment.NewLine;
 
             var sb = new StringBuilder();
