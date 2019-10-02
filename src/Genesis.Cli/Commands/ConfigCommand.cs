@@ -68,10 +68,10 @@ namespace Genesis.Cli.Commands
 
                     var chunks = args[2].Split('='); //TODO: terse
                     var propertyName = chunks[0];
-
+                    var propertyValue = args[2].Substring(propertyName.Length + 1);
                     if (generator != null)
                     {
-                        if (!await generator.EditConfig(chunks[0], chunks[1]))
+                        if (!await generator.EditConfig(propertyName, propertyValue))
                         {
                             Text.RedLine("Couldn't update value");
                         }
@@ -82,7 +82,7 @@ namespace Genesis.Cli.Commands
                     }
                     else if (populator != null)
                     {
-                        if (!await populator.EditConfig(chunks[0], chunks[1]))
+                        if (!await populator.EditConfig(propertyName, propertyValue))
                         {
                             Text.RedLine("Couldn't update value");
                         }

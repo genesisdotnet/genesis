@@ -1,7 +1,11 @@
 ﻿{
   "language": "C#",
-  "namespace": "DemoSite",
-  "outputPath": "../../../../DemoSite/Controllers",
-  "overwrite": "all",
-  "preserve": "none"
+  "namespace": "Output.Controllers",
+  "outputPath": "/Temp/Output/Controllers",
+  "overwrite": true,
+  "preserve": "",
+  "injections": [
+    "IAuthService",
+    "IAccountService"
+  ]
 }

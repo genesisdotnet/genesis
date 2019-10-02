@@ -58,5 +58,17 @@ namespace Genesis.Output
         /// Methods block placeholder (if supported by the Generator)
         /// </summary>
         public static readonly string MethodsStub = "~METHODS~";
+        /// <summary>
+        /// Interface list for constructor injections.
+        /// </summary>
+        public static readonly string Injections = "~INJECTIONS~";
+        /// <summary>
+        /// Class members for injected objects.
+        /// </summary>
+        public static readonly string InjectionMembers = "~INJECTION_MEMBERS~";
+        /// <summary>
+        /// Constructor parameters to members assignments.
+        /// </summary>
+        public static readonly string InjectionAssignment = "~INJECTION_ASSIGNMENT~";
     }
 }

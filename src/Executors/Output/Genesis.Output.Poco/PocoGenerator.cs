@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Genesis.Cli;
 using Genesis.Output;
 
+#nullable enable 
+
 namespace Genesis.Output.Poco
 {
     public class PocoGenerator : OutputExecutor
@@ -16,7 +18,7 @@ namespace Genesis.Output.Poco
         public override string Description => "(P)lain (O)ld (C)Sharp (O)bject .cs file";
         public override string FriendlyName => "(P)lain (O)ld (C)Sharp (O)bject";
 
-        public PocoConfig Config { get; set; }
+        public PocoConfig Config { get; set; } = new PocoConfig();
 
         protected override void OnInitialized()
         {
@@ -30,9 +32,8 @@ namespace Genesis.Output.Poco
             try
             {
                 foreach (var obj in genesis.Objects)
-                {
                     await ExecuteGraph(obj);
-                }
+                
                 result.Success = true;
             }
             catch (Exception e)
@@ -46,30 +47,22 @@ namespace Genesis.Output.Poco
 
         public async Task ExecuteGraph(ObjectGraph objectGraph)
         {
-            var tmp = Template;
-
-            if (!Directory.Exists(OutputPath))
-                Directory.CreateDirectory(OutputPath);
+            if (!Directory.Exists(Config.OutputPath)) //TODO: Worry about the output path in the OutputGenerator base
+                Directory.CreateDirectory(Config.OutputPath);
 
             // don't write out object base classes since it's redundant
             var baseTypeString = (objectGraph.BaseType == typeof(object))
                 ? string.Empty
                 : ": " + objectGraph.BaseTypeFormattedName;
 
-            var output = tmp.Raw
-                .Replace(Tokens.Namespace,Config.Namespace) //TODO: Templating engine? / razor etc would be cool ..|., T4 
-                .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
-                .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
-                .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties))
-                .Replace(Tokens.BaseTypeName, baseTypeString)
-                ; 
+            var output = Template.Raw
+                            .Replace(Tokens.Namespace, Config.Namespace)
+                            .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
+                            .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
+                            .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties))
+                            .Replace(Tokens.BaseTypeName, baseTypeString); 
 
-            var subPath = Path.Combine(OutputPath, "Pocos");
-
-            if (!Directory.Exists(subPath))
-                Directory.CreateDirectory(subPath);
-
-            var outPath = Path.Combine(subPath, objectGraph.Name.ToSingular() + ".cs");
+            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + ".cs");
 
             //TODO: Handle generics better while writing out .cs pocos
 
@@ -80,15 +73,14 @@ namespace Genesis.Output.Poco
             await Task.CompletedTask;
         }
 
-        private string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators
+        private static string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators
         {
-            string template = "\t\tprivate ~PROPERTY_DATATYPE~ _~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +
-                                "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~" + Environment.NewLine +
-                                "\t\t{" + Environment.NewLine +
-                                "\t\t\tget => _~PROPERTY_MEMBER_NAME~;" + Environment.NewLine +
-                                "\t\t\tset => _~PROPERTY_MEMBER_NAME~ = value;" + Environment.NewLine +
-                                "\t\t}" + Environment.NewLine;
-
+            string template = 
+                "\t\t/// <summary>" + Environment.NewLine +
+                "\t\t/// Gets or sets the ~PROPERTY_NAME~." + Environment.NewLine + 
+                "\t\t/// <summary>" + Environment.NewLine +
+                "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }" + Environment.NewLine;
+                    
             var sb = new StringBuilder();
 
             foreach (var p in properties)
@@ -102,9 +94,9 @@ namespace Genesis.Output.Poco
             return sb.ToString();
         }
 
-        private string GetConstructionReplacement(List<PropertyGraph> properties)
+        private static string GetConstructionReplacement(List<PropertyGraph> properties)
         {
-            const string template = "            //this.~PROPERTY_MEMBER_NAME~ = default(~PROPERTY_DATATYPE~);";
+            const string template = "            //this.~PROPERTY_MEMBER_NAME~ = default;";
 
             var sb = new StringBuilder();
 
@@ -114,10 +106,10 @@ namespace Genesis.Output.Poco
                     continue;
 
                 sb.AppendLine(template.Replace(Tokens.PropertyMemberName, p.Name.ToCorrectedCase())
-                                    .Replace(Tokens.PropertyDataType, p.SourceType.ToCodeDataType()));
+                                      .Replace(Tokens.PropertyDataType, p.SourceType.ToCodeDataType()));
             }
 
-            return sb.ToString();
+            return string.Empty;
         }
     }
 }

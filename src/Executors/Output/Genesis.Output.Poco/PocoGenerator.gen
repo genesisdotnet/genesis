@@ -6,9 +6,9 @@ using System.Text;
 
 namespace ~NAMESPACE~
 {
-    public class ~OBJECT_NAME~ ~BASE_CLASS~
+    public class ~OBJECT_NAME~: ~BASE_CLASS~
     {
-        public ~OBJECT_NAME~Entity()
+        public ~OBJECT_NAME~()
         {
 ~CONSTRUCTION~
         }
