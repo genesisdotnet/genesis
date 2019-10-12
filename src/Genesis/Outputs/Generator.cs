@@ -41,15 +41,18 @@ namespace Genesis.Output
             {
                 foreach (var dep in _deps)
                 {
-                    var path = (string.IsNullOrEmpty(outputRoot)) 
-                        ? OutputPath + dep.PathFragment 
-                        : outputRoot + dep.PathFragment;
+                    if (!Directory.Exists(outputRoot))
+                        Directory.CreateDirectory(outputRoot);
 
-                    Directory.CreateDirectory(Path.GetDirectoryName(path));
+                    var filename = dep.PathFragment.TrimStart('/').TrimStart('\\');
+                    
+                    var path = Path.Combine(outputRoot, filename);
+
+                    //TODO: Replace tokens in dependencies
 
                     File.WriteAllText(path, dep.Contents, Encoding.UTF8);
 
-                    Text.Gray($"Wrote ["); Text.Yellow(dep.PathFragment); Text.GrayLine("]");
+                    Text.Gray($"Wrote ["); Text.Yellow(filename); Text.GrayLine("]");
                 }
                 Text.GreenLine($"Wrote {_deps.Count} dependencies to their respective paths.");
                 return Task.FromResult(true);

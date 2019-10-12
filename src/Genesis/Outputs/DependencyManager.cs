@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
+#nullable enable
+
 namespace Genesis.Output
 {
     public static class DependencyManager
@@ -17,13 +19,14 @@ namespace Genesis.Output
             if (File.Exists(fileName))
                 t = File.ReadAllText(fileName);
 
-            var tmp = new string[] { Tokens.TemplateSeperator };
-            var chunks = t.Split(tmp, StringSplitOptions.RemoveEmptyEntries);
+            var chunks = t.Split(new string[] { Tokens.TemplateSeperator }, StringSplitOptions.RemoveEmptyEntries);
 
             foreach (var i in chunks)
             {
                 using var rdr = new StringReader(i);
-
+                
+                _ = rdr.ReadLine();
+                
                 var pathFragment = rdr.ReadLine();
                 var content = rdr.ReadToEnd();
 

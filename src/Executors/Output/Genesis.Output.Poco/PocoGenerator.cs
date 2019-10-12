@@ -85,6 +85,9 @@ namespace Genesis.Output.Poco
 
             foreach (var p in properties)
             {
+                if (p.SourceType.Equals("sysname", StringComparison.InvariantCultureIgnoreCase))
+                    continue;
+
                 if (!p.SourceType.Equals(GenesisDefaults.UnknownSourceType, StringComparison.Ordinal))
                     sb.AppendLine(template.Replace(Tokens.PropertyDataType, p.SourceType.ToCodeDataType())
                         .Replace(Tokens.PropertyName, p.Name)
@@ -102,7 +105,7 @@ namespace Genesis.Output.Poco
 
             foreach (var p in properties)
             {
-                if (p.SourceType == "sysname")
+                if (p.SourceType.Equals("sysname", StringComparison.InvariantCultureIgnoreCase))
                     continue;
 
                 sb.AppendLine(template.Replace(Tokens.PropertyMemberName, p.Name.ToCorrectedCase())
