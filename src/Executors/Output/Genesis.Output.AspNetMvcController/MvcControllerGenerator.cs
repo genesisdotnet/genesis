@@ -46,10 +46,12 @@ namespace Genesis.Output.AspNetMvcController
                             .Replace(Tokens.Injections, Config.Injections.ToInjectionString())
                             .Replace(Tokens.InjectionMembers, Config.Injections.ToInjectionMembersString())
                             .Replace(Tokens.InjectionAssignment, Config.Injections.ToInjectionAssignmentsString());
-            
-            Text.DarkCyanLine($@"{Config.OutputPath}/{entityName}Controller.cs");
 
-            File.WriteAllText(Path.Combine(Config.OutputPath, $"{entityName}Controller.cs"), output);
+            var path = Path.Combine(Config.OutputPath, $@"{entityName}Controller.cs");
+            
+            Text.DarkCyanLine($@"{path}");
+
+            File.WriteAllText(path, output);
 
             return Task.CompletedTask;
         }

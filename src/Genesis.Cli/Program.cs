@@ -19,7 +19,7 @@ namespace Genesis.Cli
         static async Task Main(string[] args)
         {
             //NOTE:      --script "C:\Path\To\Script.genesis"
-            if (args.Length == 2 && args[0].ToLower() == "--script" && args[1].Length > 0)
+            if (args.Length == 2 && args[0].Equals("--script", StringComparison.InvariantCultureIgnoreCase) && args[1].Length > 0)
                 await InitializeScript(args[1]);
 
             using var tokenSource = new CancellationTokenSource();
