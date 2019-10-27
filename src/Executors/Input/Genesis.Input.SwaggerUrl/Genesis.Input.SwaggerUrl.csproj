@@ -13,6 +13,8 @@
     <PackageReference Include="System.CodeDom" Version="4.6.0" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="System.ObjectModel" Version="4.3.0" />
+    <PackageReference Include="System.IO.FileSystem.Primitives" Version="4.3.0" />
+    <PackageReference Include="System.Text.Encoding.Extensions" Version="4.3.0" />
   </ItemGroup>
 
   <ItemGroup>
