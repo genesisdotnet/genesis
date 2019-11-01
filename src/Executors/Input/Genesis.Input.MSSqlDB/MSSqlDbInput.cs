@@ -107,8 +107,8 @@ namespace Genesis.Input.MSSqlDb
                     {
                         Name = rdr["name"].ToString(),
                         SourceType = rdr["SqlTypeName"].ToString(),
-                        TypeGuess = "convert me 2 c#", //TODO: Convert this to something csharpy for the generators, yeah assuming a lot
-                                                       //ColumnID = rdr.GetInt32(rdr.GetOrdinal("column_id")), //don't need yet?
+                        TypeGuess = Extensions.ToCodeDataType(rdr["SqlTypeName"].ToString()),
+                        //ColumnID = rdr.GetInt32(rdr.GetOrdinal("column_id")), //don't need yet?
                         IsNullable = rdr.GetBoolean(rdr.GetOrdinal("is_nullable")),
                         //IsRowGuid = rdr.GetBoolean(rdr.GetOrdinal("is_rowguidcol")),
                         IsKeyProperty = rdr.GetBoolean(rdr.GetOrdinal("is_identity")),

@@ -19,6 +19,18 @@ namespace Genesis.Output
         /// </summary>
         public static readonly string PropertiesStub = "~PROPERTIES~";
         /// <summary>
+        /// Code block for validation
+        /// </summary>
+        public static readonly string PropertiesValidationStub = "~PROPERTIES_VALIDATION~";
+        /// <summary>
+        /// The ObjectName as objectName
+        /// </summary>
+        public static readonly string ObjectNameAsArgument = "~OBJECT_NAME_ARGUMENT~";
+        /// <summary>
+        /// The ObjectName as Object Name
+        /// </summary>
+        public static readonly string ObjectNameSpaced = "~OBJECT_NAME_SPACED~";
+        /// <summary>
         /// Constructor(s) for the generated class
         /// </summary>
         public static readonly string ConstructionStub = "~CONSTRUCTION~";

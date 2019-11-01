@@ -72,11 +72,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9BB5
 	ProjectSection(SolutionItems) = preProject
 		src\Debug.genesis = src\Debug.genesis
 		src\LocalDBSqlToCSharp.genesis = src\LocalDBSqlToCSharp.genesis
+		src\MSSqlToReactEditor.genesis = src\MSSqlToReactEditor.genesis
 		src\ScanAndBreak.genesis = src\ScanAndBreak.genesis
 		src\SwaggerToPoco.genesis = src\SwaggerToPoco.genesis
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Executors.GraphTools", "src\Executors\Genesis.Executors.GraphTools\Genesis.Executors.GraphTools.csproj", "{EA2B8335-2F4F-43CB-9133-6B45165002B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genesis.Output.ReactEditorComponent", "src\Executors\Output\Genesis.Output.ReactEditorComponent\Genesis.Output.ReactEditorComponent.csproj", "{F9EA0203-AB75-4892-A182-45F04040D1AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -244,6 +247,18 @@ Global
 		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Release|x64.Build.0 = Release|Any CPU
 		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Release|x86.ActiveCfg = Release|Any CPU
 		{EA2B8335-2F4F-43CB-9133-6B45165002B6}.Release|x86.Build.0 = Release|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Debug|x64.Build.0 = Debug|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Debug|x86.Build.0 = Debug|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Release|x64.ActiveCfg = Release|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Release|x64.Build.0 = Release|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Release|x86.ActiveCfg = Release|Any CPU
+		{F9EA0203-AB75-4892-A182-45F04040D1AC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -263,6 +278,7 @@ Global
 		{0195AE48-AC67-4488-AA87-1EDB46A87068} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{E05B3EBB-0433-4833-97ED-F77EA876C049} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{EA2B8335-2F4F-43CB-9133-6B45165002B6} = {7064AAEF-D4AA-4CEB-A3AB-2588672FC1EE}
+		{F9EA0203-AB75-4892-A182-45F04040D1AC} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A29E004-0C17-4E72-AE88-F7EA03136D6E}

@@ -85,11 +85,23 @@ namespace Genesis
         /// <returns>string containing a formatted 'variableName'</returns>
         public static string ToCorrectedCase(this string variableString)
             => (variableString.Length > 2) //longer than two letter properties, like ID
-#pragma warning disable IDE0057 // Use range operator
-                ? variableString.ToLower(CultureInfo.CurrentCulture)[0] + variableString.Substring(1, variableString.Length - 1)
-#pragma warning restore IDE0057 // Use range operator
+                ? variableString.ToLower(CultureInfo.CurrentCulture)[0] + variableString[1..]
                 : variableString; //TODO: This feels off return what was passed in?
 
+        /// <summary>
+        /// Breaks up a string based on capital letters. (ObjectName as Object Name)
+        /// </summary>
+        /// <param name="objName">the string to break up</param>
+        /// <returns>The broken up string.</returns>
+        public static string ToSpaceSeperated(this string objName)
+        {
+            var chars = new List<char>();
+            foreach(var c in objName)
+            {           // ASCII A == 65, Z == 90
+                chars.Add((char)(c >= 65 && c <= 90 ? ' ' + c : c));
+            }
+            return new string(chars.ToArray());
+        }
         /// <summary>
         /// Returns a singular word from a plural
         /// </summary>
