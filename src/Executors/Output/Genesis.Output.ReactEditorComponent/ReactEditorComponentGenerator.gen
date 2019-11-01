@@ -1,0 +1,82 @@
+﻿import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import { Form, Row, Col, ButtonToolbar, Button, Alert, InputGroup } from 'react-bootstrap';
+import { Formik } from 'formik';
+import InputMask from 'react-input-mask';
+import * as yup from 'yup';
+import Switch from '../shared/Switch';
+import EditActions from '../shared/EditActions';
+
+const schema = yup.object({
+~PROPERTIES_VALIDATION~
+});
+
+class Edit~OBJECT_NAME~ extends Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirectTo: '/~OBJECT_NAME~'
+    };
+  }
+
+  render() {
+    const { staff, editAction, handleCancelEditClick, redirect, apiError, handleFormSubmit, licenseTypes, staffEducationLevels } = this.props;
+    const { redirectTo } = this.state;
+
+    if (redirect) {
+      return <Redirect to={redirectTo} />;
+    }
+
+    return (
+      <Formik
+        validationSchema={schema}
+        onSubmit={handleFormSubmit}
+        initialValues={{ ...~OBJECT_NAME_ARGUMENT~ }}>
+        {({
+          handleSubmit,
+          handleChange,
+          values,
+          touched,
+          errors,
+          isSubmitting
+        }) => (
+        <Form noValidate onSubmit={handleSubmit}>
+          <Row className="mt-3 mb-3">
+            <Col md={6}>
+              <h5><strong>{editAction} ~OBJECT_NAME~</strong></h5>
+            </Col>
+            <Form.Group as={Col} md={6} className="d-flex justify-content-end">
+              <label htmlFor="isActive">Active&nbsp;</label>
+              <Switch
+                value={values.isActive}
+                name="isActive"
+                onChange={handleChange} />
+            </Form.Group>
+          </Row>
+
+          {apiError &&
+          <Row className="mb-3">
+            <Col>
+              <Alert variant="danger">{apiError}</Alert>
+            </Col>
+          </Row>
+          }
+
+~EDITOR_ROWS~
+
+          <EditActions>
+            <ButtonToolbar className="d-flex justify-content-end">
+              <Button variant="outline-primary" onClick={() => handleCancelEditClick()}>Cancel</Button>
+              <Button variant="primary" type="submit" disabled={isSubmitting}>Save</Button>
+            </ButtonToolbar>
+          </EditActions>
+
+        </Form>
+        )}
+      </Formik>
+    );
+  }
+}
+
+export default Edit~OBJECT_NAME~;

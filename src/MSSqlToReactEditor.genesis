@@ -1,0 +1,7 @@
+scan
+add mssql
+config mssql ConnectionString="Data Source=(localdb)\MSSQLLocalDB;Integrated Security=true;Database=GenesisTest;"
+add react-ec
+config react-ec FileExtension=".js"
+config react-ec OutputPath="C:\Temp\Output\ReactEditors"
+break
