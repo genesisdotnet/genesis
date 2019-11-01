@@ -45,7 +45,7 @@ namespace Genesis.Output.ReactEditorComponent
         {
             var entityName = objectGraph.Name.ToSingular();
 
-            var output = Template.Raw
+            var output = Template.Raw 
                             .Replace(Tokens.ObjectName, entityName)
                             .Replace(Tokens.ObjectNameAsArgument, entityName.ToCorrectedCase())
                             .Replace(Tokens.PropertiesValidationStub, GetValidationBlock(objectGraph))
