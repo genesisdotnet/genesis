@@ -19,7 +19,7 @@ namespace Genesis.Input.MSSqlDb
 
         public override string CommandText => "mssql";
         public override string FriendlyName => "Sql Server LocalDB";
-        public override string Description => "Populate the object graph with the schema of a Microsoft SQL Server database.";
+        public override string Description => "Populate the object graph with the schema of a Microsoft SQL Server database";
 
         public SqlConfig Config { get; set; }
 
