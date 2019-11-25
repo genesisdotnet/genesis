@@ -6,6 +6,7 @@ using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.Loader;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -301,5 +302,17 @@ namespace Genesis
         public static string[] ToFormattedNames(this Type[] types) 
             => types.Select(s => s.GetFormattedName())
                 .ToArray();
+
+        /// <summary>
+        /// True if the property is public, false otherwise. Pass the getter or setter name to match the get or set visibility
+        /// </summary>
+        /// <param name="prop">The PropertyInfo object.</param>
+        /// <param name="getOrSet">Optional getter or setter name.</param>
+        /// <returns></returns>
+        public static bool IsPublic(this PropertyInfo prop, string getOrSet = "")
+            => (prop.GetAccessors()
+                    .Where(w => w.IsPublic && w.Name == (string.IsNullOrEmpty(getOrSet) 
+                                                            ? w.Name 
+                                                            : getOrSet)).SingleOrDefault() != null);
     }
 }

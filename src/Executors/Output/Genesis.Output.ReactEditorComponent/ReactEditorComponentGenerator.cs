@@ -41,7 +41,7 @@ namespace Genesis.Output.ReactEditorComponent
             return new OutputGenesisExecutionResult();
         }
 
-        public Task ExecuteGraph(ObjectGraph objectGraph)
+        public async Task ExecuteGraph(ObjectGraph objectGraph)
         {
             var entityName = objectGraph.Name.ToSingular();
 
@@ -55,27 +55,29 @@ namespace Genesis.Output.ReactEditorComponent
 
             Text.DarkCyanLine($@"{path}");
 
-            File.WriteAllText(path, output);
+            if (File.Exists(path))
+                File.Delete(path);
 
-            return Task.CompletedTask;
+            await Task.Delay(10);
+
+            File.WriteAllText(path, output);
         }
 
         private static string GetEditorRows(ObjectGraph objectGraph)
         {
             const string textVal = // General text validator
-@"  <Form.Group as={Col} lg={6} md={12}>
-    <Form.Control
-        type=""text""
-        name=""~OBJECT_NAME_ARGUMENT~""
-        value={values.~OBJECT_NAME_ARGUMENT~}
-        placeholder=""~OBJECT_NAME_SPACED~""
-        onChange={handleChange}
-        isInvalid={touched.~OBJECT_NAME_ARGUMENT~ && !! errors.~OBJECT_NAME_ARGUMENT~}/>
-      
+@"    <Form.Group as={Col} lg={6} md={12}>
+        <Form.Control
+            type=""text""
+            name=""~OBJECT_NAME_ARGUMENT~""
+            value={values.~OBJECT_NAME_ARGUMENT~}
+            placeholder=""~OBJECT_NAME_SPACED~""
+            onChange={handleChange}
+            isInvalid={touched.~OBJECT_NAME_ARGUMENT~ && !! errors.~OBJECT_NAME_ARGUMENT~}/>
         <Form.Control.Feedback type=""invalid"">
             {errors.~OBJECT_NAME_ARGUMENT~}
         </Form.Control.Feedback>
-  </Form.Group>";
+      </Form.Group>";
 
             var sb = new StringBuilder();
 

@@ -31,6 +31,13 @@ namespace Genesis.Output.Poco
 
             try
             {
+                if (Directory.Exists(Config.OutputPath)) //TODO: Worry about the output path in the OutputGenerator base
+                    Directory.Delete(Config.OutputPath, true);
+
+                await Task.Delay(100); // disk timings?!?
+
+                Directory.CreateDirectory(Config.OutputPath);
+
                 foreach (var obj in genesis.Objects)
                     await ExecuteGraph(obj);
                 
@@ -47,9 +54,6 @@ namespace Genesis.Output.Poco
 
         public async Task ExecuteGraph(ObjectGraph objectGraph)
         {
-            if (!Directory.Exists(Config.OutputPath)) //TODO: Worry about the output path in the OutputGenerator base
-                Directory.CreateDirectory(Config.OutputPath);
-
             // don't write out object base classes since it's redundant
             var baseTypeString = (objectGraph.BaseType == typeof(object))
                 ? string.Empty

@@ -2,12 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.0</TargetFramework>
-    <Nullable>enable</Nullable>
     <LangVersion>8.0</LangVersion>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Genesis\Genesis.csproj" />
+    <ProjectReference Include="..\..\src\Genesis.Cli.Extensions\Genesis.Cli.Extensions.csproj" />
+    <ProjectReference Include="..\..\src\Genesis\Genesis.csproj" />
   </ItemGroup>
 
 </Project>
