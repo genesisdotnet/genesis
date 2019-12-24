@@ -82,5 +82,13 @@ namespace Genesis.Output
         /// Constructor parameters to members assignments.
         /// </summary>
         public static readonly string InjectionAssignment = "~INJECTION_ASSIGNMENT~";
+        /// <summary>
+        /// Object key's data type
+        /// </summary>
+        public static readonly string KeyDataType = "~KEY_DATATYPE~";
+        /// <summary>
+        /// Namespace for Grpc related output
+        /// </summary>
+        public static readonly string GrpcNamespace = "~GRPC_NAMESPACE~";
     }
 }

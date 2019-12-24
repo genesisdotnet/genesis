@@ -1,7 +1,7 @@
 ﻿{
   "version": 3,
-  "namespace": "Genesis.Output.Proto",
-  "outputPath": "C:\\Temp\\Output\\roto",
+  "namespace": "Genesis.Services.Grpc",
+  "outputPath": "C:\\Temp\\Output\\Proto-Entities",
   "overwrite": "all",
   "preserve": "none"
 }

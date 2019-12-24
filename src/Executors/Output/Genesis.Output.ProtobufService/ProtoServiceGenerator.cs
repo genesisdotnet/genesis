@@ -8,17 +8,17 @@ using System.Threading.Tasks;
 
 namespace Genesis.Output.Protos
 {
-    public class ProtoGenerator : OutputExecutor
+    public class ProtoServiceGenerator : OutputExecutor
     {
-        public override string CommandText => "proto-entity";
-        public override string Description => "Generates a Protobuf file with CRUD operations and an Entity member";
-        public override string FriendlyName => "Protobuf (.proto) file Generator";
+        public override string CommandText => "proto-svc";
+        public override string Description => "Generates a service class implementation of a protobuf";
+        public override string FriendlyName => "Protobuf Implementation Service Generator";
 
-        public ProtoConfig Config { get; set; }
+        public ProtoServiceConfig Config { get; set; }
 
         protected override void OnInitialized()
         {
-            Config = (ProtoConfig)Configuration;
+            Config = (ProtoServiceConfig)Configuration;
         }
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
@@ -50,18 +50,18 @@ namespace Genesis.Output.Protos
                 Directory.CreateDirectory(Config.OutputPath);
 
             var output = tmp.Raw.Replace(Tokens.Version, Config.Version.ToString())
-                                .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
                                 .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
                                 .Replace(Tokens.MethodsStub, GetMethodsReplacement(objectGraph.Methods))
                                 .Replace(Tokens.Namespace, Config.Namespace)
                                 .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToCodeDataType())
+                                .Replace(Tokens.GrpcNamespace, Config.GrpcNamespace)
                                 ;
 
-            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + ".proto");
+            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + "GrpcService.cs");
 
             File.WriteAllText(outPath, output);
 
-            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".proto"); Text.WhiteLine("'");
+            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".cs"); Text.WhiteLine("'");
             
             await Task.CompletedTask;
         }
@@ -69,9 +69,15 @@ namespace Genesis.Output.Protos
         private static string GetMethodsReplacement(List<MethodGraph> methods)
         {
             var rows = new List<string>();
+            var sb = new StringBuilder();
             foreach (var m in methods)
             {
-                rows.Add($"rpc {m.Name} ({((m.Parameters.Count > 0)?m.Parameters[0].DataTypeFormattedName:"void")}) returns ({m.ReturnTypeFormattedName});");
+                sb.Clear();
+                m.Parameters.ForEach(p => sb.Append(p.DataTypeFormattedName + " " + p.Name.ToCorrectedCase() + ","));
+                var s = sb.ToString();
+                var tmp = s.Length > 0 ? s[..^1] : s;
+
+                rows.Add(@$"\t\tpublic override {m.ReturnTypeFormattedName} {m.Name}({tmp})\n\t\t{{\n\t\t\t\\\\\throw new NotImplementedException();n\t\t}}");
             }
 
             return string.Join(Environment.NewLine, rows.ToArray());

@@ -26,5 +26,6 @@ namespace Genesis
         public string BaseTypeFormattedName { get; set; } = string.Empty;
         public bool IsGeneric { get; set; }
         public string[] GenericArgumentTypes { get; set; } = Array.Empty<string>();
+        public string KeyDataType { get; set; } = "int";
     }
 }

@@ -6,23 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Genesis.Cli.Extensions\Genesis.Cli.Extensions.csproj" />
     <ProjectReference Include="..\..\..\Genesis\Genesis.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="PocoGenerator.deps">
+    <None Update="ProtoServiceConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="PocoConfig.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="PocoGenerator.gen">
+    <None Update="ProtoServiceGenerator.gen">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-  </Target>
 
 </Project>

@@ -1,3 +1,6 @@
 ﻿{
-  "ConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=GenesisTest;Integrated Security=True;MultipleActiveResultSets=True;"
+  "ConnectionString": "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=GenesisTest;Integrated Security=True;MultipleActiveResultSets=True;",
+  "ExcludePrefixes": [
+    "AspNet", "_", "sys"
+  ]
 }
