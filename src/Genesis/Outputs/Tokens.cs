@@ -90,5 +90,33 @@ namespace Genesis.Output
         /// Namespace for Grpc related output
         /// </summary>
         public static readonly string GrpcNamespace = "~GRPC_NAMESPACE~";
+        /// <summary>
+        /// Injection class members declarations
+        /// </summary>
+        public static readonly string RepositoryMembers = "~REPO_MEMBERS~";
+        /// <summary>
+        /// Injection member assignments, usually for a constructor
+        /// </summary>
+        public static readonly string RepositoryAssignments = "~REPO_ASSIGNMENTS~";
+        /// <summary>
+        /// Injection parameters, usually for a constructor
+        /// </summary>
+        public static readonly string RepositoryInjections = "~REPO_INJECTIONS~";
+        /// <summary>
+        /// The namespace for a using that contains ApiServices
+        /// </summary>
+        public static readonly string ApiServiceNamespace = "~API_SERVICE_NAMESPACE~";
+        /// <summary>
+        /// Api service class name suffix
+        /// </summary>
+        public static readonly string ApiServiceSuffix = "~API_SERVICE_SUFFIX~";
+        /// <summary>
+        /// Base class for whatever
+        /// </summary>
+        public static readonly string ObjectBaseClass = "~OBJECT_BASECLASS~";
+        /// <summary>
+        /// Suffix for filename / classname etc
+        /// </summary>
+        public static readonly string OutputSuffix = "~OUTPUT_SUFFIX~";
     }
 }

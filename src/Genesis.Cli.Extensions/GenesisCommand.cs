@@ -10,8 +10,6 @@ namespace Genesis.Cli.Extensions
 {
     public abstract class GenesisCommand : IGenesisCommand
     {
-        public GenesisCommand() {}
-
         public abstract string Name { get; }
         public virtual string HelpTemplate { get; } = "-?|-h|--help";
         public abstract Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args);

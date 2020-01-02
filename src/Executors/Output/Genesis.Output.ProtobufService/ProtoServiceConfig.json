@@ -1,7 +1,10 @@
 ﻿{
   "namespace": "Genesis.Api.Services",
   "grpcNamespace": "Genesis.Services.Grpc",
+  "apiServiceSuffix": "Service",
+  "apiServiceNamespace": "Genesis.Api.Services",
   "outputPath": "C:\\Temp\\Output\\Proto-Services",
+  "initNullable": true,
   "overwrite": "all",
   "preserve": "none"
 }

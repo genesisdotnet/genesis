@@ -55,13 +55,18 @@ namespace Genesis.Output.Protos
                                 .Replace(Tokens.Namespace, Config.Namespace)
                                 .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToCodeDataType())
                                 .Replace(Tokens.GrpcNamespace, Config.GrpcNamespace)
+                                .Replace(Tokens.ApiServiceNamespace, Config.ApiServiceNamespace)
+                                .Replace(Tokens.ApiServiceSuffix, Config.ApiServiceSuffix)
+                                .Replace(Tokens.Injections, GrpcServiceInjector.GetParameterForServiceClass(objectGraph, Config.ApiServiceSuffix))
+                                .Replace(Tokens.InjectionMembers, GrpcServiceInjector.GetDeclarationForServiceClass(objectGraph, Config.ApiServiceSuffix, true))
+                                .Replace(Tokens.InjectionAssignment, GrpcServiceInjector.GetAssignmentForServiceClass(objectGraph))
                                 ;
 
             var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + "GrpcService.cs");
 
             File.WriteAllText(outPath, output);
 
-            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".cs"); Text.WhiteLine("'");
+            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + "GrpcService.cs"); Text.WhiteLine("'");
             
             await Task.CompletedTask;
         }

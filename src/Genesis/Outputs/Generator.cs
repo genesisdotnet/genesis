@@ -35,22 +35,22 @@ namespace Genesis.Output
         public IOutputConfiguration Configuration { get; set; } = new GeneratorConfiguration();
 
         public IList<IOutputDependency> Dependencies { get => _deps; }
-        public Task<bool> DepositDependencies(string outputRoot = @"Output\") 
+        public Task<bool> DepositDependencies(string outputRoot = "") 
         {
             try
             {
-                foreach (var dep in _deps)
+                foreach (var dependency in _deps)
                 {
+                    var modifiedDep = OnBeforeWriteDependency(this, new DependencyEventArgs((GenesisDependency)dependency));
+
                     if (!Directory.Exists(outputRoot))
                         Directory.CreateDirectory(outputRoot);
 
-                    var filename = dep.PathFragment.TrimStart('/').TrimStart('\\');
+                    var filename = dependency.PathFragment.TrimStart('/').TrimStart('\\');
                     
                     var path = Path.Combine(outputRoot, filename);
 
-                    //TODO: Replace tokens in dependencies
-
-                    File.WriteAllText(path, dep.Contents, Encoding.UTF8);
+                    File.WriteAllText(path, modifiedDep, Encoding.UTF8);
 
                     Text.Gray($"Wrote ["); Text.Yellow(filename); Text.GrayLine("]");
                 }
@@ -70,5 +70,14 @@ namespace Genesis.Output
 
             return Task.CompletedTask;
         }
+
+        /// <summary>
+        /// Return a modified dependency
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        /// <returns></returns>
+        protected virtual string OnBeforeWriteDependency(object sender, DependencyEventArgs e) 
+            => e.Dependency.Contents;
     }
 }

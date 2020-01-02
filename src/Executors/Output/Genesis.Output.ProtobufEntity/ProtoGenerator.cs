@@ -10,7 +10,7 @@ namespace Genesis.Output.Protos
 {
     public class ProtoGenerator : OutputExecutor
     {
-        public override string CommandText => "proto-entity";
+        public override string CommandText => "proto-file";
         public override string Description => "Generates a Protobuf file with CRUD operations and an Entity member";
         public override string FriendlyName => "Protobuf (.proto) file Generator";
 
@@ -54,7 +54,7 @@ namespace Genesis.Output.Protos
                                 .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
                                 .Replace(Tokens.MethodsStub, GetMethodsReplacement(objectGraph.Methods))
                                 .Replace(Tokens.Namespace, Config.Namespace)
-                                .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToCodeDataType())
+                                .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToGrpcProtoDataType())
                                 ;
 
             var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + ".proto");

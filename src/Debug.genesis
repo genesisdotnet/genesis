@@ -1,5 +1,0 @@
-scan
-add netlib
-exec netlib
-exec tools dump
-break

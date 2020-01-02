@@ -14,7 +14,7 @@ namespace Genesis.Cli
     static class Program
     {
         public static bool _isScript = false;
-        private static string[] _script = new string[] { };
+        private static string[] _script = Array.Empty<string>();
 
         static async Task Main(string[] args)
         {
