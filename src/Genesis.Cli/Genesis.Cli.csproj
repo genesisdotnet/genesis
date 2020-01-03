@@ -11,8 +11,8 @@
     <Description>Extensible scaffolding from just about any source to any destination you can write code for.</Description>
     <Copyright></Copyright>
     <Deterministic>False</Deterministic> <!-- required (for now) to use the * below for the assembly version -->
-    <AssemblyVersion>0.7.1.*</AssemblyVersion> 
-    <FileVersion>0.7.1</FileVersion>
+    <AssemblyVersion>0.7.2.*</AssemblyVersion> 
+    <FileVersion>0.7.2</FileVersion>
     <PackageProjectUrl>https://www.github.com/genesisdotnet/genesis</PackageProjectUrl>
     <GenerateErrorForMissingTargetingPacks>false</GenerateErrorForMissingTargetingPacks>
   </PropertyGroup>
@@ -55,6 +55,7 @@
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.Poco\Genesis.Output.Poco.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.ProtobufEntity\Genesis.Output.ProtobufEntity.csproj" />
+    <ProjectReference Include="..\Executors\Output\Genesis.Output.ProtobufService\Genesis.Output.ProtobufService.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.ReactEditorComponent\Genesis.Output.ReactEditorComponent.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.XamarinViewModel\Genesis.Output.XamarinViewModel.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.XamarinView\Genesis.Output.XamarinView.csproj" />

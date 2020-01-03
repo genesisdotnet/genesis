@@ -1,10 +1,10 @@
 ﻿<!----->
-\Model.cs
+\~OUTPUT_SUFFIX~.cs
 using System.Collections.Generic;
 
 namespace ~NAMESPACE~
 {
-    public class Model
+    public class ~OUTPUT_SUFFIX~
     {
         
     }

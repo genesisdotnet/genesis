@@ -28,29 +28,26 @@ namespace Genesis.Output.Poco
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             var result = new OutputGenesisExecutionResult();
-
-            try
-            {
-                if (Directory.Exists(Config.OutputPath)) //TODO: Worry about the output path in the OutputGenerator base
-                    Directory.Delete(Config.OutputPath, true);
-
-                await Task.Delay(100); // disk timings?!?
-
-                Directory.CreateDirectory(Config.OutputPath);
-
-                foreach (var obj in genesis.Objects)
-                    await ExecuteGraph(obj);
                 
-                result.Success = true;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                result.Message = e.Message;
-            }
+            if (!Directory.Exists(Config.OutputPath)) //TODO: Worry about the output path in the OutputGenerator base
+                    Directory.CreateDirectory(Config.OutputPath);
+
+            await DepositDependencies(Config.OutputPath);
+
+            foreach (var obj in genesis.Objects)
+                await ExecuteGraph(obj);
+                
+            result.Success = true;
             
             return result;
         }
+
+        protected override string OnBeforeWriteDependency(object sender, DependencyEventArgs e)
+         => e.Dependency.Contents
+                .Replace(Tokens.Namespace, Config.Namespace)
+                .Replace(Tokens.ObjectName, e.Dependency.ObjectName)
+                .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
+                .Replace(Tokens.OutputSuffix, Config.OutputSuffix);
 
         public async Task ExecuteGraph(ObjectGraph objectGraph)
         {
@@ -64,6 +61,8 @@ namespace Genesis.Output.Poco
                             .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
                             .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
                             .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties))
+                            .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
+                            .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                             .Replace(Tokens.BaseTypeName, baseTypeString); 
 
             var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + ".cs");
@@ -83,7 +82,7 @@ namespace Genesis.Output.Poco
                 "\t\t/// <summary>" + Environment.NewLine +
                 "\t\t/// Gets or sets the ~PROPERTY_NAME~." + Environment.NewLine + 
                 "\t\t/// <summary>" + Environment.NewLine +
-                "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }" + Environment.NewLine;
+                "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }";
                     
             var sb = new StringBuilder();
 

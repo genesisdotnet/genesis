@@ -30,12 +30,24 @@ namespace Genesis.Input.MSSqlDb
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
+            static bool isExcluded(ObjectGraph g, string[] ex)
+            {
+                foreach (var s in ex)
+                    if (g.Name.StartsWith(s, StringComparison.InvariantCultureIgnoreCase))
+                        return true;
+                
+                return false;
+            }
+
             var tmp = GetSchema();
 
-            Text.BlueLine($"{GetType().Name} created {tmp.Count} ObjectGraph(s)");
+            Text.BlueLine($"{GetType().Name} created {tmp.Count} ObjectGraph(s), matching exclusions...");
 
             foreach(var i in tmp)
             {
+                if (isExcluded(i, Config.ExcludePrefixes))
+                    continue;
+
                 Text.DarkYellowLine($"{i.Name}:{i.SourceType}");
                 if(genesis.Objects.SingleOrDefault(x => x.KeyId == i.KeyId) == null)
                     await genesis.AddObject(i); //yeah, this can blow up - leaving it for errors
@@ -103,7 +115,7 @@ namespace Genesis.Input.MSSqlDb
                     if (rdr["name"].ToString().StartsWith("_")) //migrations-ish table(s), skip them
                         continue;
 
-                    obj.Properties.Add(new PropertyGraph
+                    var p = new PropertyGraph
                     {
                         Name = rdr["name"].ToString(),
                         SourceType = rdr["SqlTypeName"].ToString(),
@@ -118,7 +130,12 @@ namespace Genesis.Input.MSSqlDb
                         //Scale = rdr.GetByte(rdr.GetOrdinal("scale")),
                         //SystemTypeID = rdr.GetByte(rdr.GetOrdinal("system_type_id")),
                         //ObjectID = rdr.GetInt32(rdr.GetOrdinal("object_id")),
-                    });
+                    };
+
+                    obj.Properties.Add(p);
+
+                    if (p.IsKeyProperty)
+                        obj.KeyDataType = p.SourceType;
                 }
             }
             return objs;

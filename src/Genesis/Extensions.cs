@@ -135,7 +135,74 @@ namespace Genesis
 
             return configuration;
         }
+        /// <summary>
+        /// Get the GRPC datatype
+        /// There's probably a better way
+        /// </summary>
+        /// <param name="dbDataType">string representation of the database type</param>
+        /// <returns>GRPC type corresponding to the database type received</returns>
+        public static string ToGrpcProtoDataType(this string dbDataType)
+        {
+            switch (dbDataType.ToLower()) //NOTE: Null?
+            {
+                case "string":
+                case "char":
+                case "nchar":
+                case "varchar":
+                case "nvarchar":
+                case "text":
+                case "ntext":
+                case "xml":
+                    return "string";
 
+                case "int32":
+                case "int": return "int32";
+
+                case "bigint": return "int64";
+
+                case "short":
+                case "smallint": return "int8";
+
+                case "byte":
+                case "tinyint": return "int8";
+
+                case "double":
+                case "long":
+                case "money":
+                case "smallmoney":
+                case "decimal":
+                case "numeric":
+                case "float":
+                case "single":
+                case "real":
+                    return "int64";
+
+                case "guid":
+                case "uniqueidentifier": return "string";
+
+                case "boolean":
+                case "bool":
+                case "bit": return "bool";
+
+                case "datetime":
+                case "datetime2":
+                case "smalldatetime":
+                case "date":
+                    return "string";
+
+                case "image":
+                case "rowversion":
+                case "timestamp":
+                case "varbinary":
+                case "varbinary(max)": //filestreams in sql
+                    return "binary";
+
+                default:
+                    {
+                        return dbDataType;
+                    }
+            }
+        }
         /// <summary>
         /// Get the equivalent c# datatype for database type provided
         /// There's probably a better way

@@ -1,0 +1,40 @@
+﻿using Grpc.Core;
+using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using ~API_SERVICE_NAMESPACE~;
+using ~GRPC_NAMESPACE~;
+
+namespace ~NAMESPACE~
+{
+    public class ~OBJECT_NAME~GrpcService : ~OBJECT_NAME~Service.~OBJECT_NAME~ServiceBase
+    {
+        private readonly ILogger<~OBJECT_NAME~GrpcService> _logger;
+~INJECTION_MEMBERS~
+
+        public ~OBJECT_NAME~GrpcService(ILogger<~OBJECT_NAME~GrpcService> logger, ~INJECTIONS~)
+        {
+            _logger = logger;
+~INJECTION_ASSIGNMENT~
+        }
+
+        public override Task<SuccessOrFailResult> Add~OBJECT_NAME~(~OBJECT_NAME~ request, ServerCallContext context)
+        {
+            return Task.FromResult(new SuccessOrFailResult { Result = true });
+        }
+
+        public override Task<~OBJECT_NAME~> Get~OBJECT_NAME~(~OBJECT_NAME~Key request, ServerCallContext context)
+        {
+            return Task.FromResult(new ~OBJECT_NAME~() { Id = request.Id });
+        }
+
+        public override Task<SuccessOrFailResult> Put~OBJECT_NAME~(~OBJECT_NAME~ request, ServerCallContext context)
+        {
+            return Task.FromResult(new SuccessOrFailResult { Result = true });
+        }
+
+        public override Task<SuccessOrFailResult> Delete~OBJECT_NAME~(~OBJECT_NAME~Key request, ServerCallContext context)
+        {
+            return Task.FromResult(new SuccessOrFailResult { Result = true });
+        }
+    }
+}

@@ -2,6 +2,8 @@
   "language": "C#",
   "namespace": "Genesis.Output.Poco",
   "outputPath": "C:\\Temp\\Output",
+  "outputSuffix": "Model",
+  "objectBaseClass": "Model",
   "overwrite": "all",
   "preserve": "none"
 }
