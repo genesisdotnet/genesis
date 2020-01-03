@@ -5,6 +5,7 @@
   "overwrite": true,
   "apiServiceSuffix": "Service",
   "apiServiceNamespace": "Genesis.Api.Services",
+  "DepsDtoNamespace": "Genesis.Common",
   "preserve": "none",
   "injections": [
     "IAuthService",

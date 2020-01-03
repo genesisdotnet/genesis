@@ -1,14 +1,15 @@
 ﻿<!----->
 IReadOnlyRepository
 IReadOnlyRepository.cs
-using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ~DEPS_NAMESPACE~
 {
     public interface I~OUTPUT_SUFFIX~ { }
 
     public interface IReadOnly~OUTPUT_SUFFIX~<TModel, TKey> : I~OUTPUT_SUFFIX~
-        where TModel : ~MODEL_BASE_CLASS~
+        where TModel : ~OBJECT_BASECLASS~
         where TKey : struct
     {
         Task<TModel> GetById(TKey id);
@@ -19,12 +20,13 @@ namespace ~DEPS_NAMESPACE~
 IRepository
 IRepository.cs
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace ~DEPS_NAMESPACE~
 {
     public interface I~OUTPUT_SUFFIX~<TModel, TKey> : IReadOnly~OUTPUT_SUFFIX~<TModel, TKey>
-        where TModel : ~MODEL_BASE_CLASS~
+        where TModel : ~OBJECT_BASECLASS~
         where TKey : struct
     {
         void CancelAllOperations(bool throwOnFirstException);
@@ -49,7 +51,7 @@ namespace ~DEPS_NAMESPACE~
     public abstract class ~OUTPUT_SUFFIX~ { }
 
     public abstract class ~OUTPUT_SUFFIX~<TModel, TKey> : ~OUTPUT_SUFFIX~, I~OUTPUT_SUFFIX~<TModel, TKey>
-        where TModel : ~MODEL_BASE_CLASS~
+        where TModel : ~OBJECT_BASECLASS~
         where TKey : struct
     {
         private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();

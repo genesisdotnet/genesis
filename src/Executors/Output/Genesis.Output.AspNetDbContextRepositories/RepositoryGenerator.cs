@@ -24,7 +24,6 @@ namespace Genesis.Output.CachedRepo
 
             string replaceTokens(string input)
                => input.Replace(Tokens.Namespace, Config.DepsNamespace)
-                       .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
                        .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                        .Replace(Tokens.ObjectBaseClass, baseTypeString)
                        .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
@@ -41,6 +40,13 @@ namespace Genesis.Output.CachedRepo
         {
             var result = new OutputGenesisExecutionResult();
 
+
+            var path = !string.IsNullOrEmpty(Config.DepsPath) && Directory.Exists(Config.DepsPath)
+                            ? Config.DepsPath
+                            : Config.OutputPath;
+
+            await DepositDependencies(path);
+
             foreach (var obj in genesis.Objects)
             {
                 await ExecuteGraph(obj);
@@ -56,17 +62,21 @@ namespace Genesis.Output.CachedRepo
                         : Config.ModelBaseClass;
 
             var output = Template.Raw.Replace(Tokens.Namespace, Config.Namespace) 
-                                     .Replace(Tokens.ObjectName, objGraph.Name.ToSingular() + Config.OutputSuffix)
-                                     .Replace(Tokens.ObjectBaseClass, baseTypeString)
+                                     .Replace(Tokens.ObjectName, objGraph.Name.ToSingular())
+                                     .Replace(Tokens.ModelBaseClass, baseTypeString)
                                      .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
                                      .Replace(Tokens.DepsModelNamespace, Config.DepsModelNamespace)
+                                     .Replace(Tokens.DepsDBContextClass, Config.DepsDbContext)
                                      .Replace(Tokens.KeyDataType, objGraph.KeyDataType)
+                                     .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                                      ;
 
             if (!Directory.Exists(Config.OutputPath))
                 Directory.CreateDirectory(Config.OutputPath);
 
             File.WriteAllText(Path.Combine(Config.OutputPath, $"{objGraph.Name.ToSingular()}{Config.OutputSuffix}.cs"), output);
+
+            Text.White($"Wrote '"); Text.Yellow(objGraph.Name.ToSingular() + Config.OutputSuffix + ".cs"); Text.WhiteLine("'");
 
             await Task.CompletedTask;
         }

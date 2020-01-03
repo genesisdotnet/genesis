@@ -10,13 +10,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="CachedRepoConfig.json">
+    <None Update="RepoConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="CachedRepositoryGenerator.deps">
+    <None Update="RepositoryGenerator.deps">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="CachedRepositoryGenerator.gen">
+    <None Update="RepositoryGenerator.gen">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

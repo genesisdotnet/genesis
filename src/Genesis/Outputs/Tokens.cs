@@ -134,5 +134,17 @@ namespace Genesis.Output
         /// Namespace that the models reside
         /// </summary>
         public static readonly string DepsModelNamespace = "~DEPS_MODEL_NAMESPACE~";
+        /// <summary>
+        /// Namespace containing repositories
+        /// </summary>
+        public static readonly string DepsRepoNamespace = "~DEPS_REPO_NAMESPACE~";
+        /// <summary>
+        /// EF Core DBContext Name
+        /// </summary>
+        public static readonly string DepsDBContextClass = "~DEPS_DBCONTEXT~";
+        /// <summary>
+        /// Namespace for DTO objects
+        /// </summary>
+        public static readonly string DepsDtoNamespace = "~DEPS_DTO_NAMESPACE~";
     }
 }

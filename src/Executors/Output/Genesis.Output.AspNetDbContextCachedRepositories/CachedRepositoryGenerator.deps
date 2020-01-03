@@ -1,42 +1,50 @@
 ﻿<!----->
-IReadOnlyRepository
-IReadOnlyRepository.cs
-using System.Collections.Generic;
-using ~DEPS_MODEL_NAMESPACE~;
-
-namespace ~DEPS_NAMESPACE~
-{
-    public interface ~OBJECT_BASE_CLASS~
-    {
-
-    }
-
-    public interface IReadOnlyRepository<TModel, TKey> : ~OBJECT_BASE_CLASS~
-        where TModel : ~MODEL_BASE_CLASS~
-        where TKey : struct
-    {
-        Task<TModel> GetById(TKey id);
-        Task<IAsyncQueryable<TModel>> Query();
-    }
-}
-<!----->
-IRepository
-IRepository.cs
-using System.Collections.Generic;
+CachedRepository
+CachedRepository.cs
+using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Linq;
 using System.Threading.Tasks;
-using ~DEPS_MODEL_NAMESPACE~;
 
 namespace ~DEPS_NAMESPACE~
 {
-    public interface IRepository<TModel, TKey> : IReadOnlyRepository<TModel, TKey>
-        where TModel : ~MODEL_BASE_CLASS~
+    public abstract class ~OUTPUT_SUFFIX~
+    {
+    
+    }
+
+    public abstract class ~OUTPUT_SUFFIX~<TModel, TKey> : ~OUTPUT_SUFFIX~, IReadOnlyRepository<TModel, TKey>
+        where TModel : ~OBJECT_BASECLASS~
         where TKey : struct
     {
-        void CancelAllOperations(bool throwOnFirstException);
+        private static readonly string _cacheKey = typeof(TModel).Name;
 
-        Task<TModel> Upsert(TModel model);
-        Task Delete(TKey model);
-        Task AddRange(IEnumerable<TModel> models);
-        Task<int> SaveChanges(string currentUser);
+        private readonly IRepository<TModel, TKey> _repo = null!;
+        private readonly IMemoryCache _cache = null!;
+
+        public MemoryCacheEntryOptions CacheOptions { get; private set; }
+
+        protected CachedRepository(IRepository<TModel, TKey> repository, IMemoryCache cacheObject) //NOTE: Use IDistributedCache for Reddis etc. 
+        {
+            _repo = repository;
+            _cache = cacheObject;
+
+            CacheOptions = new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(relative: TimeSpan.FromSeconds(5000));
+        }
+
+        public virtual Task<TModel> GetById(TKey id) 
+            => _cache.GetOrCreate($@"{_cacheKey}-{id}", entry =>
+            {
+                entry.SetOptions(CacheOptions);
+                return _repo.GetById(id);
+            });
+
+        public virtual Task<IAsyncQueryable<TModel>> Query() 
+            => _cache.GetOrCreate($@"{_cacheKey}", entry =>
+            {
+                entry.SetOptions(CacheOptions);
+                return _repo.Query();
+            });
     }
 }

@@ -75,6 +75,8 @@ namespace Genesis.Cli.Commands
 
                     if (int.TryParse(val, out var number))
                         propertyValue = number;
+                    else if (bool.TryParse(val, out var bit))
+                        propertyValue = bit;
                     else
                         propertyValue = val;
 
