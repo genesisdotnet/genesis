@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
-using System.Web.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Web.Http;
+using ~DEPS_NAMESPACE~;
+//using ~API_SERVICE_NAMESPACE~;
+using ~DEPS_DTO_NAMESPACE~;
 
 namespace ~NAMESPACE~
 {
     [ApiController]
-    [ApiVersion("2")]
-    [RoutePrefix("api/v{version:apiVersion}/[controller]")]
-    public class ~OBJECT_NAME~Controller : BaseApiController
+    [Route("api/v{version:apiVersion}/[controller]")]
+    public class ~OBJECT_NAME~Controller : Controller
     {
+    /*
 ~INJECTION_MEMBERS~
 
 		public ~OBJECT_NAME~Controller(
@@ -22,24 +23,24 @@ namespace ~NAMESPACE~
 		{
 ~INJECTION_ASSIGNMENT~
 		}
-		
+	*/	
         // GET api/v#/~OBJECT_NAME~
         [HttpGet]
         public IHttpActionResult Get()
         {
-            return Ok(new ~OBJECT_NAME~[] { default(~OBJECT_NAME~), default(~OBJECT_NAME~) });
+            return Ok(new ~OBJECT_NAME~Dto[] { default(~OBJECT_NAME~Dto), default(~OBJECT_NAME~Dto) });
         }
 
         // GET api/v#/~OBJECT_NAME~/5
         [HttpGet("{id}")]
         public IHttpActionResult Get(int id)
         {
-            return Ok(new ~OBJECT_NAME~());
+            return Ok(new ~OBJECT_NAME~Dto());
         }
 
         // POST api/v#/~OBJECT_NAME~
         [HttpPost]
-        public IHttpActionResult Post([FromBody] ~OBJECT_NAME~ obj)
+        public IHttpActionResult Post([FromBody] ~OBJECT_NAME~Dto obj)
         {
 			if (!ModelState.IsValid)
             {
@@ -51,7 +52,7 @@ namespace ~NAMESPACE~
 
         // PUT api/v#/~OBJECT_NAME~/5
         [HttpPut("{id}")]
-        public IHttpActionResult Put([FromUrl] int id, [FromBody] ~OBJECT_NAME~ obj)
+        public IHttpActionResult Put([FromUrl] int id, [FromBody] ~OBJECT_NAME~Dto obj)
         {
 			if (!ModelState.IsValid)
             {

@@ -3,22 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Genesis.Output.Poco
+namespace Genesis.Output.EFCoreModel
 {
-    /*
-     {
-        "language": "C#",
-        "namespace": "Genesis.Output.Poco", --baseconfig
-        "outputPath": "C:\\Temp\\Output", --baseconfig
-        "overwrite": "all",
-        "preserve": "none"
-    }
-     * */
-    public class PocoConfig : GeneratorConfiguration
+    public class EFCoreModelConfig : GeneratorConfiguration
     {
         public string ObjectBaseClass { get; set; } = "Model";
         public string Language { get; set; } = "C#";
         public string Overwrite { get; set; } = "all";
         public string Preserve { get; set; } = "none";
+        public bool GenericBaseClass { get; set; } = true;
     }
 }

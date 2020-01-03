@@ -1,0 +1,88 @@
+﻿<!----->
+IReadOnlyRepository
+IReadOnlyRepository.cs
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ~DEPS_NAMESPACE~
+{
+    public interface I~OUTPUT_SUFFIX~ { }
+
+    public interface IReadOnly~OUTPUT_SUFFIX~<TModel, TKey> : I~OUTPUT_SUFFIX~
+        where TModel : ~OBJECT_BASECLASS~
+        where TKey : struct
+    {
+        Task<TModel> GetById(TKey id);
+        Task<IAsyncQueryable<TModel>> Query();
+    }
+}
+<!----->
+IRepository
+IRepository.cs
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace ~DEPS_NAMESPACE~
+{
+    public interface I~OUTPUT_SUFFIX~<TModel, TKey> : IReadOnly~OUTPUT_SUFFIX~<TModel, TKey>
+        where TModel : ~OBJECT_BASECLASS~
+        where TKey : struct
+    {
+        void CancelAllOperations(bool throwOnFirstException);
+
+        Task<TModel> Upsert(TModel model);
+        Task Delete(TKey model);
+        Task AddRange(IEnumerable<TModel> models);
+        Task<int> SaveChanges(string currentUser);
+    }
+}
+<!----->
+Repository
+Repository.cs
+using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+
+namespace ~DEPS_NAMESPACE~
+{
+    public abstract class ~OUTPUT_SUFFIX~ { }
+
+    public abstract class ~OUTPUT_SUFFIX~<TModel, TKey> : ~OUTPUT_SUFFIX~, I~OUTPUT_SUFFIX~<TModel, TKey>
+        where TModel : ~OBJECT_BASECLASS~
+        where TKey : struct
+    {
+        private readonly CancellationTokenSource _tokenSource = new CancellationTokenSource();
+
+        protected ~OUTPUT_SUFFIX~(DbContext context) 
+            => DbContext = context;
+
+        public DbContext DbContext { get; } = null!;
+
+        public virtual void CancelAllOperations(bool throwOnFirstException = false) 
+            => _tokenSource.Cancel(throwOnFirstException);
+
+        public virtual Task AddRange(IEnumerable<TModel> models) 
+            => DbContext.Set<TModel>().AddRangeAsync(models, _tokenSource.Token);
+
+        public virtual Task<IAsyncQueryable<TModel>> Query()
+            => Task.FromResult(DbContext.Set<TModel>().AsAsyncQueryable());
+
+        public virtual Task Delete(TKey id) 
+            => Task.CompletedTask;
+
+        public virtual Task<TModel> GetById(TKey id) 
+            => Task.FromResult(DbContext.Set<TModel>().Find(id));
+
+        public virtual Task<TModel> Upsert(TModel model) 
+            => Task.FromResult(model);
+
+        protected virtual Task<TModel> Add(string user, TModel model)
+            => Task.FromResult(DbContext.Set<TModel>().Add(model).Entity);
+
+        public virtual Task<int> SaveChanges(string user)
+            => DbContext.SaveChangesAsync(_tokenSource.Token);
+    }
+}

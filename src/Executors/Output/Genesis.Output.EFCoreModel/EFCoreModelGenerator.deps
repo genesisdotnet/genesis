@@ -1,0 +1,20 @@
+﻿<!----->
+~OBJECT_BASECLASS~
+\~OBJECT_BASECLASS~.cs
+using System.ComponentModel.DataAnnotations;
+
+namespace ~NAMESPACE~
+{
+    public interface I~OBJECT_BASECLASS~<TKey>
+        where TKey : struct
+    {
+        TKey Id { get; set; }
+    }
+
+    public class ~OBJECT_BASECLASS~<TKey> : I~OBJECT_BASECLASS~<TKey>
+        where TKey : struct
+    {
+        [Key]
+        public TKey Id { get; set; }
+    }
+}

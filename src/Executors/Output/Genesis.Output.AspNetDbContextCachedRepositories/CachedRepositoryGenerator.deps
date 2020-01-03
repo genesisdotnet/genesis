@@ -1,34 +1,50 @@
 ﻿<!----->
-IReadOnlyRepository
-./IReadOnlyRepository.cs
-using System.Collections.Generic;
+CachedRepository
+CachedRepository.cs
+using Microsoft.Extensions.Caching.Memory;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace ~NAMESPACE~
+namespace ~DEPS_NAMESPACE~
 {
-    public interface IReadOnlyRepository<T> where T : ~OBJECT_BASE_CLASS~
+    public abstract class ~OUTPUT_SUFFIX~
     {
-        T GetById(int id);
-        List<T> List();
+    
     }
-}
-<!----->
-IRepository
-./IRepository.cs
-namespace ~NAMESPACE~
-{
-    public interface IRepository<T> : IReadOnlyRepository<T> where T : ~OBJECT_BASE_CLASS~
+
+    public abstract class ~OUTPUT_SUFFIX~<TModel, TKey> : ~OUTPUT_SUFFIX~, IReadOnlyRepository<TModel, TKey>
+        where TModel : ~OBJECT_BASECLASS~
+        where TKey : struct
     {
-        T Upsert(T entity);
-        void Delete(T entity);
-    }
-}
-<!----->
-~OBJECT_BASE_CLASS~
-./~OBJECT_BASE_CLASS~.cs
-namespace ~NAMESPACE~
-{
-    public class ~OBJECT_BASE_CLASS~
-    {
-        public int Id { get; set; }
+        private static readonly string _cacheKey = typeof(TModel).Name;
+
+        private readonly IRepository<TModel, TKey> _repo = null!;
+        private readonly IMemoryCache _cache = null!;
+
+        public MemoryCacheEntryOptions CacheOptions { get; private set; }
+
+        protected CachedRepository(IRepository<TModel, TKey> repository, IMemoryCache cacheObject) //NOTE: Use IDistributedCache for Reddis etc. 
+        {
+            _repo = repository;
+            _cache = cacheObject;
+
+            CacheOptions = new MemoryCacheEntryOptions()
+                .SetAbsoluteExpiration(relative: TimeSpan.FromSeconds(5000));
+        }
+
+        public virtual Task<TModel> GetById(TKey id) 
+            => _cache.GetOrCreate($@"{_cacheKey}-{id}", entry =>
+            {
+                entry.SetOptions(CacheOptions);
+                return _repo.GetById(id);
+            });
+
+        public virtual Task<IAsyncQueryable<TModel>> Query() 
+            => _cache.GetOrCreate($@"{_cacheKey}", entry =>
+            {
+                entry.SetOptions(CacheOptions);
+                return _repo.Query();
+            });
     }
 }
