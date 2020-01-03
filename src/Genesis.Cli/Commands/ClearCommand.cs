@@ -13,6 +13,11 @@ namespace Genesis.Cli.Commands
 
         public override string Description => "Clear the execution Chain and flush the Object cache";
 
+        protected override Task OnHelpRequested(string[] args)
+        {
+            return base.OnHelpRequested(args);
+        }
+
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             genesis.Objects.Clear();
