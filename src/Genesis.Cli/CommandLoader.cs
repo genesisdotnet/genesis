@@ -10,7 +10,7 @@ using Genesis.Cli.Extensions;
 
 namespace Genesis.Cli
 {
-    public class CommandLoader
+    public sealed class CommandLoader
     {
         public static List<IGenesisCommand> Commands { get; } = new List<IGenesisCommand>();
 

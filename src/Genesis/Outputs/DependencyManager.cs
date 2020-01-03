@@ -25,12 +25,13 @@ namespace Genesis.Output
             {
                 using var rdr = new StringReader(i);
                 
-                _ = rdr.ReadLine();
-                
+                //_ = rdr.ReadLine();
+
+                var objectName = rdr.ReadLine();
                 var pathFragment = rdr.ReadLine();
                 var content = rdr.ReadToEnd();
 
-                result.Add(new GenesisDependency(pathFragment, content));
+                result.Add(new GenesisDependency(pathFragment, objectName, content));
 
                 rdr.Dispose();
             }

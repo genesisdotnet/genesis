@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
+#nullable enable
+
 namespace Genesis.Cli.Commands
 {
     public class ConfigCommand : GenesisCommand
@@ -68,7 +70,14 @@ namespace Genesis.Cli.Commands
 
                     var chunks = args[2].Split('='); //TODO: terse
                     var propertyName = chunks[0];
-                    var propertyValue = args[2].Substring(propertyName.Length + 1);
+                    var val = args[2].Substring(propertyName.Length + 1);
+                    object? propertyValue = null;
+
+                    if (int.TryParse(val, out var number))
+                        propertyValue = number;
+                    else
+                        propertyValue = val;
+
                     if (generator != null)
                     {
                         if (!await generator.EditConfig(propertyName, propertyValue))

@@ -55,6 +55,7 @@
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.Poco\Genesis.Output.Poco.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.ProtobufEntity\Genesis.Output.ProtobufEntity.csproj" />
+    <ProjectReference Include="..\Executors\Output\Genesis.Output.ProtobufService\Genesis.Output.ProtobufService.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.ReactEditorComponent\Genesis.Output.ReactEditorComponent.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.XamarinViewModel\Genesis.Output.XamarinViewModel.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.XamarinView\Genesis.Output.XamarinView.csproj" />

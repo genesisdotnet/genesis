@@ -49,7 +49,7 @@ namespace Genesis.Executors.GraphTools
             Text.WhiteLine("--dump              Writes the ObjectGraphs content to Xml");
             Text.WhiteLine("--clear             Empties the current ObjectGraphs collection");
             Text.WhiteLine();
-            return true; // wanted to use the new switch syntax ;P
+            return true; //w
         }
 
         private bool WriteObjectGraphToStorage(GenesisContext genesis)

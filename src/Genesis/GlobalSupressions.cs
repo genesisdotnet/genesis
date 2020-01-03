@@ -1,2 +1,0 @@
-﻿/*Check parent project file for compiler warnings / NUxxxx warnings listed there*/
-[assembly: System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "Why not?", Scope = "member", Target = "~P:Genesis.ObjectGraph.GenericArgumentTypes")]
