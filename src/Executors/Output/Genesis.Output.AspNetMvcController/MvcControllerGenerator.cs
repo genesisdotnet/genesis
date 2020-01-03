@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 #nullable enable
@@ -43,11 +41,15 @@ namespace Genesis.Output.AspNetMvcController
             var output = Template.Raw
                             .Replace(Tokens.Namespace, Config.Namespace)
                             .Replace(Tokens.ObjectName, entityName)
+                            .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                             .Replace(Tokens.Injections, Config.Injections.ToInjectionString())
                             .Replace(Tokens.InjectionMembers, Config.Injections.ToInjectionMembersString())
-                            .Replace(Tokens.InjectionAssignment, Config.Injections.ToInjectionAssignmentsString());
+                            .Replace(Tokens.InjectionAssignment, Config.Injections.ToInjectionAssignmentsString())
+                            .Replace(Tokens.ApiServiceNamespace, Config.ApiServiceNamespace)
+                            .Replace(Tokens.ApiServiceSuffix, Config.ApiServiceSuffix)
+                            ;
 
-            var path = Path.Combine(Config.OutputPath, $@"{entityName}Controller.cs");
+            var path = Path.Combine(Config.OutputPath, $@"{entityName}{Config.OutputSuffix}.cs");
             
             Text.DarkCyanLine($@"{path}");
 

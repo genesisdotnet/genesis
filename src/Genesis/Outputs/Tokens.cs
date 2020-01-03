@@ -118,5 +118,21 @@ namespace Genesis.Output
         /// Suffix for filename / classname etc
         /// </summary>
         public static readonly string OutputSuffix = "~OUTPUT_SUFFIX~";
+        /// <summary>
+        /// The current context's base class that Models subclass
+        /// </summary>
+        public static readonly string ModelBaseClass = "~MODEL_BASE_CLASS~";
+        /// <summary>
+        /// Dependencies namespace
+        /// </summary>
+        public static readonly string DepsNamespace = "~DEPS_NAMESPACE~";
+        /// <summary>
+        /// Absolute path for where to place dependencies
+        /// </summary>
+        public static readonly string DepsPath = "~DEPS_PATH~";
+        /// <summary>
+        /// Namespace that the models reside
+        /// </summary>
+        public static readonly string DepsModelNamespace = "~DEPS_MODEL_NAMESPACE~";
     }
 }

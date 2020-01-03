@@ -1,34 +1,42 @@
 ﻿<!----->
 IReadOnlyRepository
-./IReadOnlyRepository.cs
+IReadOnlyRepository.cs
 using System.Collections.Generic;
+using ~DEPS_MODEL_NAMESPACE~;
 
-namespace ~NAMESPACE~
+namespace ~DEPS_NAMESPACE~
 {
-    public interface IReadOnlyRepository<T> where T : ~OBJECT_BASE_CLASS~
+    public interface ~OBJECT_BASE_CLASS~
     {
-        T GetById(int id);
-        List<T> List();
+
+    }
+
+    public interface IReadOnlyRepository<TModel, TKey> : ~OBJECT_BASE_CLASS~
+        where TModel : ~MODEL_BASE_CLASS~
+        where TKey : struct
+    {
+        Task<TModel> GetById(TKey id);
+        Task<IAsyncQueryable<TModel>> Query();
     }
 }
 <!----->
 IRepository
-./IRepository.cs
-namespace ~NAMESPACE~
+IRepository.cs
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using ~DEPS_MODEL_NAMESPACE~;
+
+namespace ~DEPS_NAMESPACE~
 {
-    public interface IRepository<T> : IReadOnlyRepository<T> where T : ~OBJECT_BASE_CLASS~
+    public interface IRepository<TModel, TKey> : IReadOnlyRepository<TModel, TKey>
+        where TModel : ~MODEL_BASE_CLASS~
+        where TKey : struct
     {
-        T Upsert(T entity);
-        void Delete(T entity);
-    }
-}
-<!----->
-~OBJECT_BASE_CLASS~
-./~OBJECT_BASE_CLASS~.cs
-namespace ~NAMESPACE~
-{
-    public class ~OBJECT_BASE_CLASS~
-    {
-        public int Id { get; set; }
+        void CancelAllOperations(bool throwOnFirstException);
+
+        Task<TModel> Upsert(TModel model);
+        Task Delete(TKey model);
+        Task AddRange(IEnumerable<TModel> models);
+        Task<int> SaveChanges(string currentUser);
     }
 }

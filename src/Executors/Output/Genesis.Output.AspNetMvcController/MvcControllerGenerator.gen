@@ -6,6 +6,9 @@ using System.Net;
 using System.Web.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Web.Http;
+using ~DEPS_NAMESPACE~;
+using ~DEPS_SERVICE_NAMESPACE~;
+using ~DEPS_MODEL_NAMESPACE~;
 
 namespace ~NAMESPACE~
 {

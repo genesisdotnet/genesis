@@ -46,11 +46,11 @@ namespace Genesis.Output
                     if (!Directory.Exists(outputRoot))
                         Directory.CreateDirectory(outputRoot);
 
-                    var filename = dependency.PathFragment.TrimStart('/').TrimStart('\\');
+                    var filename = dependency.PathFragment.TrimStart('.').TrimStart('/').TrimStart('\\');
                     
                     var path = Path.Combine(outputRoot, filename);
 
-                    File.WriteAllText(path, modifiedDep, Encoding.UTF8);
+                    File.WriteAllText(path, modifiedDep.Contents, Encoding.UTF8);
 
                     Text.Gray($"Wrote ["); Text.Yellow(filename); Text.GrayLine("]");
                 }
@@ -74,10 +74,7 @@ namespace Genesis.Output
         /// <summary>
         /// Return a modified dependency
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        protected virtual string OnBeforeWriteDependency(object sender, DependencyEventArgs e) 
-            => e.Dependency.Contents;
+        protected virtual GenesisDependency OnBeforeWriteDependency(object sender, DependencyEventArgs e) 
+            => e.Dependency;
     }
 }

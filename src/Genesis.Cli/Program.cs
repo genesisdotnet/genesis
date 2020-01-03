@@ -36,7 +36,16 @@ namespace Genesis.Cli
 
                 foreach (var line in _script)
                 {
-                    Text.WhiteLine($"Executing: '{line}' as {line.ToArgs().Count()} arguments");
+                    if (line.StartsWith("--"))
+                    {
+                        Debug.WriteLine($"Skipping due to comment: [{line}]");
+                        continue;
+                    }
+
+                    if (string.IsNullOrEmpty(line.Trim()))
+                        continue; //blank line
+
+                    Text.WhiteLine($"Executing: [{line}]");
 
                     if (line.ToLower().StartsWith("break"))
                         _isScript = false; //cheesy, but can't set it from a command apparently, CommandLineApplication?
@@ -68,8 +77,8 @@ namespace Genesis.Cli
             var version = typeof(Program).Assembly.GetName().Version;
 
             return (withAV)
-                           ? $"v{version.Major}.{version.Minor}.{version.Revision}.{version.Build}"
-                           : $"{version.Major}.{version.Minor}.{version.Revision}.{version.Build}";
+                    ? $"v{version.Major}.{version.Minor}.{version.Revision}.{version.Build}"
+                    : $"{version.Major}.{version.Minor}.{version.Revision}.{version.Build}";
         }
 
         /// <summary>
@@ -140,14 +149,13 @@ namespace Genesis.Cli
                     cfg.Option("-?", "Display command details", CommandOptionType.SingleValue);
                     cfg.ShowInHelpText = true;
                     /* arguments and options */
-                }, false) //false so it doesn't throw on unknown args, pop and gen commands have no way to know the args ahead of time
-                .OnExecute((async () =>
+                }, false) //false so it doesn't throw on unknown args
+                .OnExecute(async () =>
                 {
                     IGenesisExecutionResult result;
                     try
                     {
                         result = await cmd.Execute(GenesisContext.Current, args);
-                        //Console.WriteLine(result.Message);
                     }
                     catch (Exception exception)
                     {
@@ -156,7 +164,7 @@ namespace Genesis.Cli
                     }
 
                     return result.Success ? 0 : -1; //does this even matter?
-                }));
+                });
             }
 
             return app;

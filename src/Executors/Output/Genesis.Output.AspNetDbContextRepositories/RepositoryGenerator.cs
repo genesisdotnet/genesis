@@ -1,25 +1,19 @@
-﻿using Genesis;
-using Genesis.Output;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 namespace Genesis.Output.CachedRepo
 {
-    public class CachedRepositoryGenerator : OutputExecutor
+    public class RepositoryGenerator : OutputExecutor
     {
-        public override string CommandText => "aspnet-repo-cached"; //UX: This is annoying to type, though descriptive
-        public override string Description => "Implements a simple cached repository";
-        public override string FriendlyName => "Asp.Net Cached Repository";
+        public override string CommandText => "aspnet-repo";
+        public override string Description => "Implements a simple repository based on EF Core";
+        public override string FriendlyName => "Asp.Net DbContext Repository";
 
-        public CachedRepoConfig Config { get; set; }
+        public RepoConfig Config { get; set; }
 
         protected override void OnInitialized()
         {
-            Config = (CachedRepoConfig)Configuration;
+            Config = (RepoConfig)Configuration;
         }
 
         protected override GenesisDependency OnBeforeWriteDependency(object sender, DependencyEventArgs e)
@@ -29,7 +23,7 @@ namespace Genesis.Output.CachedRepo
                         : Config.ModelBaseClass;
 
             string replaceTokens(string input)
-               => input.Replace(Tokens.Namespace, Config.DepsNamespace)  //TODO: Make more base level config properties so this can be global-er
+               => input.Replace(Tokens.Namespace, Config.DepsNamespace)
                        .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
                        .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                        .Replace(Tokens.ObjectBaseClass, baseTypeString)
@@ -66,6 +60,7 @@ namespace Genesis.Output.CachedRepo
                                      .Replace(Tokens.ObjectBaseClass, baseTypeString)
                                      .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
                                      .Replace(Tokens.DepsModelNamespace, Config.DepsModelNamespace)
+                                     .Replace(Tokens.KeyDataType, objGraph.KeyDataType)
                                      ;
 
             if (!Directory.Exists(Config.OutputPath))

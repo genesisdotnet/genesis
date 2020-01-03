@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Genesis.Output.CachedRepo
 {
-    public class CachedRepoConfig : GeneratorConfiguration
+    public class RepoConfig : GeneratorConfiguration
     {
         public string ObjectBaseClass { get; set; } = "IRepository";
         public string OutputSuffix { get; set; } = "CachedRepository";

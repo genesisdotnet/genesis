@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Extensions.Caching.Memory;
+using ~DEPS_NAMESPACE~;
+using ~DEPS_MODEL_NAMESPACE~;
+using ~DEPS_REPO_NAMESPACE~;
 
-namespace ~NAMESPACE~.Data
+namespace ~NAMESPACE~
 {
-    public class Cached~OBJECT_NAME~Repository : IReadOnlyRepository<~OBJECT_NAME~>
+    public class ~OBJECT_NAME~~OUTPUT_SUFFIX~ : IReadOnlyRepository<~OBJECT_NAME~>
     {
         private const string cacheKey = "~OBJECT_NAME~";
 
@@ -14,7 +17,7 @@ namespace ~NAMESPACE~.Data
 
         public MemoryCacheEntryOptions CacheOptions { get; private set; }
 
-        public Cached~OBJECT_NAME~Repository(~OBJECT_NAME~Repository repository, IMemoryCache cacheObject) //NOTE: IDistributedCache if you use redis and multiple services
+        public ~OBJECT_NAME~~OUTPUT_SUFFIX~(~OBJECT_NAME~Repository repository, IMemoryCache cacheObject) //NOTE: IDistributedCache if you use redis and multiple services
         {
             repo = repository;
             cache = cacheObject;

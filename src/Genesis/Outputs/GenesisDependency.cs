@@ -20,17 +20,13 @@ namespace Genesis.Output
     {
         public GenesisDependency(string pathFragment, string objectName, string contents)
         {
-            _pathFragment = pathFragment;
-            _contents = contents;
-            _objectName = objectName;
+            PathFragment = pathFragment;
+            Contents = contents;
+            ObjectName = objectName;
         }
-        private readonly string _pathFragment;
-        public string PathFragment => _pathFragment;
 
-        private readonly string _contents;
-        public string Contents => _contents;
-
-        private readonly string _objectName;
-        public string ObjectName => _objectName;
+        public string PathFragment { get; set; }
+        public string Contents { get; set; }
+        public string ObjectName { get; set; }
     }
 }

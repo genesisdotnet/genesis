@@ -10,19 +10,19 @@ using Genesis.Output;
 
 #nullable enable 
 
-namespace Genesis.Output.Poco
+namespace Genesis.Output.EFCoreModel
 {
-    public class PocoGenerator : OutputExecutor
+    public class EFCoreModelGenerator : OutputExecutor
     {
-        public override string CommandText => "poco";
-        public override string Description => "(P)lain (O)ld (C)Sharp (O)bject .cs file";
-        public override string FriendlyName => "(P)lain (O)ld (C)Sharp (O)bject";
+        public override string CommandText => "ef-model";
+        public override string Description => "Entity Framework Core Model generator";
+        public override string FriendlyName => "EFCore Models";
 
-        public PocoConfig Config { get; set; } = new PocoConfig();
+        public EFCoreModelConfig Config { get; set; } = new EFCoreModelConfig();
 
         protected override void OnInitialized()
         {
-            Config = (PocoConfig)Configuration;
+            Config = (EFCoreModelConfig)Configuration;
         }
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
@@ -32,11 +32,15 @@ namespace Genesis.Output.Poco
             if (!Directory.Exists(Config.OutputPath)) //TODO: Worry about the output path in the OutputGenerator base
                     Directory.CreateDirectory(Config.OutputPath);
 
-            await DepositDependencies(Config.OutputPath);
+            var path = !string.IsNullOrEmpty(Config.DepsPath) && Directory.Exists(Config.DepsPath)
+                            ? Config.DepsPath
+                            : Config.OutputPath;
+
+            await DepositDependencies(path);
 
             foreach (var obj in genesis.Objects)
                 await ExecuteGraph(obj);
-                
+
             result.Success = true;
             
             return result;
@@ -45,7 +49,7 @@ namespace Genesis.Output.Poco
         protected override GenesisDependency OnBeforeWriteDependency(object sender, DependencyEventArgs e)
         {
              string replaceTokens(string input)
-                => input.Replace(Tokens.Namespace, Config.Namespace)  //TODO: Make more base level config properties so this can be global-er
+                => input.Replace(Tokens.Namespace, Config.DepsNamespace)  //TODO: Make more base level config properties so this can be global-er
                         .Replace(Tokens.ObjectName, e.Dependency.ObjectName)
                         .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
                         .Replace(Tokens.OutputSuffix, Config.OutputSuffix);
@@ -60,18 +64,18 @@ namespace Genesis.Output.Poco
         public async Task ExecuteGraph(ObjectGraph objectGraph)
         {
             // don't write out object base classes since it's redundant
-            var baseTypeString = (objectGraph.BaseType == typeof(object))
-                ? string.Empty
-                : ": " + objectGraph.BaseTypeFormattedName;
+            var baseTypeString = Config.GenericBaseClass
+                                    ? Config.ObjectBaseClass+'<'+objectGraph.KeyDataType+'>'
+                                    : Config.ObjectBaseClass;
 
             var output = Template.Raw
                             .Replace(Tokens.Namespace, Config.Namespace)
                             .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
                             .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
                             .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties))
-                            .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
                             .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
-                            .Replace(Tokens.BaseTypeName, baseTypeString); 
+                            .Replace(Tokens.BaseTypeName, baseTypeString)
+                            .Replace(Tokens.DepsNamespace, Config.DepsNamespace);
 
             var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + ".cs");
 
@@ -96,6 +100,11 @@ namespace Genesis.Output.Poco
 
             foreach (var p in properties)
             {
+                //TODO: Make this configurable to skip the Key
+
+                if (p.Name.Equals("Id", StringComparison.InvariantCultureIgnoreCase))
+                    continue;
+
                 if (p.SourceType.Equals("sysname", StringComparison.InvariantCultureIgnoreCase))
                     continue;
 
@@ -111,7 +120,7 @@ namespace Genesis.Output.Poco
         private static string GetConstructionReplacement(List<PropertyGraph> properties)
         {
             const string template = "            //this.~PROPERTY_MEMBER_NAME~ = default;";
-
+            //TODO: Initialize model members from EFCore model generator
             var sb = new StringBuilder();
 
             foreach (var p in properties)
