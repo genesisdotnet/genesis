@@ -1,0 +1,21 @@
+﻿{
+  "language": "C#",
+  "namespace": "Genesis.Services",
+  "outputPath": "C:\\Temp\\Output\\Services",
+  "depsPath": "C:\\Temp\\Output\\Dependencies",
+  "dtoNamespace": "Genesis.Common",
+  "modelNamespace": "Genesis.Data.Models",
+  "repoNamespace": "Genesis.Data.Repositories",
+  "cachedRepoNamespace": "Genesis.Data.CachedRepositories",
+  "mapperNamespace": "Genesis.Services.Mapping",
+  "depsNamespace": "Genesis.Framework",
+  "objectBaseClass": "Model",
+  "genericBaseClass": true,
+  "outputSuffix": "Service",
+  "dtoSuffix": "Dto",
+  "mapperSuffix": "Mapper",
+  "repoSuffix": "Repository",
+  "cachedRepoSuffix": "CachedRepository",
+  "overwrite": "all",
+  "preserve": "none"
+}

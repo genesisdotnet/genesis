@@ -6,20 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NETCore.Platforms" Version="3.1.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.0" />
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\Genesis\Genesis.csproj" />
     <ProjectReference Include="..\..\..\Genesis.Cli.Extensions\Genesis.Cli.Extensions.csproj" />
+    <ProjectReference Include="..\..\..\Genesis\Genesis.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="SqlConfig.json">
+    <None Update="AspNetServiceConfig.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AspNetServiceGenerator.deps">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="AspNetServiceGenerator.gen">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-
+  
 </Project>

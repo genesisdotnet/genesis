@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 #nullable enable
 
@@ -13,6 +14,7 @@ namespace Genesis.Output.AspNetMvcController
         public string ApiServiceSuffix { get; set; } = "Service";
         public string DepsDtoNamespace { get; set; } = "Genesis.Common";
         public bool InitNullable { get; set; } = true;
-        public List<string> Injections { get; set; } = new List<string>();
+        [Obsolete("Too common to one-off.")] //TODO: Fix this
+        public List<string> Injections { get; set; } = new List<string>(); 
     }
 }

@@ -28,32 +28,32 @@ namespace Genesis.Output.Poco
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             var result = new OutputGenesisExecutionResult();
-                
-            if (!Directory.Exists(Config.OutputPath)) //TODO: Worry about the output path in the OutputGenerator base
-                    Directory.CreateDirectory(Config.OutputPath);
 
-            await DepositDependencies(Config.OutputPath);
+            if (!Directory.Exists(Config.OutputPath)) //TODO: Worry about the output path in the OutputGenerator base
+                Directory.CreateDirectory(Config.OutputPath);
+
+            await DepositDependencies();
 
             foreach (var obj in genesis.Objects)
                 await ExecuteGraph(obj);
-                
+
             result.Success = true;
-            
+
             return result;
         }
 
         protected override GenesisDependency OnBeforeWriteDependency(object sender, DependencyEventArgs e)
         {
-             string replaceTokens(string input)
-                => input.Replace(Tokens.Namespace, Config.Namespace)  //TODO: Make more base level config properties so this can be global-er
-                        .Replace(Tokens.ObjectName, e.Dependency.ObjectName)
-                        .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
-                        .Replace(Tokens.OutputSuffix, Config.OutputSuffix);
+            string replaceTokens(string input)
+               => input.Replace(Tokens.Namespace, Config.Namespace)  //TODO: Make more base level config properties so this can be global-er
+                       .Replace(Tokens.ObjectName, e.Dependency.ObjectName)
+                       .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
+                       .Replace(Tokens.OutputSuffix, Config.OutputSuffix);
 
             e.Dependency.Contents = replaceTokens(e.Dependency.Contents);
             e.Dependency.ObjectName = replaceTokens(e.Dependency.ObjectName);
             e.Dependency.PathFragment = replaceTokens(e.Dependency.PathFragment);
-            
+
             return e.Dependency;
         }
 
@@ -71,7 +71,7 @@ namespace Genesis.Output.Poco
                             .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties))
                             .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
                             .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
-                            .Replace(Tokens.BaseTypeName, baseTypeString); 
+                            .Replace(Tokens.BaseTypeName, baseTypeString);
 
             var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + ".cs");
 
@@ -79,19 +79,19 @@ namespace Genesis.Output.Poco
 
             File.WriteAllText(outPath.Replace('<', '_').Replace('>', '_'), output); //hacky, can't save fileNames with '<' or '>' in the name
 
-            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".cs"); Text.WhiteLine("'");
+            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + Config.OutputSuffix + ".cs"); Text.WhiteLine("'");
 
             await Task.CompletedTask;
         }
 
         private static string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators
         {
-            string template = 
+            string template =
                 "\t\t/// <summary>" + Environment.NewLine +
-                "\t\t/// Gets or sets the ~PROPERTY_NAME~." + Environment.NewLine + 
+                "\t\t/// Gets or sets the ~PROPERTY_NAME~." + Environment.NewLine +
                 "\t\t/// <summary>" + Environment.NewLine +
                 "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }";
-                    
+
             var sb = new StringBuilder();
 
             foreach (var p in properties)

@@ -1,0 +1,29 @@
+﻿using ~DEPS_MODEL_NAMESPACE~;
+using ~DEPS_REPO_NAMESPACE~;
+using ~DEPS_CACHED_REPO_NAMESPACE~;
+using ~DEPS_DTO_NAMESPACE~;
+using ~DEPS_MAPPING_NAMESPACE~;
+using ~DEPS_NAMESPACE~;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ~NAMESPACE~
+{
+    public interface I~OBJECT_NAME~~OUTPUT_SUFFIX~ : I~OUTPUT_SUFFIX~<~OBJECT_NAME~, ~KEY_DATATYPE~> { }
+
+    public sealed class ~OBJECT_NAME~~OUTPUT_SUFFIX~ : ~OUTPUT_SUFFIX~<~OBJECT_NAME~, ~KEY_DATATYPE~>, I~OBJECT_NAME~~OUTPUT_SUFFIX~
+    {
+        public ~OBJECT_NAME~~OUTPUT_SUFFIX~(
+            I~OBJECT_NAME~~REPOSITORY_SUFFIX~ ~OBJECT_NAME_ARGUMENT~~REPOSITORY_SUFFIX~,
+            I~OBJECT_NAME~~CACHED_REPOSITORY_SUFFIX~ ~OBJECT_NAME_ARGUMENT~~CACHED_REPOSITORY_SUFFIX~,
+            IFeatureManagerSnapshot featureManagementSnapshot,
+            ILogger<~OBJECT_NAME~~OUTPUT_SUFFIX~> logger
+        ) : base(~OBJECT_NAME_ARGUMENT~~REPOSITORY_SUFFIX~, ~OBJECT_NAME_ARGUMENT~~CACHED_REPOSITORY_SUFFIX~, featureManagementSnapshot, logger)
+        { 
+        
+        }
+    }
+}

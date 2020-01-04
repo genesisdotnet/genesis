@@ -1,0 +1,103 @@
+--Discover all of the executors we have available
+scan
+
+add mssql
+--Populate our object graph from SQL server, or Swagger url, or xl sheet, or class library
+config mssql ConnectionString="Server=(localdb)\MSSQLLocalDB;Database=GenesisTest;Integrated Security=true;"
+
+add aspnet-svc
+--Boilerplate Middle-tier CRUD Services for ASP.Net
+config aspnet-svc OutputPath="/src/genesis-mvp/src/Api/Genesis.Services/"
+config aspnet-svc DepsPath="/src/genesis-mvp/src/Api/Genesis.Framework/"
+config aspnet-svc OutputSuffix="Service"
+config aspnet-svc ObjectBaseClass="Service"
+config aspnet-svc ModelBaseClass="Model"
+config aspnet-svc RepoSuffix="Repository"
+config aspnet-svc CachedRepoSuffix="CachedRepository"
+config aspnet-svc DtoSuffix="Dto"
+config aspnet-svc MapperSuffix="Mapper"
+config aspnet-svc Namespace="Genesis.Services"
+config aspnet-svc MapperNamespace="Genesis.Services.Mapping"
+config aspnet-svc DepsNamespace="Genesis.Framework"
+config aspnet-svc ModelNamespace="Genesis.Data.Models"
+config aspnet-svc CachedRepoNamespace="Genesis.Data.CachedRepositories"
+config aspnet-svc RepoNamespace="Genesis.Data.Repositories"
+config aspnet-svc DtoNamespace="Genesis.Common"
+config aspnet-svc GenericBaseClass=true
+
+add poco
+--Dump out our DTO objects in the common/shared project
+config poco OutputPath="/src/genesis-mvp/src/Shared/Genesis.Common/"
+config poco DepsPath="/src/genesis-mvp/src/Api/Genesis.Framework/"
+config poco OutputSuffix="Dto"
+config poco ObjectBaseClass="Dto"
+config poco GenericBaseClass=false
+config poco Namespace="Genesis.Common"
+
+add ef-model
+--Basically a dupe of poco but with a different template, v2 will address this redundancy
+config ef-model OutputPath="/src/genesis-mvp/src/Api/Genesis.Data/Models/"
+--OutputSuffix is appended to the filename before the extension
+config ef-model OutputSuffix=""
+config ef-model DepsPath="/src/genesis-mvp/src/Api/Genesis.Framework/"
+config ef-model DepsNamespace="Genesis.Framework"
+config ef-model ObjectBaseClass="Model"
+config ef-model GenericBaseClass=true
+config ef-model Namespace="Genesis.Data.Models"
+
+add aspnet-repo
+--Generate basic CRUD repositories
+config aspnet-repo OutputPath="/src/genesis-mvp/src/Api/Genesis.Data/Repositories/"
+config aspnet-repo OutputSuffix="Repository"
+config aspnet-repo DepsPath="/src/genesis-mvp/src/Api/Genesis.Framework/"
+config aspnet-repo DepsNamespace="Genesis.Framework"
+config aspnet-repo DepsModelNamespace="Genesis.Data.Models"
+config aspnet-repo ObjectBaseClass="Model"
+config aspnet-repo ModelBaseClass="Model"
+config aspnet-repo GenericBaseClass=true
+config aspnet-repo Namespace="Genesis.Data.Repositories"
+
+add aspnet-repo-cached
+--Generate basic CRUD cached repositories, using the repositories above
+config aspnet-repo-cached OutputPath="/src/genesis-mvp/src/Api/Genesis.Data/CachedRepositories/"
+config aspnet-repo-cached OutputSuffix="CachedRepository"
+config aspnet-repo-cached DepsPath="/src/genesis-mvp/src/Api/Genesis.Framework/"
+config aspnet-repo-cached DepsNamespace="Genesis.Framework"
+config aspnet-repo-cached DepsModelNamespace="Genesis.Data.Models"
+config aspnet-repo-cached DepsRepoNamespace="Genesis.Data.Repositories"
+config aspnet-repo-cached ObjectBaseClass="Model"
+config aspnet-repo-cached ModelBaseClass="Model"
+config aspnet-repo-cached GenericBaseClass=true
+config aspnet-repo-cached Namespace="Genesis.Data.Repositories"
+
+add proto-file
+--Write out all of the .proto files for the API project. Tools on build will generate the base service classes
+config proto-file OutputPath="/src/genesis-mvp/src/Api/Genesis.Api/Protos/"
+config proto-file OutputSuffix=""
+config proto-file Namespace="Genesis.Api.Grpc"
+config proto-file Version=3
+
+add proto-svc
+--Build all of the GRPC service wrapper classes using the common namespace for the models
+config proto-svc OutputPath="/src/genesis-mvp/src/Api/Genesis.Api/GrpcServices/"
+config proto-svc GrpcNamespace="Genesis.Api.Grpc"
+config proto-svc Namespace="Genesis.Api.GrpcServices"
+config proto-svc ServiceSuffix="GrpcService"
+config proto-svc ApiServiceNamespace="Genesis.Services"
+config proto-svc ModelNamespace="Genesis.Common";
+
+add aspnet-mvc-con
+--Write out the boilerplate controllers for their respective objects/dtos
+config aspnet-mvc-con OutputPath="/src/genesis-mvp/src/Api/Genesis.Api/Controllers/"
+config aspnet-mvc-con Namespace="Genesis.Api.Controllers"
+config aspnet-mvc-con OutputSuffix="Controller"
+config aspnet-mvc-con ApiServiceNamespace="Genesis.Services"
+config aspnet-mvc-con ModelNamespace="Genesis.Common"
+config aspnet-mvc-con DepsNamespace="Genesis.Framework"
+config aspnet-mvc-con DepsDtoNamespace="Genesis.Common"
+
+--	Execute the chain sequentially
+exec chain
+
+--dump to console, otherwise the console quits
+break

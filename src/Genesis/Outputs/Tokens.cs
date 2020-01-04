@@ -139,6 +139,14 @@ namespace Genesis.Output
         /// </summary>
         public static readonly string DepsRepoNamespace = "~DEPS_REPO_NAMESPACE~";
         /// <summary>
+        /// Namespace containing repositories
+        /// </summary>
+        public static readonly string DepsCachedRepoNamespace = "~DEPS_CACHED_REPO_NAMESPACE~";
+        /// <summary>
+        /// Namespace for Mapping classes
+        /// </summary>
+        public static readonly string DepsMappingNamespace = "~DEPS_MAPPING_NAMESPACE~";
+        /// <summary>
         /// EF Core DBContext Name
         /// </summary>
         public static readonly string DepsDBContextClass = "~DEPS_DBCONTEXT~";
@@ -146,5 +154,21 @@ namespace Genesis.Output
         /// Namespace for DTO objects
         /// </summary>
         public static readonly string DepsDtoNamespace = "~DEPS_DTO_NAMESPACE~";
+        /// <summary>
+        /// Suffix for a repository
+        /// </summary>
+        public static readonly string RepoSuffix = "~REPOSITORY_SUFFIX~";
+        /// <summary>
+        /// Suffix for a cached repository
+        /// </summary>
+        public static readonly string CachedRepoSuffix = "~CACHED_REPOSITORY_SUFFIX~";
+        /// <summary>
+        /// Suffix for a Data Transfer Object
+        /// </summary>
+        public static readonly string DtoSuffix = "~DTO_SUFFIX~";
+        /// <summary>
+        /// Suffix for a Mapper class
+        /// </summary>
+        public static readonly string MapperSuffix = "~MAPPER_SUFFIX~";
     }
 }
