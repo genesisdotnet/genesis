@@ -1,7 +1,7 @@
 ﻿using Grpc.Core;
 using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
-using ~API_SERVICE_NAMESPACE~;
+using ~DEPS_SERVICE_NAMESPACE~;
 using ~GRPC_NAMESPACE~;
 
 namespace ~NAMESPACE~

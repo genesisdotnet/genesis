@@ -15,8 +15,8 @@ namespace Genesis.Output.Poco
     public class PocoGenerator : OutputExecutor
     {
         public override string CommandText => "poco";
-        public override string Description => "(P)lain (O)ld (C)Sharp (O)bject .cs file";
-        public override string FriendlyName => "(P)lain (O)ld (C)Sharp (O)bject";
+        public override string Description => "Generates Plain Old C# Object .cs files with optional Suffix i.e. Dto";
+        public override string FriendlyName => "POCO+Suffix Generator";
 
         public PocoConfig Config { get; set; } = new PocoConfig();
 
@@ -79,7 +79,7 @@ namespace Genesis.Output.Poco
 
             File.WriteAllText(outPath.Replace('<', '_').Replace('>', '_'), output); //hacky, can't save fileNames with '<' or '>' in the name
 
-            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + Config.OutputSuffix + ".cs"); Text.WhiteLine("'");
+            Text.White($"Wrote '"); Text.Yellow(outPath); Text.WhiteLine("'");
 
             await Task.CompletedTask;
         }
@@ -88,9 +88,9 @@ namespace Genesis.Output.Poco
         {
             string template =
                 "\t\t/// <summary>" + Environment.NewLine +
-                "\t\t/// Gets or sets the ~PROPERTY_NAME~." + Environment.NewLine +
+                "\t\t/// Gets or sets the ~PROPERTY_NAME~ property." + Environment.NewLine +
                 "\t\t/// <summary>" + Environment.NewLine +
-                "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }";
+                "\t\tpublic virtual ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }";
 
             var sb = new StringBuilder();
 

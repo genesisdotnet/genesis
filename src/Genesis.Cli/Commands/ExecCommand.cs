@@ -17,6 +17,7 @@ namespace Genesis.Cli.Commands
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             var tmp = (args.Length==1) ? args[0] : args[1];
+            var frag = (args.Length == 3 && args[2].Equals("fragile", StringComparison.InvariantCultureIgnoreCase));
 
             var exe = GetExecutor(tmp);
 
@@ -39,15 +40,13 @@ namespace Genesis.Cli.Commands
                 {
                     Text.SuccessGraffiti();
                     return new OutputGenesisExecutionResult { Success = true };
-                }
-
-                if (errorCount < genesis.Chain.Count)
+                } 
+                else if (errorCount <= genesis.Chain.Count && !frag)
                 {
                     Text.WarningGraffiti();
                     return new OutputGenesisExecutionResult { Success = false };
                 }
-
-                if (errorCount == genesis.Chain.Count)
+                else if (errorCount <= genesis.Chain.Count && frag) 
                 {
                     Text.ErrorGraffiti();
                     return new OutputGenesisExecutionResult { Success = false };

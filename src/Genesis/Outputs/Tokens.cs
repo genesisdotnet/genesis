@@ -47,7 +47,7 @@ namespace Genesis.Output
         /// </summary>
         public static readonly string PropertyDataType = "~PROPERTY_DATATYPE~";
         /// <summary>
-        /// Hmm...
+        /// React Edidor Component control rows
         /// </summary>
         public static readonly string EditorRowsStub = "~EDITOR_ROWS~";
         /// <summary>
@@ -105,11 +105,11 @@ namespace Genesis.Output
         /// <summary>
         /// The namespace for a using that contains ApiServices
         /// </summary>
-        public static readonly string ApiServiceNamespace = "~API_SERVICE_NAMESPACE~";
+        public static readonly string DepsServiceNamespace = "~DEPS_SERVICE_NAMESPACE~";
         /// <summary>
         /// Api service class name suffix
         /// </summary>
-        public static readonly string ApiServiceSuffix = "~API_SERVICE_SUFFIX~";
+        public static readonly string ServiceSuffix = "~SERVICE_SUFFIX~";
         /// <summary>
         /// Base class for whatever
         /// </summary>

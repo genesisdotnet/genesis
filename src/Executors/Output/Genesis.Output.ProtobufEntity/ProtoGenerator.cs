@@ -25,6 +25,8 @@ namespace Genesis.Output.Protos
         {
             var result = new OutputGenesisExecutionResult();
 
+            await DepositDependencies();
+
             try
             {
                 foreach (var obj in genesis.Objects)
@@ -61,8 +63,8 @@ namespace Genesis.Output.Protos
 
             File.WriteAllText(outPath, output);
 
-            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".proto"); Text.WhiteLine("'");
-            
+            Text.White($"Wrote '"); Text.Yellow(outPath); Text.WhiteLine("'");
+
             await Task.CompletedTask;
         }
 

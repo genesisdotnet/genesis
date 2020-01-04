@@ -40,6 +40,8 @@ namespace Genesis.Output.CachedRepo
         {
             var result = new OutputGenesisExecutionResult();
 
+            if (!Directory.Exists(Config.OutputPath))
+                            Directory.CreateDirectory(Config.OutputPath);
 
             var path = !string.IsNullOrEmpty(Config.DepsPath) && Directory.Exists(Config.DepsPath)
                             ? Config.DepsPath
@@ -71,12 +73,11 @@ namespace Genesis.Output.CachedRepo
                                      .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                                      ;
 
-            if (!Directory.Exists(Config.OutputPath))
-                Directory.CreateDirectory(Config.OutputPath);
+            var outPath = Path.Combine(Config.OutputPath, $"{objGraph.Name.ToSingular()}{Config.OutputSuffix}.cs");
 
-            File.WriteAllText(Path.Combine(Config.OutputPath, $"{objGraph.Name.ToSingular()}{Config.OutputSuffix}.cs"), output);
+            File.WriteAllText(outPath, output);
 
-            Text.White($"Wrote '"); Text.Yellow(objGraph.Name.ToSingular() + Config.OutputSuffix + ".cs"); Text.WhiteLine("'");
+            Text.White($"Wrote '"); Text.Yellow(outPath); Text.WhiteLine("'");
 
             await Task.CompletedTask;
         }

@@ -152,7 +152,7 @@ namespace Genesis.Cli
                 }, false) //false so it doesn't throw on unknown args
                 .OnExecute(async () =>
                 {
-                    IGenesisExecutionResult result;
+                    IGenesisExecutionResult result = null!;
                     try
                     {
                         result = await cmd.Execute(GenesisContext.Current, args);
@@ -162,7 +162,10 @@ namespace Genesis.Cli
                         result = new BlankGenesisExecutionResult();
                         Text.RedLine(exception.Message);
                     }
-
+                    finally
+                    {
+                        Debug.WriteLine($"{cmd.Name}| {result.Success}");
+                    }
                     return result.Success ? 0 : -1; //does this even matter?
                 });
             }

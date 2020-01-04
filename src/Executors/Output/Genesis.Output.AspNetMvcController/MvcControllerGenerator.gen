@@ -5,25 +5,29 @@ using System.Threading.Tasks;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using ~DEPS_NAMESPACE~;
-using ~API_SERVICE_NAMESPACE~;
+using ~DEPS_SERVICE_NAMESPACE~;
 using ~DEPS_DTO_NAMESPACE~;
 
 namespace ~NAMESPACE~
 {
-    [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     public class ~OBJECT_NAME~Controller : Controller
     {
-    /*
-~INJECTION_MEMBERS~
+        private readonly I~OBJECT_NAME~~SERVICE_SUFFIX~ _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~;
+        private readonly IFeatureManagerSnapshot _features;
+        private readonly ILogger<~OBJECT_NAME~Controller> _logger;
 
 		public ~OBJECT_NAME~Controller(
-~INJECTIONS~
+            I~OBJECT_NAME~~SERVICE_SUFFIX~ ~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~,
+            IFeatureManagerSnapshot featureManagementSnapshot,
+            ILogger<~OBJECT_NAME~Controller> logger
 		) 
 		{
-~INJECTION_ASSIGNMENT~
+            _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~ = ~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~;
+            _features = featureManagementSnapshot;
+            _logger = logger;
 		}
-	*/	
+	
         // GET api/v#/~OBJECT_NAME~
         [HttpGet]
         public IHttpActionResult Get()

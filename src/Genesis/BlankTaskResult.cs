@@ -11,7 +11,7 @@ namespace Genesis
 
         }
 
-        public virtual bool Success { get; set; } 
+        public virtual bool Success { get; set; } = true;
         public virtual string Message { get; set; } = string.Empty;
     }
 }

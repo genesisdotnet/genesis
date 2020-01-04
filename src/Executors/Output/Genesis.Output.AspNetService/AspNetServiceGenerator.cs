@@ -90,7 +90,7 @@ namespace Genesis.Output.ApiServiceConfig
 
             File.WriteAllText(outPath.Replace('<', '_').Replace('>', '_'), output); //HACK: Can't save fileNames with '<' or '>' in the name
 
-            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + Config.OutputSuffix + ".cs"); Text.WhiteLine("'"); //TODO: This needs centralized somehow... more copy/paste code
+            Text.White($"Wrote '"); Text.Yellow(outPath); Text.WhiteLine("'");
 
             await Task.CompletedTask;
         }

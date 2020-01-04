@@ -20,6 +20,8 @@ namespace Genesis.Output.AspNetMvcController
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
+            if (!Directory.Exists(Config.OutputPath))
+                Directory.CreateDirectory(Config.OutputPath);
 
             var path = !string.IsNullOrEmpty(Config.DepsPath) && Directory.Exists(Config.DepsPath)
                             ? Config.DepsPath
@@ -35,33 +37,25 @@ namespace Genesis.Output.AspNetMvcController
 
         public Task ExecuteGraph(ObjectGraph objectGraph)
         {
-            if (Config.OutputPath.EndsWith("/") || Config.OutputPath.EndsWith(@"\"))
-                Config.OutputPath = Config.OutputPath[..^1];
-
-            if (!Directory.Exists(Config.OutputPath))
-                Directory.CreateDirectory(Config.OutputPath); 
-            
             var entityName = objectGraph.Name.ToSingular();
 
             var output = Template.Raw
                             .Replace(Tokens.Namespace, Config.Namespace)
                             .Replace(Tokens.ObjectName, entityName)
+                            .Replace(Tokens.ObjectNameAsArgument, entityName.ToCorrectedCase())
                             .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
-                            .Replace(Tokens.Injections, Config.Injections.ToInjectionString().TrimEnd(','))
-                            .Replace(Tokens.InjectionMembers, Config.Injections.ToInjectionMembersString().TrimEnd(','))
-                            .Replace(Tokens.InjectionAssignment, Config.Injections.ToInjectionAssignmentsString().TrimEnd(','))
-                            .Replace(Tokens.ApiServiceNamespace, Config.ApiServiceNamespace)
-                            .Replace(Tokens.ApiServiceSuffix, Config.ApiServiceSuffix)
-                            .Replace(Tokens.InjectionAssignment, Config.Injections.ToInjectionAssignmentsString().TrimEnd(','))
+                            .Replace(Tokens.ServiceSuffix, Config.ServiceSuffix)
+                            .Replace(Tokens.DtoSuffix, Config.DtoSuffix)
                             .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
                             .Replace(Tokens.DepsDtoNamespace, Config.DepsDtoNamespace)
+                            .Replace(Tokens.DepsServiceNamespace, Config.DepsServiceNamespace)
                             ;
 
             var path = Path.Combine(Config.OutputPath, $@"{entityName}{Config.OutputSuffix}.cs");
 
-            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + Config.OutputSuffix + ".cs"); Text.WhiteLine("'");
-
             File.WriteAllText(path, output);
+
+            Text.White($"Wrote '"); Text.Yellow(path); Text.WhiteLine("'");
 
             return Task.CompletedTask;
         }

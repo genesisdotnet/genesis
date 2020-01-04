@@ -4,13 +4,9 @@ using System.Text;
 
 namespace ~NAMESPACE~
 {
-    public class ~OBJECT_NAME~~OUTPUT_SUFFIX~: ~OBJECT_BASECLASS~
+    //[DebuggerDisplay("~OBJECT_NAME~~OUTPUT_SUFFIX~, Id={Id}, Genesis: Implement ~DEBUGGER_DISPLAY_PROPERTIES~")]
+    public partial class ~OBJECT_NAME~~OUTPUT_SUFFIX~: ~OBJECT_BASECLASS~
     {
-        public ~OBJECT_NAME~~OUTPUT_SUFFIX~()
-        {
-~CONSTRUCTION~
-        }
-
 ~PROPERTIES~
     }
 }

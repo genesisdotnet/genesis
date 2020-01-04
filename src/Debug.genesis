@@ -91,8 +91,8 @@ add aspnet-mvc-con
 config aspnet-mvc-con OutputPath="/src/genesis-mvp/src/Api/Genesis.Api/Controllers/"
 config aspnet-mvc-con Namespace="Genesis.Api.Controllers"
 config aspnet-mvc-con OutputSuffix="Controller"
-config aspnet-mvc-con ApiServiceNamespace="Genesis.Services"
-config aspnet-mvc-con ModelNamespace="Genesis.Common"
+config aspnet-mvc-con DepsServiceNamespace="Genesis.Services"
+config aspnet-mvc-con DepsModelNamespace="Genesis.Common"
 config aspnet-mvc-con DepsNamespace="Genesis.Framework"
 config aspnet-mvc-con DepsDtoNamespace="Genesis.Common"
 

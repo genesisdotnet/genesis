@@ -83,7 +83,7 @@ namespace Genesis.Output.EFCoreModel
 
             File.WriteAllText(outPath.Replace('<', '_').Replace('>', '_'), output); //hacky, can't save fileNames with '<' or '>' in the name
 
-            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + ".cs"); Text.WhiteLine("'");
+            Text.White($"Wrote '"); Text.Yellow(outPath); Text.WhiteLine("'");
 
             await Task.CompletedTask;
         }
