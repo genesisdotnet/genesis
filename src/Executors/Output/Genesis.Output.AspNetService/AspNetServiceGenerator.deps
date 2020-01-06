@@ -1,0 +1,81 @@
+﻿<!----->
+I~OUTPUT_SUFFIX~
+I~OUTPUT_SUFFIX~.cs
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ~NAMESPACE~
+{
+    public interface I~OUTPUT_SUFFIX~ { }
+
+    public interface I~OUTPUT_SUFFIX~<TModel, TKey> : I~OUTPUT_SUFFIX~
+        where TModel : ~OBJECT_BASECLASS~
+        where TKey : struct
+    {
+        string Name { get; }
+    }
+}
+<!----->
+~OUTPUT_SUFFIX~
+~OUTPUT_SUFFIX~.cs
+using Microsoft.Extensions.Logging;
+using Microsoft.FeatureManagement;
+using System;
+
+namespace ~DEPS_NAMESPACE~
+{
+    public abstract class ~OUTPUT_SUFFIX~
+    {
+        public abstract string Name { get; }
+    }
+
+    public abstract class ~OUTPUT_SUFFIX~<TModel, TKey> : ~OUTPUT_SUFFIX~, I~OUTPUT_SUFFIX~<TModel, TKey>
+        where TModel : ~OBJECT_BASECLASS~
+        where TKey : struct
+    {
+#pragma warning disable IDE0052 // Remove unread private members
+        
+        protected readonly IRepository<TModel, TKey> _repo = null!;
+        protected readonly IReadOnlyRepository<TModel, TKey> _cache = null!;
+        protected readonly IFeatureManagerSnapshot _features = null!;
+        protected readonly ILogger<TModel> _logger = null!;
+
+#pragma warning restore IDE0052 // Remove unread private members
+        
+        protected Service(
+            IRepository<TModel, TKey> repository,
+            IReadOnlyRepository<TModel, TKey> cachedRepository,
+            IFeatureManagerSnapshot featureManagementSnapshot,
+            ILogger<TModel> logger)
+        {
+            _repo = repository ?? throw new ServiceException(new ArgumentNullException(nameof(repository)));
+            _cache = cachedRepository ?? throw new ServiceException(new ArgumentNullException(nameof(cachedRepository)));
+            _features = featureManagementSnapshot ?? throw new ServiceException(new ArgumentNullException(nameof(featureManagementSnapshot)));
+            _logger = logger;
+        }
+    }
+}
+<!----->
+~OUTPUT_SUFFIX~Exception
+~OUTPUT_SUFFIX~Exception.cs
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace ~DEPS_NAMESPACE~
+{
+    [Serializable]
+    public class ~OUTPUT_SUFFIX~Exception : Exception
+    {
+        private const string EXCEPTION_MESSAGE = "A ~OUTPUT_SUFFIX~ error has occurred. See inner exception for details.";
+
+        public ~OUTPUT_SUFFIX~Exception() { }
+        public ~OUTPUT_SUFFIX~Exception(Exception innerException) : base(EXCEPTION_MESSAGE, innerException) { }
+        public ~OUTPUT_SUFFIX~Exception(string message) : base(message) { }
+        public ~OUTPUT_SUFFIX~Exception(string message, Exception inner) : base(message, inner) { }
+        protected ~OUTPUT_SUFFIX~Exception(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context) : base(info, context) { }
+    }
+}

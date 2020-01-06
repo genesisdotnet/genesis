@@ -43,16 +43,23 @@ namespace Genesis.Output
                 {
                     var modifiedDep = OnBeforeWriteDependency(this, new DependencyEventArgs((GenesisDependency)dependency));
 
-                    if (!Directory.Exists(outputRoot))
-                        Directory.CreateDirectory(outputRoot);
+                    var loc = ((GeneratorConfiguration)Configuration).DepsPath;
 
-                    var filename = dependency.PathFragment.TrimStart('/').TrimStart('\\');
+                    var directory = !string.IsNullOrEmpty(loc) 
+                                        ? loc : !string.IsNullOrEmpty(outputRoot)
+                                            ? outputRoot
+                                            : ((GeneratorConfiguration)Configuration).OutputPath;
+
+                    if (!Directory.Exists(directory))
+                        Directory.CreateDirectory(directory);
+
+                    var filename = dependency.PathFragment.TrimStart('.').TrimStart('/').TrimStart('\\');
                     
-                    var path = Path.Combine(outputRoot, filename);
+                    var path = Path.Combine(directory, filename);
 
-                    File.WriteAllText(path, modifiedDep, Encoding.UTF8);
+                    File.WriteAllText(path, modifiedDep.Contents, Encoding.UTF8);
 
-                    Text.Gray($"Wrote ["); Text.Yellow(filename); Text.GrayLine("]");
+                    Text.Gray($"Wrote ["); Text.DarkYellow(path); Text.GrayLine("]");
                 }
                 Text.GreenLine($"Wrote {_deps.Count} dependencies to their respective paths.");
                 return Task.FromResult(true);
@@ -74,10 +81,7 @@ namespace Genesis.Output
         /// <summary>
         /// Return a modified dependency
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        /// <returns></returns>
-        protected virtual string OnBeforeWriteDependency(object sender, DependencyEventArgs e) 
-            => e.Dependency.Contents;
+        protected virtual GenesisDependency OnBeforeWriteDependency(object sender, DependencyEventArgs e) 
+            => e.Dependency;
     }
 }

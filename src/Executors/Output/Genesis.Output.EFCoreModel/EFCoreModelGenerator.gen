@@ -1,0 +1,17 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+using ~DEPS_NAMESPACE~;
+
+namespace ~NAMESPACE~
+{
+    public partial class ~OBJECT_NAME~~OUTPUT_SUFFIX~: ~BASE_CLASS~
+    {
+        public ~OBJECT_NAME~~OUTPUT_SUFFIX~()
+        {
+~CONSTRUCTION~
+        }
+
+~PROPERTIES~
+    }
+}

@@ -3,6 +3,8 @@
   "namespace": "Genesis.Output.Poco",
   "outputPath": "C:\\Temp\\Output",
   "outputSuffix": "Model",
+  "depsPath": "C:\\src\\readyskill-mvp\\src\\Api\\ReadySkill.Framework\\",
+  "depsNamespace": "C:\\src\\readyskill-mvp\\src\\Api\\ReadySkill.Framework\\",
   "objectBaseClass": "Model",
   "overwrite": "all",
   "preserve": "none"

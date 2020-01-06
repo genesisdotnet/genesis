@@ -1,0 +1,12 @@
+﻿using ~DEPS_MODEL_NAMESPACE~;
+using ~DEPS_NAMESPACE~;
+
+namespace ~NAMESPACE~
+{
+    public interface I~OBJECT_NAME~~OUTPUT_SUFFIX~ : I~OUTPUT_SUFFIX~<~OBJECT_NAME~, ~KEY_DATATYPE~> { }
+
+    public sealed class ~OBJECT_NAME~~OUTPUT_SUFFIX~ : ~OUTPUT_SUFFIX~<~OBJECT_NAME~, ~KEY_DATATYPE~>, I~OBJECT_NAME~~OUTPUT_SUFFIX~
+    {
+        public ~OBJECT_NAME~~OUTPUT_SUFFIX~(~DEPS_DBCONTEXT~ context) : base(context) { }
+    }
+}

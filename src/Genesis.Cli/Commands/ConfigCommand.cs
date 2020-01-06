@@ -75,6 +75,8 @@ namespace Genesis.Cli.Commands
 
                     if (int.TryParse(val, out var number))
                         propertyValue = number;
+                    else if (bool.TryParse(val, out var bit))
+                        propertyValue = bit;
                     else
                         propertyValue = val;
 
@@ -103,7 +105,7 @@ namespace Genesis.Cli.Commands
                     else
                     {
                         Text.CliCommand(args[1]);
-                        Text.RedLine(" is not a known Executor. ("); Text.FriendlyText("Input", false); Text.Red(" or "); Text.FriendlyText("Output"); Text.RedLine(".");
+                        Text.Red(" is not a known Executor. ("); Text.FriendlyText("Input", false); Text.Red(" or "); Text.FriendlyText("Output"); Text.RedLine(").");
 
                         result.Message = "Invalid Executor";
                     }

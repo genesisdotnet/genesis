@@ -53,12 +53,7 @@ namespace Genesis.Output.ReactEditorComponent
 
             var path = Path.Combine(Config.OutputPath, $@"Edit{entityName}.{Config.FileExtension.TrimStart('.')}");
 
-            Text.DarkCyanLine($@"{path}");
-
-            if (File.Exists(path))
-                File.Delete(path);
-
-            await Task.Delay(10);
+            Text.White($"Wrote '"); Text.Yellow(path); Text.WhiteLine("'");
 
             File.WriteAllText(path, output);
         }

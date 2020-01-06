@@ -25,6 +25,8 @@ namespace Genesis.Output.Protos
         {
             var result = new OutputGenesisExecutionResult();
 
+            await DepositDependencies();
+
             try
             {
                 foreach (var obj in genesis.Objects)
@@ -55,10 +57,10 @@ namespace Genesis.Output.Protos
                                 .Replace(Tokens.Namespace, Config.Namespace)
                                 .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToCodeDataType())
                                 .Replace(Tokens.GrpcNamespace, Config.GrpcNamespace)
-                                .Replace(Tokens.ApiServiceNamespace, Config.ApiServiceNamespace)
-                                .Replace(Tokens.ApiServiceSuffix, Config.ApiServiceSuffix)
-                                .Replace(Tokens.Injections, GrpcServiceInjector.GetParameterForServiceClass(objectGraph, Config.ApiServiceSuffix))
-                                .Replace(Tokens.InjectionMembers, GrpcServiceInjector.GetDeclarationForServiceClass(objectGraph, Config.ApiServiceSuffix, true))
+                                .Replace(Tokens.DepsServiceNamespace, Config.DepsServiceNamespace)
+                                .Replace(Tokens.ServiceSuffix, Config.ServiceSuffix)
+                                .Replace(Tokens.Injections, GrpcServiceInjector.GetParameterForServiceClass(objectGraph, Config.ServiceSuffix))
+                                .Replace(Tokens.InjectionMembers, GrpcServiceInjector.GetDeclarationForServiceClass(objectGraph, Config.ServiceSuffix, true))
                                 .Replace(Tokens.InjectionAssignment, GrpcServiceInjector.GetAssignmentForServiceClass(objectGraph))
                                 ;
 
@@ -66,8 +68,8 @@ namespace Genesis.Output.Protos
 
             File.WriteAllText(outPath, output);
 
-            Text.White($"Wrote '"); Text.Yellow(objectGraph.Name.ToSingular() + "GrpcService.cs"); Text.WhiteLine("'");
-            
+            Text.White($"Wrote '"); Text.Yellow(outPath); Text.WhiteLine("'");
+
             await Task.CompletedTask;
         }
 

@@ -15,7 +15,7 @@ namespace Genesis
             => $"{GetServiceInterfaceName(og, suffix)} {GetServiceParamName(og, suffix)}";
 
         public static string GetAssignmentForServiceClass(ObjectGraph og, string suffix = "GrpcService")
-            => $"\t\t\t\t{GetServiceMemberName(og, suffix)} = {GetServiceParamName(og, suffix)};";
+            => $"\t\t\t{GetServiceMemberName(og, suffix)} = {GetServiceParamName(og, suffix)};";
 
         private static object GetServiceMemberName(ObjectGraph og, string suffix)
             => $"_{og.Name.ToSingular().ToCamelCase()}{suffix}";
@@ -38,7 +38,7 @@ namespace Genesis
             => $"{GetRepoInterfaceName(og, repoSuffix)} {GetRepoParamName(og, repoSuffix)}";
 
         public static string GetAssignmentForObjectRepo(ObjectGraph og, string repoSuffix = "Repository")
-            => $"\t\t\t\t{GetRepoMemberName(og, repoSuffix)} = {GetRepoParamName(og, repoSuffix)};";
+            => $"\t\t\t{GetRepoMemberName(og, repoSuffix)} = {GetRepoParamName(og, repoSuffix)};";
         
         private static object GetRepoMemberName(ObjectGraph og, string repoSuffix) 
             => $"_{og.Name.ToSingular().ToCamelCase()}{repoSuffix}";

@@ -1,4 +1,5 @@
 ﻿<!----->
+~OUTPUT_SUFFIX~
 \~OUTPUT_SUFFIX~.cs
 using System.Collections.Generic;
 

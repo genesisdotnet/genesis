@@ -41,19 +41,18 @@ namespace Genesis.Input.MSSqlDb
 
             var tmp = GetSchema();
 
-            Text.BlueLine($"{GetType().Name} created {tmp.Count} ObjectGraph(s), matching exclusions...");
+            Text.BlueLine($"Found {tmp.Count} possible objects. Matching exclusions...");
 
             foreach(var i in tmp)
             {
                 if (isExcluded(i, Config.ExcludePrefixes))
                     continue;
 
-                Text.DarkYellowLine($"{i.Name}:{i.SourceType}");
+                Text.White("Found "); Text.Yellow($"Table:{i.Name}, Type:{i.SourceType} - ");
                 if(genesis.Objects.SingleOrDefault(x => x.KeyId == i.KeyId) == null)
                     await genesis.AddObject(i); //yeah, this can blow up - leaving it for errors
             }
 
-            Text.CyanLine("Populated "+genesis.Objects.Count().ToString()+" object(s).");
             return await Task.FromResult(new InputGenesisExecutionResult {
                 Success = true,
             });

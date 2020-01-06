@@ -1,9 +1,13 @@
 ﻿{
   "language": "C#",
-  "namespace": "Output.Controllers",
+  "namespace": "Genesis.Api.Controllers",
   "outputPath": "/Temp/Output/Controllers",
   "overwrite": true,
-  "preserve": "",
+  "serviceSuffix": "Service",
+  "depsServiceNamespace": "Genesis.Services",
+  "depsDtoNamespace": "Genesis.Common",
+  "depsNamespace": "Genesis.Framework",
+  "preserve": "none",
   "injections": [
     "IAuthService",
     "IAccountService"

@@ -77,7 +77,7 @@ namespace Genesis
                     cfgType.GetProperty(propertyName)?.SetValue(cfg, value);
                 }
 
-                Text.Green(cfgType.Name); Text.White("."); Text.Cyan(propertyName); Text.WhiteLine(" was updated.");
+                //Text.Green(cfgType.Name); Text.White("."); Text.Cyan(propertyName); Text.WhiteLine(" was updated.");
             }
             catch (NullReferenceException)
             {

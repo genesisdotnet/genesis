@@ -47,7 +47,7 @@ namespace Genesis.Output
         /// </summary>
         public static readonly string PropertyDataType = "~PROPERTY_DATATYPE~";
         /// <summary>
-        /// Hmm...
+        /// React Edidor Component control rows
         /// </summary>
         public static readonly string EditorRowsStub = "~EDITOR_ROWS~";
         /// <summary>
@@ -105,11 +105,11 @@ namespace Genesis.Output
         /// <summary>
         /// The namespace for a using that contains ApiServices
         /// </summary>
-        public static readonly string ApiServiceNamespace = "~API_SERVICE_NAMESPACE~";
+        public static readonly string DepsServiceNamespace = "~DEPS_SERVICE_NAMESPACE~";
         /// <summary>
         /// Api service class name suffix
         /// </summary>
-        public static readonly string ApiServiceSuffix = "~API_SERVICE_SUFFIX~";
+        public static readonly string ServiceSuffix = "~SERVICE_SUFFIX~";
         /// <summary>
         /// Base class for whatever
         /// </summary>
@@ -118,5 +118,57 @@ namespace Genesis.Output
         /// Suffix for filename / classname etc
         /// </summary>
         public static readonly string OutputSuffix = "~OUTPUT_SUFFIX~";
+        /// <summary>
+        /// The current context's base class that Models subclass
+        /// </summary>
+        public static readonly string ModelBaseClass = "~MODEL_BASE_CLASS~";
+        /// <summary>
+        /// Dependencies namespace
+        /// </summary>
+        public static readonly string DepsNamespace = "~DEPS_NAMESPACE~";
+        /// <summary>
+        /// Absolute path for where to place dependencies
+        /// </summary>
+        public static readonly string DepsPath = "~DEPS_PATH~";
+        /// <summary>
+        /// Namespace that the models reside
+        /// </summary>
+        public static readonly string DepsModelNamespace = "~DEPS_MODEL_NAMESPACE~";
+        /// <summary>
+        /// Namespace containing repositories
+        /// </summary>
+        public static readonly string DepsRepoNamespace = "~DEPS_REPO_NAMESPACE~";
+        /// <summary>
+        /// Namespace containing repositories
+        /// </summary>
+        public static readonly string DepsCachedRepoNamespace = "~DEPS_CACHED_REPO_NAMESPACE~";
+        /// <summary>
+        /// Namespace for Mapping classes
+        /// </summary>
+        public static readonly string DepsMappingNamespace = "~DEPS_MAPPING_NAMESPACE~";
+        /// <summary>
+        /// EF Core DBContext Name
+        /// </summary>
+        public static readonly string DepsDBContextClass = "~DEPS_DBCONTEXT~";
+        /// <summary>
+        /// Namespace for DTO objects
+        /// </summary>
+        public static readonly string DepsDtoNamespace = "~DEPS_DTO_NAMESPACE~";
+        /// <summary>
+        /// Suffix for a repository
+        /// </summary>
+        public static readonly string RepoSuffix = "~REPOSITORY_SUFFIX~";
+        /// <summary>
+        /// Suffix for a cached repository
+        /// </summary>
+        public static readonly string CachedRepoSuffix = "~CACHED_REPOSITORY_SUFFIX~";
+        /// <summary>
+        /// Suffix for a Data Transfer Object
+        /// </summary>
+        public static readonly string DtoSuffix = "~DTO_SUFFIX~";
+        /// <summary>
+        /// Suffix for a Mapper class
+        /// </summary>
+        public static readonly string MapperSuffix = "~MAPPER_SUFFIX~";
     }
 }

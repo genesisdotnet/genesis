@@ -1,25 +1,19 @@
-﻿using Genesis;
-using Genesis.Output;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-using System.Threading;
+﻿using System.IO;
 using System.Threading.Tasks;
 
 namespace Genesis.Output.CachedRepo
 {
-    public class CachedRepositoryGenerator : OutputExecutor
+    public class RepositoryGenerator : OutputExecutor
     {
-        public override string CommandText => "aspnet-repo-cached"; //UX: This is annoying to type, though descriptive
-        public override string Description => "Implements a simple cached repository";
-        public override string FriendlyName => "Asp.Net Cached Repository";
+        public override string CommandText => "aspnet-repo";
+        public override string Description => "Implements a simple repository based on EF Core";
+        public override string FriendlyName => "Asp.Net DbContext Repository";
 
-        public CachedRepoConfig Config { get; set; }
+        public RepoConfig Config { get; set; }
 
         protected override void OnInitialized()
         {
-            Config = (CachedRepoConfig)Configuration;
+            Config = (RepoConfig)Configuration;
         }
 
         protected override GenesisDependency OnBeforeWriteDependency(object sender, DependencyEventArgs e)
@@ -45,9 +39,9 @@ namespace Genesis.Output.CachedRepo
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
             var result = new OutputGenesisExecutionResult();
-            
+
             if (!Directory.Exists(Config.OutputPath))
-                Directory.CreateDirectory(Config.OutputPath);
+                            Directory.CreateDirectory(Config.OutputPath);
 
             var path = !string.IsNullOrEmpty(Config.DepsPath) && Directory.Exists(Config.DepsPath)
                             ? Config.DepsPath
@@ -71,10 +65,10 @@ namespace Genesis.Output.CachedRepo
 
             var output = Template.Raw.Replace(Tokens.Namespace, Config.Namespace) 
                                      .Replace(Tokens.ObjectName, objGraph.Name.ToSingular())
-                                     .Replace(Tokens.ObjectBaseClass, baseTypeString)
+                                     .Replace(Tokens.ModelBaseClass, baseTypeString)
                                      .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
                                      .Replace(Tokens.DepsModelNamespace, Config.DepsModelNamespace)
-                                     .Replace(Tokens.DepsRepoNamespace, Config.DepsRepoNamespace)
+                                     .Replace(Tokens.DepsDBContextClass, Config.DepsDbContext)
                                      .Replace(Tokens.KeyDataType, objGraph.KeyDataType)
                                      .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                                      ;
