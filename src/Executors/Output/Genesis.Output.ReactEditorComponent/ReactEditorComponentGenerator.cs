@@ -56,6 +56,8 @@ namespace Genesis.Output.ReactEditorComponent
             Text.White($"Wrote '"); Text.Yellow(path); Text.WhiteLine("'");
 
             File.WriteAllText(path, output);
+
+            await Task.CompletedTask;
         }
 
         private static string GetEditorRows(ObjectGraph objectGraph)

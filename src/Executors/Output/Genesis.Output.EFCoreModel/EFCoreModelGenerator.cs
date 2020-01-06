@@ -65,7 +65,7 @@ namespace Genesis.Output.EFCoreModel
         {
             // don't write out object base classes since it's redundant
             var baseTypeString = Config.GenericBaseClass
-                                    ? Config.ObjectBaseClass+'<'+objectGraph.KeyDataType+'>'
+                                    ? Config.ObjectBaseClass+'<'+objectGraph.KeyDataType.ToCodeDataType()+'>'
                                     : Config.ObjectBaseClass;
 
             var output = Template.Raw

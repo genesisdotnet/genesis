@@ -1,8 +1,9 @@
-﻿using ~DEPS_MODEL_NAMESPACE~;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.FeatureManagement;
+using ~DEPS_MODEL_NAMESPACE~;
 using ~DEPS_REPO_NAMESPACE~;
-using ~DEPS_CACHED_REPO_NAMESPACE~;
 using ~DEPS_DTO_NAMESPACE~;
-using ~DEPS_MAPPING_NAMESPACE~;
+//using ~DEPS_MAPPING_NAMESPACE~;
 using ~DEPS_NAMESPACE~;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,8 @@ namespace ~NAMESPACE~
 
     public sealed class ~OBJECT_NAME~~OUTPUT_SUFFIX~ : ~OUTPUT_SUFFIX~<~OBJECT_NAME~, ~KEY_DATATYPE~>, I~OBJECT_NAME~~OUTPUT_SUFFIX~
     {
+        public override string Name { get => nameof(~OBJECT_NAME~~OUTPUT_SUFFIX~); }
+
         public ~OBJECT_NAME~~OUTPUT_SUFFIX~(
             I~OBJECT_NAME~~REPOSITORY_SUFFIX~ ~OBJECT_NAME_ARGUMENT~~REPOSITORY_SUFFIX~,
             I~OBJECT_NAME~~CACHED_REPOSITORY_SUFFIX~ ~OBJECT_NAME_ARGUMENT~~CACHED_REPOSITORY_SUFFIX~,

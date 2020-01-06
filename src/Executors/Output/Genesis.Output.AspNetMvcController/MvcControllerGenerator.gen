@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.FeatureManagement;
+using Microsoft.Extensions.Logging;
 using ~DEPS_NAMESPACE~;
 using ~DEPS_SERVICE_NAMESPACE~;
 using ~DEPS_DTO_NAMESPACE~;
@@ -30,21 +32,21 @@ namespace ~NAMESPACE~
 	
         // GET api/v#/~OBJECT_NAME~
         [HttpGet]
-        public IHttpActionResult Get()
+        public IActionResult Get()
         {
-            return Ok(new ~OBJECT_NAME~Dto[] { default(~OBJECT_NAME~Dto), default(~OBJECT_NAME~Dto) });
+            return Ok(new ~OBJECT_NAME~Dto[] { default, default, default });
         }
 
         // GET api/v#/~OBJECT_NAME~/5
         [HttpGet("{id}")]
-        public IHttpActionResult Get(int id)
+        public IActionResult Get(int id)
         {
             return Ok(new ~OBJECT_NAME~Dto());
         }
 
         // POST api/v#/~OBJECT_NAME~
         [HttpPost]
-        public IHttpActionResult Post([FromBody] ~OBJECT_NAME~Dto obj)
+        public IActionResult Post([FromBody] ~OBJECT_NAME~Dto obj)
         {
 			if (!ModelState.IsValid)
             {
@@ -56,7 +58,7 @@ namespace ~NAMESPACE~
 
         // PUT api/v#/~OBJECT_NAME~/5
         [HttpPut("{id}")]
-        public IHttpActionResult Put([FromUrl] int id, [FromBody] ~OBJECT_NAME~Dto obj)
+        public IActionResult Put(int id, [FromBody] ~OBJECT_NAME~Dto obj)
         {
 			if (!ModelState.IsValid)
             {
@@ -68,7 +70,7 @@ namespace ~NAMESPACE~
 
         // DELETE api/v#/~OBJECT_NAME~/5
         [HttpDelete("{id}")]
-        public IHttpActionResult Delete([FromUrl] int id)
+        public IActionResult Delete(int id)
         {
 			return Ok(id);
         }

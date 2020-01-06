@@ -54,6 +54,7 @@ namespace Genesis.Output.Protos
             var output = tmp.Raw.Replace(Tokens.Version, Config.Version.ToString())
                                 .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
                                 .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
+                                .Replace(Tokens.GrpcNamespace, Config.GrpcNamespace)
                                 .Replace(Tokens.MethodsStub, GetMethodsReplacement(objectGraph.Methods))
                                 .Replace(Tokens.Namespace, Config.Namespace)
                                 .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToGrpcProtoDataType())
@@ -81,7 +82,7 @@ namespace Genesis.Output.Protos
 
         private static string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties)
         {
-            string template = "\t\t~PROPERTY_DATATYPE~ ~PROPERTY_MEMBER_NAME~ = ~COUNTER~;";
+            string template = "\t~PROPERTY_DATATYPE~ ~PROPERTY_MEMBER_NAME~ = ~COUNTER~;";
 
             var sb = new StringBuilder();
 

@@ -3,10 +3,11 @@ using Microsoft.Extensions.Logging;
 using System.Threading.Tasks;
 using ~DEPS_SERVICE_NAMESPACE~;
 using ~GRPC_NAMESPACE~;
+using ~DEPS_DTO_NAMESPACE~;
 
 namespace ~NAMESPACE~
 {
-    public class ~OBJECT_NAME~GrpcService : ~OBJECT_NAME~Service.~OBJECT_NAME~ServiceBase
+    public class ~OBJECT_NAME~GrpcService : ~OBJECT_NAME~ProtoService.~OBJECT_NAME~ServiceBase
     {
         private readonly ILogger<~OBJECT_NAME~GrpcService> _logger;
 ~INJECTION_MEMBERS~

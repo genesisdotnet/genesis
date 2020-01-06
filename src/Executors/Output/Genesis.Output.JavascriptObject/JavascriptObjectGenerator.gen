@@ -1,0 +1,18 @@
+﻿export default class ~OBJECT_NAME~~OUTPUT_SUFFIX~ {
+  constructor(options = {}) {
+~PROPERTIES~
+  }
+
+  parseJson(schema) {
+    try {
+      return JSON.parse(schema);
+    } catch (err) {
+      console.log('Could not parse ~OBJECT_NAME~~OUTPUT_SUFFIX~ into a DTO.')
+      return null;
+    }
+  }
+
+  stringify() {
+    return JSON.stringify(this);
+  }
+}
