@@ -156,15 +156,12 @@ namespace Genesis
                     return "string";
 
                 case "int32":
+                case "short":
+                case "smallint":
+                case "tinyint":
                 case "int": return "int32";
 
                 case "bigint": return "int64";
-
-                case "short":
-                case "smallint": return "int8";
-
-                case "byte":
-                case "tinyint": return "int8";
 
                 case "double":
                 case "long":
@@ -255,11 +252,11 @@ namespace Genesis
                 case "numeric":
                     return "decimal";
 
-                case "guid":
-                case "uniqueidentifier": return "Guid";
-
                 case "float": return "float";
 
+                case "guid":
+                case "uniqueidentifier": return "Guid";
+                
                 case "boolean":
                 case "bool":
                 case "bit": return "bool";
@@ -271,6 +268,7 @@ namespace Genesis
                 case "datetime2":
                 case "smalldatetime":
                 case "date":
+                case "time":
                     return "DateTime";
 
                 case "image":

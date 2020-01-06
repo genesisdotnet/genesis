@@ -55,6 +55,7 @@
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetService\Genesis.Output.AspNetService.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.EFCoreModel\Genesis.Output.EFCoreModel.csproj" />
+    <ProjectReference Include="..\Executors\Output\Genesis.Output.JavascriptObject\Genesis.Output.JavascriptObject.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.Poco\Genesis.Output.Poco.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.ProtobufEntity\Genesis.Output.ProtobufEntity.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.ProtobufService\Genesis.Output.ProtobufService.csproj" />

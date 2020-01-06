@@ -60,7 +60,7 @@ namespace Genesis.Output.CachedRepo
         private async Task ExecuteGraph(ObjectGraph objGraph)
         {
             var baseTypeString = Config.GenericBaseClass
-                        ? Config.ModelBaseClass + '<' + objGraph.KeyDataType + '>'
+                        ? Config.ModelBaseClass + '<' + objGraph.KeyDataType.ToCodeDataType() + '>'
                         : Config.ModelBaseClass;
 
             var output = Template.Raw.Replace(Tokens.Namespace, Config.Namespace) 
@@ -69,7 +69,7 @@ namespace Genesis.Output.CachedRepo
                                      .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
                                      .Replace(Tokens.DepsModelNamespace, Config.DepsModelNamespace)
                                      .Replace(Tokens.DepsDBContextClass, Config.DepsDbContext)
-                                     .Replace(Tokens.KeyDataType, objGraph.KeyDataType)
+                                     .Replace(Tokens.KeyDataType, objGraph.KeyDataType.ToCodeDataType())
                                      .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                                      ;
 

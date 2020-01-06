@@ -73,7 +73,7 @@ namespace Genesis.Output.Poco
                             .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                             .Replace(Tokens.BaseTypeName, baseTypeString);
 
-            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + ".cs");
+            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + Config.OutputSuffix + ".cs");
 
             //TODO: Handle generics better while writing out .cs pocos
 

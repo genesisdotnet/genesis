@@ -72,7 +72,7 @@ namespace Genesis.Output.ApiServiceConfig
                             .Replace(Tokens.Namespace, Config.Namespace)                    //NOTE: see //2020:
                             .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
                             .Replace(Tokens.ObjectNameAsArgument, objectGraph.Name.ToCorrectedCase())
-                            .Replace(Tokens.KeyDataType, objectGraph.KeyDataType)
+                            .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToCodeDataType())
                             .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                             .Replace(Tokens.RepoSuffix, Config.RepoSuffix)
                             .Replace(Tokens.CachedRepoSuffix, Config.CachedRepoSuffix)

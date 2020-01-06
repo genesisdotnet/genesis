@@ -75,7 +75,7 @@ namespace Genesis.Output.CachedRepo
                                      .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
                                      .Replace(Tokens.DepsModelNamespace, Config.DepsModelNamespace)
                                      .Replace(Tokens.DepsRepoNamespace, Config.DepsRepoNamespace)
-                                     .Replace(Tokens.KeyDataType, objGraph.KeyDataType)
+                                     .Replace(Tokens.KeyDataType, objGraph.KeyDataType.ToCodeDataType())
                                      .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                                      ;
 

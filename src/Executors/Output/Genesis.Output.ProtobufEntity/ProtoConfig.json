@@ -1,7 +1,8 @@
 ﻿{
   "version": 3,
-  "namespace": "Genesis.Services.Grpc",
-  "outputPath": "C:\\Temp\\Output\\Proto-Files",
+  "grpcNamespace": "Genesis.Api.Proto",
+  "namespace": "Genesis.Api.GrpcServices",
+  "outputPath": "/Temp/Output/Proto-Files",
   "overwrite": "all",
   "preserve": "none"
 }

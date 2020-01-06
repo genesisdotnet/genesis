@@ -39,7 +39,7 @@ namespace ~DEPS_NAMESPACE~
         protected readonly IRepository<TModel, TKey> _repo = null!;
         protected readonly IReadOnlyRepository<TModel, TKey> _cache = null!;
         protected readonly IFeatureManagerSnapshot _features = null!;
-        protected readonly ILogger<TModel> _logger = null!;
+        protected readonly ILogger _logger = null!;
 
 #pragma warning restore IDE0052 // Remove unread private members
         
@@ -47,7 +47,7 @@ namespace ~DEPS_NAMESPACE~
             IRepository<TModel, TKey> repository,
             IReadOnlyRepository<TModel, TKey> cachedRepository,
             IFeatureManagerSnapshot featureManagementSnapshot,
-            ILogger<TModel> logger)
+            ILogger logger)
         {
             _repo = repository ?? throw new ServiceException(new ArgumentNullException(nameof(repository)));
             _cache = cachedRepository ?? throw new ServiceException(new ArgumentNullException(nameof(cachedRepository)));

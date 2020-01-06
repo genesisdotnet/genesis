@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Memory;
 using ~DEPS_NAMESPACE~;
 using ~DEPS_MODEL_NAMESPACE~;
-using ~DEPS_REPO_NAMESPACE~;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,35 +9,15 @@ using System.Threading.Tasks;
 
 namespace ~NAMESPACE~
 {
-    public class ~OBJECT_NAME~~OUTPUT_SUFFIX~ : IReadOnlyRepository<~OBJECT_NAME~, ~KEY_DATATYPE~>
+    public interface I~OBJECT_NAME~~OUTPUT_SUFFIX~ : IReadOnlyRepository<~OBJECT_NAME~, ~KEY_DATATYPE~> { }
+
+    public partial class ~OBJECT_NAME~~OUTPUT_SUFFIX~ : CachedRepository<~OBJECT_NAME~, ~KEY_DATATYPE~>, I~OBJECT_NAME~~OUTPUT_SUFFIX~
     {
-        private const string cacheKey = "~OBJECT_NAME~";
-
-        private readonly I~OBJECT_NAME~Repository repo;
-        private readonly IMemoryCache cache;
-
-        public MemoryCacheEntryOptions CacheOptions { get; private set; }
-
-        public ~OBJECT_NAME~~OUTPUT_SUFFIX~(I~OBJECT_NAME~Repository repository, IMemoryCache cacheObject) //NOTE: IDistributedCache if you use redis and multiple services
+        //public ~OBJECT_NAME~~OUTPUT_SUFFIX~(I~OBJECT_NAME~Repository repository, IDistributedCache cacheObject)
+        public ~OBJECT_NAME~~OUTPUT_SUFFIX~(I~OBJECT_NAME~Repository repository, IMemoryCache cacheObject)
+            :base(repository, cacheObject)
         {
-            repo = repository;
-            cache = cacheObject;
-
-            CacheOptions = new MemoryCacheEntryOptions().SetAbsoluteExpiration(relative: TimeSpan.FromSeconds(5));
+            // _repo is the Repository, _cache is the IMemoryCache or IDistributedCache interface on the base    
         }
-
-        public virtual Task<~OBJECT_NAME~> GetById(~KEY_DATATYPE~ id)
-        =>  cache.GetOrCreate($@"{cacheKey}-{id}", entry =>
-            {
-                entry.SetOptions(CacheOptions);
-                return repo.GetById(id);
-            });
-
-        public virtual Task<IAsyncQueryable<~OBJECT_NAME~>> Query() 
-            => cache.GetOrCreate(cacheKey, entry =>
-            {
-                entry.SetOptions(CacheOptions);
-                return repo.Query();
-            });
     }
 }

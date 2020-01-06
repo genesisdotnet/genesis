@@ -40,7 +40,7 @@ namespace Genesis.Output.Protos
                 Debug.WriteLine(e.Message);
                 result.Message = e.Message;
             }
-            
+
             return result;
         }
 
@@ -58,13 +58,14 @@ namespace Genesis.Output.Protos
                                 .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToCodeDataType())
                                 .Replace(Tokens.GrpcNamespace, Config.GrpcNamespace)
                                 .Replace(Tokens.DepsServiceNamespace, Config.DepsServiceNamespace)
+                                .Replace(Tokens.DepsDtoNamespace, Config.DepsDtoNamespace)
                                 .Replace(Tokens.ServiceSuffix, Config.ServiceSuffix)
                                 .Replace(Tokens.Injections, GrpcServiceInjector.GetParameterForServiceClass(objectGraph, Config.ServiceSuffix))
                                 .Replace(Tokens.InjectionMembers, GrpcServiceInjector.GetDeclarationForServiceClass(objectGraph, Config.ServiceSuffix, true))
                                 .Replace(Tokens.InjectionAssignment, GrpcServiceInjector.GetAssignmentForServiceClass(objectGraph))
                                 ;
 
-            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + "GrpcService.cs");
+            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + Config.ServiceSuffix + ".cs");
 
             File.WriteAllText(outPath, output);
 

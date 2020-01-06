@@ -1,0 +1,7 @@
+﻿{
+  "language": "Javascript",
+  "outputPath": "/src/readyskill-mvp/src/Clients/ReadySkill.React/ClientApp/src/data",
+  "outputSuffix": "Dto",
+  "overwrite": "all",
+  "preserve": "none"
+}

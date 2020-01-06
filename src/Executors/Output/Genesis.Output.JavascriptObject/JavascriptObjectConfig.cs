@@ -3,13 +3,12 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Genesis.Output.Protos
+namespace Genesis.Output.Poco
 {
-    public class ProtoConfig : GeneratorConfiguration
+    public class JavascriptObjectConfig : GeneratorConfiguration
     {
-        public int Version { get; set; } = 3;
+        public string Language { get; set; } = "Javascript";
         public string Overwrite { get; set; } = "all";
         public string Preserve { get; set; } = "none";
-        public string GrpcNamespace { get; set; } = "Genesis.Api.Proto";
     }
 }
