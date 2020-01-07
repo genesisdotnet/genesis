@@ -3,7 +3,7 @@ scan
 
 add mssql
 --Populate our object graph from SQL server, or Swagger url, or xl sheet, or class library
-config mssql ConnectionString="Server=(localdb)\MSSQLLocalDB;Database=Genesis-MVP;Integrated Security=true;"
+config mssql ConnectionString="Server=(localdb)\MSSQLLocalDB;Database=GenesisTest;Integrated Security=true;"
 
 add aspnet-svc
 --Boilerplate Middle-tier CRUD Services for ASP.Net
@@ -70,22 +70,22 @@ config aspnet-repo-cached ModelBaseClass="Model"
 config aspnet-repo-cached GenericBaseClass=true
 config aspnet-repo-cached Namespace="Genesis.Data.Repositories"
 
-add proto-file
---Write out all of the .proto files for the API project. Tools on build will generate the base service classes
-config proto-file OutputPath="/src/genesis-mvp/src/Api/Genesis.Api/Protos/"
-config proto-file OutputSuffix=""
-config proto-file Namespace="Genesis.Api.GrpcServices"
-config proto-file GrpcNamespace="Genesis.Api.Proto"
-config proto-file Version=3
-
-add proto-svc
---Build all of the GRPC service wrapper classes using the common namespace for the models
-config proto-svc OutputPath="/src/genesis-mvp/src/Api/Genesis.Api/GrpcServices/"
-config proto-svc GrpcNamespace="Genesis.Api.Proto"
-config proto-svc Namespace="Genesis.Api.GrpcServices"
-config proto-svc ServiceSuffix="GrpcService"
-config proto-svc DepsServiceNamespace="Genesis.Services"
-config proto-svc DepsDtoNamespace="Genesis.Common"
+--add proto-file
+----Write out all of the .proto files for the API project. Tools on build will generate the base service classes
+--config proto-file OutputPath="/src/genesis-mvp/src/Api/Genesis.Api/Protos/"
+--config proto-file OutputSuffix=""
+--config proto-file Namespace="Genesis.Api.GrpcServices"
+--config proto-file GrpcNamespace="Genesis.Api.Proto"
+--config proto-file Version=3
+--
+--add proto-svc
+----Build all of the GRPC service wrapper classes using the common namespace for the models
+--config proto-svc OutputPath="/src/genesis-mvp/src/Api/Genesis.Api/GrpcServices/"
+--config proto-svc GrpcNamespace="Genesis.Api.Proto"
+--config proto-svc Namespace="Genesis.Api.GrpcServices"
+--config proto-svc ServiceSuffix="GrpcService"
+--config proto-svc DepsServiceNamespace="Genesis.Services"
+--config proto-svc DepsDtoNamespace="Genesis.Common"
 
 add aspnet-mvc-con
 --Write out the boilerplate controllers for their respective objects/dtos
