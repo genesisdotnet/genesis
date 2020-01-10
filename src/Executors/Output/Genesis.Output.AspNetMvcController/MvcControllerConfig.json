@@ -6,6 +6,8 @@
   "serviceSuffix": "Service",
   "depsServiceNamespace": "Genesis.Services",
   "depsDtoNamespace": "Genesis.Common",
+  "depsModelNamespace": "Genesis.Data.Models",
+  "depsMappingNamespace": "Genesis.Services.Mapping",
   "depsNamespace": "Genesis.Framework",
   "preserve": "none",
   "injections": [

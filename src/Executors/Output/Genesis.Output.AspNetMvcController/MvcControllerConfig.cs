@@ -11,8 +11,9 @@ namespace Genesis.Output.AspNetMvcController
         public string Language { get; set; } = "C#";
         public bool Overwrite { get; set; } = true;
         public string Preserve { get; set; } = string.Empty;
-        public string DepsServiceNamespace { get; set; } = "Genesis.Services";      //BUG: Find where DepsModelNamespace is being used within the Mvc Controller Generator
-        public string DepsModelNamespace { get; set; } = "Genesis.Data.Models";  //hmm, why does a controller need to know about models? - bug somewhere
+        public string DepsServiceNamespace { get; set; } = "Genesis.Services";  
+        public string DepsModelNamespace { get; set; } = "Genesis.Data.Models";
+        public string DepsMappingNamespace { get; set; } = "Genesis.Services.Mapping";
         public string ServiceSuffix { get; set; } = "Service";
         public string DepsDtoNamespace { get; set; } = "Genesis.Common";
         public bool InitNullable { get; set; } = true;

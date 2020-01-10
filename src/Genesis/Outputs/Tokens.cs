@@ -170,5 +170,9 @@ namespace Genesis.Output
         /// Suffix for a Mapper class
         /// </summary>
         public static readonly string MapperSuffix = "~MAPPER_SUFFIX~";
+        /// <summary>
+        /// Marker for Foreign Key relationships
+        /// </summary>
+        public static readonly string RelationshipStub = "~RELATIONSHIPS~";
     }
 }

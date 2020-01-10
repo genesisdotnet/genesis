@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Net;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.FeatureManagement;
 using Microsoft.Extensions.Logging;
 using ~DEPS_NAMESPACE~;
 using ~DEPS_SERVICE_NAMESPACE~;
 using ~DEPS_DTO_NAMESPACE~;
+using ~DEPS_MODELS_NAMESPACE~;
 
 namespace ~NAMESPACE~
 {
@@ -17,43 +19,41 @@ namespace ~NAMESPACE~
     {
         private readonly I~OBJECT_NAME~~SERVICE_SUFFIX~ _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~;
         private readonly IFeatureManagerSnapshot _features;
+        private readonly IMapper _mapper;
         private readonly ILogger<~OBJECT_NAME~Controller> _logger;
-
+        
 		public ~OBJECT_NAME~Controller(
             I~OBJECT_NAME~~SERVICE_SUFFIX~ ~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~,
             IFeatureManagerSnapshot featureManagementSnapshot,
+            IMapper mapper,
             ILogger<~OBJECT_NAME~Controller> logger
 		) 
 		{
             _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~ = ~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~;
             _features = featureManagementSnapshot;
+            _mapper = mapper;
             _logger = logger;
 		}
 	
         // GET api/v#/~OBJECT_NAME~
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(new ~OBJECT_NAME~Dto[] { default, default, default });
+            return Ok(await _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~.Query());
         }
 
         // GET api/v#/~OBJECT_NAME~/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
-            return Ok(new ~OBJECT_NAME~Dto());
+            return Ok(await _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~.GetById(id));
         }
 
         // POST api/v#/~OBJECT_NAME~
         [HttpPost]
-        public IActionResult Post([FromBody] ~OBJECT_NAME~Dto obj)
+        public async Task<IActionResult> Post([FromBody] ~OBJECT_NAME~Dto obj)
         {
-			if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-			return Ok(obj.Id);
+            return Ok(await _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~.Upsert(_mapper.Map<~OBJECT_NAME~>(obj)));
         }
 
         // PUT api/v#/~OBJECT_NAME~/5
