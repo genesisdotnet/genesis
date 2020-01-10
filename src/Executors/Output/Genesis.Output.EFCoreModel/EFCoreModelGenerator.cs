@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -65,7 +66,7 @@ namespace Genesis.Output.EFCoreModel
         {
             // don't write out object base classes since it's redundant
             var baseTypeString = Config.GenericBaseClass
-                                    ? Config.ObjectBaseClass+'<'+objectGraph.KeyDataType.ToCodeDataType()+'>'
+                                    ? Config.ObjectBaseClass+'<'+ objectGraph.KeyDataType.ToCodeDataType()+'>'
                                     : Config.ObjectBaseClass;
 
             var output = Template.Raw
@@ -73,6 +74,7 @@ namespace Genesis.Output.EFCoreModel
                             .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
                             .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
                             .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties))
+                            .Replace(Tokens.RelationshipStub, GetRelationshipsReplacement(objectGraph))
                             .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                             .Replace(Tokens.BaseTypeName, baseTypeString)
                             .Replace(Tokens.DepsNamespace, Config.DepsNamespace);
@@ -86,6 +88,46 @@ namespace Genesis.Output.EFCoreModel
             Text.White($"Wrote '"); Text.Yellow(outPath); Text.WhiteLine("'");
 
             await Task.CompletedTask;
+        }
+
+        private static string GetRelationshipsReplacement(ObjectGraph og)
+        {
+            var PTS = "~PRIMARY_TABLE_SINGLE~";
+            //var PTC = "~PRIMARY_TABLE_PLURAL~";
+            var FTP = "~FOREIGN_TABLE_PLURAL~";
+            var FTS = "~FOREIGN_TABLE_SINGLE~";
+            var FTC = "~FOREIGN_TABLE_COLUMN~";
+
+            var navTemplate =
+                $"\t\tpublic virtual {PTS} {FTC} {{ get; set; }} = new {PTS}();";
+            
+            var pkTemplate = 
+                $"\t\tpublic virtual ICollection<{FTS}> {FTC}{FTP} {{ get; set; }} = new HashSet<{FTS}>();";
+            
+            var sb = new StringBuilder();
+
+            og.Relationships
+                .Where(x=>x.ForeignTable == og.Name)
+                .ToList()
+                .ForEach(r => {
+                    sb.AppendLine(navTemplate
+                                    .Replace(PTS, r.PrimaryTable.ToSingular())
+                                    .Replace(FTC, r.ForeignColumn.TrimEnd('i', 'I', 'd', 'D'))
+                    );
+                });
+
+            og.Relationships
+                .Where(x => x.PrimaryTable == og.Name)
+                .ToList()
+                .ForEach(r => {
+                    sb.AppendLine(pkTemplate
+                                    .Replace(FTS, r.ForeignTable.ToSingular())
+                                    .Replace(FTC, r.ForeignColumn.TrimEnd('i', 'I', 'd', 'D'))
+                                    .Replace(FTP, r.ForeignTable)
+                    );
+                });
+
+            return sb.ToString();
         }
 
         private static string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators

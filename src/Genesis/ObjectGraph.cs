@@ -16,6 +16,7 @@ namespace Genesis
         public List<PropertyGraph> Properties { get; set; } = new List<PropertyGraph>();
         public List<MethodGraph> Methods { get; set; } = new List<MethodGraph>();
         public List<EventGraph> Events { get; set; } = new List<EventGraph>();
+        public List<RelationshipGraph> Relationships { get; set; } = new List<RelationshipGraph>();
         public string Name { get; set; } = "OG";
         public bool IsKeyProperty { get; set; }
         public object KeyId { get; set; } = "0";

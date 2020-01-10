@@ -14,6 +14,13 @@ namespace ~NAMESPACE~
         where TKey : struct
     {
         string Name { get; }
+        
+        Task<TModel> GetById(TKey id);
+        Task<IAsyncQueryable<TModel>> Query();
+        Task<TModel> Upsert(TModel model);
+        Task Delete(TKey model);
+        Task AddRange(IEnumerable<TModel> models);
+        Task<int> SaveChanges(string currentUser);
     }
 }
 <!----->
@@ -43,7 +50,7 @@ namespace ~DEPS_NAMESPACE~
 
 #pragma warning restore IDE0052 // Remove unread private members
         
-        protected Service(
+        protected ~OUTPUT_SUFFIX~(
             IRepository<TModel, TKey> repository,
             IReadOnlyRepository<TModel, TKey> cachedRepository,
             IFeatureManagerSnapshot featureManagementSnapshot,
@@ -54,6 +61,27 @@ namespace ~DEPS_NAMESPACE~
             _features = featureManagementSnapshot ?? throw new ServiceException(new ArgumentNullException(nameof(featureManagementSnapshot)));
             _logger = logger;
         }
+
+        public virtual async Task AddRange(IEnumerable<TModel> models)
+            => await _repo.AddRange(models);
+
+        public virtual async Task<IAsyncQueryable<TModel>> Query()
+            => await _cache.Query();
+
+        public virtual async Task Delete(TKey id)
+            => await _repo.Delete(id);
+
+        public virtual async Task<TModel> GetById(TKey id)
+            => await _cache.GetById(id);
+
+        public virtual async Task<TModel> Upsert(TModel model)
+            => await _repo.Upsert(model);
+
+        protected virtual async Task<TModel> Add(string user, TModel model)
+            => await _repo.Upsert(model);
+
+        public virtual async Task<int> SaveChanges(string user)
+            => await _repo.SaveChanges(user);
     }
 }
 <!----->

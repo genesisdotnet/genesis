@@ -12,6 +12,30 @@ namespace Genesis.Input.MSSqlDb
 {
     public class MSSqlDbInput : InputExecutor
     {
+        private const string Q_FOREIGN_KEYS = @"SELECT 
+	                                                tab.[Name] AS [ForeignTable],
+                                                    col.[Name] AS [ForeignColumn],
+                                                    pk_tab.[Name] AS [PrimaryTable],
+                                                    pk_col.[Name] AS [PrimaryColumn]
+                                                FROM sys.tables tab
+                                                    INNER JOIN sys.columns col 
+                                                        ON col.[object_id] = tab.[object_id]
+                                                    LEFT OUTER JOIN sys.foreign_key_columns fk_cols
+                                                        ON fk_cols.parent_object_id = tab.[object_id]
+                                                        and fk_cols.parent_column_id = col.column_id
+                                                    LEFT OUTER JOIN sys.foreign_keys fk
+                                                        ON fk.[object_id] = fk_cols.cONstraint_object_id
+                                                    LEFT OUTER JOIN sys.tables pk_tab
+                                                        ON pk_tab.[object_id] = fk_cols.referenced_object_id
+                                                    LEFT OUTER JOIN sys.columns pk_col
+                                                        ON pk_col.column_id = fk_cols.referenced_column_id
+                                                        and pk_col.[object_id] = fk_cols.referenced_object_id
+                                                WHERE 
+	                                                pk_tab.[Name] IS NOT NULL
+	                                                AND LEFT(tab.[Name], 6) <> 'AspNet' 
+                                                ORDER BY
+	                                                tab.[Name]";
+
         private const string Q_TABLE_PROPERTIES = @"SELECT c.*, t.[name] AS [SqlTypeName] FROM [sys].[Columns] c " +
                                                     "INNER JOIN [sys].[types] t  ON t.system_type_id = c.system_type_id " +
                                                     "WHERE c.[object_id] = @objectID " +
@@ -40,22 +64,57 @@ namespace Genesis.Input.MSSqlDb
             }
 
             var tmp = GetSchema();
+            var keys = GetRelationships();
 
             Text.BlueLine($"Found {tmp.Count} possible objects. Matching exclusions...");
+
+            int keyCount = 0;
 
             foreach(var i in tmp)
             {
                 if (isExcluded(i, Config.ExcludePrefixes))
                     continue;
 
-                Text.White("Found "); Text.Yellow($"Table:{i.Name}, Type:{i.SourceType} - ");
+                
                 if(genesis.Objects.SingleOrDefault(x => x.KeyId == i.KeyId) == null)
+                {
+                    keyCount = keys.Where(x => x.ForeignTable == i.Name || x.PrimaryTable == i.Name).Count();
+                    
+                    Text.White("Found "); Text.Yellow($"Table:{i.Name}, ForeignKeys:{keyCount}, Type:{i.SourceType}, - ");
+
+                    if(keyCount > 0)
+                        i.Relationships.AddRange(keys.Where(x => x.ForeignTable == i.Name || x.PrimaryTable == i.Name).ToList());
+                    
                     await genesis.AddObject(i); //yeah, this can blow up - leaving it for errors
+                }
             }
 
             return await Task.FromResult(new InputGenesisExecutionResult {
                 Success = true,
             });
+        }
+
+        private List<RelationshipGraph> GetRelationships()
+        {
+            var list = new List<RelationshipGraph>();
+            using var con = new SqlConnection(Config.ConnectionString);
+            using var cmd = new SqlCommand(Q_FOREIGN_KEYS, con);
+
+            con.Open();
+
+            using var r = cmd.ExecuteReader(CommandBehavior.CloseConnection);
+
+            while(r.Read())
+            {
+                list.Add(new RelationshipGraph { 
+                    ForeignColumn = r["ForeignColumn"].ToString(),
+                    PrimaryColumn = r["PrimaryColumn"].ToString(),
+                    ForeignTable = r["ForeignTable"].ToString(),
+                    PrimaryTable = r["PrimaryTable"].ToString()
+                });
+            }
+
+            return list;
         }
 
         /// <summary>
