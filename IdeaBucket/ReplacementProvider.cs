@@ -57,20 +57,20 @@ namespace Genesis.Suggestions
         key, value
      */
 
-    public interface IReplacementPaser
+    public interface IReplacementParser
     {
         IEnumerable<(string key, Func<object, string> execFunc)> Parse(string template);
     }
 
-    public abstract class ReplacementPaserBase<T> : IReplacementPaser
+    public abstract class ReplacementPaserBase<T> : IReplacementParser
     {
         public abstract IEnumerable<(string key, Func<T, string> execFunc)> Parse(string template);
 
-        IEnumerable<(string key, Func<object, string> execFunc)> IReplacementPaser.Parse(string template)
+        IEnumerable<(string key, Func<object, string> execFunc)> IReplacementParser.Parse(string template)
         {
             return from e in Parse(template)
                    let k = e.key
-                   let f = new Func<object?, string?>(o => o is T t ? e.execFunc(t) : null)
+                   let f = new Func<object, string>(o => o is T t ? e.execFunc(t) : string.Empty)
                    select (k, f);
         }
     }
