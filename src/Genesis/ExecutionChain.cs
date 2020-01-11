@@ -58,7 +58,7 @@ namespace Genesis
                 try
                 {
                     Text.Execute($"{e.GetType().Name}"); Text.Line();
-                    result = e.Execute(_ctx, args).GetAwaiter().GetResult();
+                    result = e.Execute(_ctx, args).GetAwaiter().GetResult(); // no SyncContext hopefully
                 }
                 catch (Exception ex)
                 {
