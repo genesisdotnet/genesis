@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -23,6 +24,16 @@ namespace Genesis.Output.Poco
         protected override void OnInitialized()
         {
             Config = (PocoConfig)Configuration;
+
+            Actions.Add(Tokens.Namespace, (ctx, obj) => Config.Namespace);
+            Actions.Add(Tokens.ObjectName, (ctx, obj) => obj.Name.ToSingular());
+            Actions.Add(Tokens.ObjectBaseClass, (ctx, obj) => Config.ObjectBaseClass);
+            Actions.Add(Tokens.OutputSuffix, (ctx, obj) => Config.OutputSuffix);
+            Actions.Add(Tokens.PropertiesStub, (ctx, obj) => GetPropertiesReplacement(obj.Properties));
+            Actions.Add(Tokens.ConstructionStub, (ctx, obj) => GetConstructionReplacement(obj.Properties));
+            Actions.Add(Tokens.BaseTypeName, (ctx, obj) => (obj.BaseType == typeof(object))
+                                                                ? string.Empty
+                                                                : ": " + obj.BaseTypeFormattedName);
         }
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
@@ -59,23 +70,12 @@ namespace Genesis.Output.Poco
 
         public async Task ExecuteGraph(ObjectGraph objectGraph)
         {
-            // don't write out object base classes since it's redundant
-            var baseTypeString = (objectGraph.BaseType == typeof(object))
-                ? string.Empty
-                : ": " + objectGraph.BaseTypeFormattedName;
-
-            var output = Template.Raw
-                            .Replace(Tokens.Namespace, Config.Namespace)
-                            .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
-                            .Replace(Tokens.PropertiesStub, GetPropertiesReplacement(objectGraph.Properties))
-                            .Replace(Tokens.ConstructionStub, GetConstructionReplacement(objectGraph.Properties))
-                            .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
-                            .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
-                            .Replace(Tokens.BaseTypeName, baseTypeString);
-
+            var output = Template.Raw;
+            
+            foreach (var action in Actions)
+                output = output.Replace(action.Key, action.Value(GenesisContext.Current, objectGraph));
+            
             var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + Config.OutputSuffix + ".cs");
-
-            //TODO: Handle generics better while writing out .cs pocos
 
             File.WriteAllText(outPath.Replace('<', '_').Replace('>', '_'), output); //hacky, can't save fileNames with '<' or '>' in the name
 
