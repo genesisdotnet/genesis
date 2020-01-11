@@ -60,40 +60,37 @@ namespace IdeaBucket
 
         public static IEnumerable<(string key, string script)> GetKeysAndScripts(this string filePath)
         {
-            using (var reader = new StreamReader(filePath))
+            using var reader = new StreamReader(filePath);
+            
+            var key = string.Empty;
+            StringBuilder? value = null;
+
+            while (!reader.EndOfStream)
             {
-                string key = null;
-                StringBuilder value = null;
+                var line = reader.ReadLine()?.Split(new[] { '|' }, 2).FirstOrDefault()?.Trim() ?? string.Empty;
 
-                while (!reader.EndOfStream)
+                if (line.StartsWith(':') && line.EndsWith(':'))
                 {
-                    var line = reader.ReadLine()?.Split(new[] { '|' }, 2).FirstOrDefault()?.Trim();
-
-                    if (line.StartsWith(':') && line.EndsWith(':'))
+                    if (key.Length > 0)
                     {
-                        if (key != null)
-                        {
-                            yield return (key, value?.ToString());
-                            value = null;
-                            key = null;
-                        }
-                        key = line.Trim(':');
+                        yield return (key, value?.ToString() ?? string.Empty);
+                        value = null;
                     }
-                    else if (string.IsNullOrWhiteSpace(line))
-                    {
-                        //Ignore me
-                    }
-                    else
-                    {
-                        if (value != null) value.AppendLine();
-                        (value ?? (value = new StringBuilder())).Append(line);
-                    }
+                    key = line.Trim(':');
                 }
-
-                if (key != null)
+                else if (string.IsNullOrWhiteSpace(line))
                 {
-                    yield return (key, value?.ToString());
+                    //Ignore me
                 }
+                else
+                {
+                    (value ?? (value = new StringBuilder())).Append(line).AppendLine();
+                }
+            }
+
+            if (key != null)
+            {
+                yield return (key, value?.ToString());
             }
         }
     }
