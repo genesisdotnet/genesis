@@ -1,0 +1,25 @@
+﻿
+:GLOBAL_NAMESPACE:
+    input.Namespace
+
+:OUTPUT_SUFFIX:
+    input.OutputSuffix
+
+:REPO_SUFFIX:
+    input.RepoSuffix
+
+:CACHED_REPO_SUFFIX:
+    input.CachedRepoSuffix
+
+:DTO_SUFFIX:
+    input.DtoSuffix
+
+:MAPPER_SUFFIX:
+    input.MapperSuffix
+
+|                    .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
+|                  .Replace(Tokens.DepsDtoNamespace, Config.DtoNamespace)
+|                 .Replace(Tokens.DepsModelNamespace, Config.ModelNamespace)
+|                .Replace(Tokens.DepsMappingNamespace, Config.MapperNamespace)
+|               .Replace(Tokens.DepsRepoNamespace, Config.RepoNamespace)
+|              .Replace(Tokens.DepsCachedRepoNamespace, Config.CachedRepoNamespace)

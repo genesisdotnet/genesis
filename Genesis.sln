@@ -95,6 +95,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.JavascriptObject", "src\Executors\Output\Genesis.Output.JavascriptObject\Genesis.Output.JavascriptObject.csproj", "{FFC7F93D-447F-47C4-88AE-ACF17907633F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IdeaBucket", "IdeaBucket\IdeaBucket.csproj", "{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -357,6 +359,18 @@ Global
 		{FFC7F93D-447F-47C4-88AE-ACF17907633F}.Release|x64.Build.0 = Release|Any CPU
 		{FFC7F93D-447F-47C4-88AE-ACF17907633F}.Release|x86.ActiveCfg = Release|Any CPU
 		{FFC7F93D-447F-47C4-88AE-ACF17907633F}.Release|x86.Build.0 = Release|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Debug|x64.Build.0 = Debug|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Debug|x86.Build.0 = Debug|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Release|x64.ActiveCfg = Release|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Release|x64.Build.0 = Release|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Release|x86.ActiveCfg = Release|Any CPU
+		{D92F706A-CD6C-49F6-BC79-AFFAC36556FF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
