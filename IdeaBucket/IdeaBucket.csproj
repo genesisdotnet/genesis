@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="3.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="GlobalConfig.KeyDef">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
