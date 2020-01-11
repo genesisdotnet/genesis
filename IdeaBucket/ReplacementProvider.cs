@@ -70,7 +70,7 @@ namespace Genesis.Suggestions
         {
             return from e in Parse(template)
                    let k = e.key
-                   let f = new Func<object, string>(o => o is T t ? e.execFunc(t) : null)
+                   let f = new Func<object?, string?>(o => o is T t ? e.execFunc(t) : null)
                    select (k, f);
         }
     }
