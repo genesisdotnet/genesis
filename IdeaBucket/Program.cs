@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Scripting;
+﻿using Genesis;
+using Microsoft.CodeAnalysis.CSharp.Scripting;
 using Microsoft.CodeAnalysis.Scripting;
 using System;
 using System.Collections.Generic;
@@ -35,12 +36,13 @@ namespace IdeaBucket
         }
 
     }
-    public class Inputs
+    public static class Inputs
     {
-        private class Inputs
+        private class Input
         {
-            public dynamic Input { get; internal set; } = new ExpandoObject();
+            public dynamic Raw { get; internal set; } = new ExpandoObject();
         }
+
         public static Func<dynamic, string> ToFunc(this string script)
         {
             // https://github.com/dotnet/roslyn/wiki/Scripting-API-Samples
@@ -54,15 +56,16 @@ namespace IdeaBucket
 
             var csScript = CSharpScript.Create<string>(
                 code,
-                globalsType: typeof(Inputs),
+                globalsType: typeof(Input),
                 options: ScriptOptions.Default
-                                      .WithReferences(typeof(Inputs).Assembly)
+                                      .WithReferences(typeof(Input).Assembly)
                                       .AddReferences("Microsoft.CSharp")
 
                 );
-            var csDelegate = csScript.CreateDelegate();
-            var result = csDelegate.Invoke();
-            Debug.WriteLine($"Script Result: {result}");
+            //NOTE: This should be Func<GenesisContext, ObjectGraph, string>
+            //return new Func<GenesisContext, ObjectGraph, string>(obj => csScript.CreateDelegate().Invoke(obj));
+
+            return new Func<dynamic, string>(obj => csScript.CreateDelegate().Invoke(obj));
         }
 
         public static IEnumerable<string> ToLines(this string text)
