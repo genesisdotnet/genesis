@@ -28,7 +28,7 @@ config aspnet-svc DtoNamespace="Genesis.Common"
 add poco
 --Dump out our DTO objects in the common/shared project
 config poco OutputPath="/src/genesis-mvp/src/Shared/Genesis.Common/"
-config poco DepsPath="/src/genesis-mvp/src/Api/Genesis.Framework/"
+config poco DepsPath="/src/genesis-mvp/src/Shared/Genesis.Common/"
 config poco OutputSuffix="Dto"
 config poco ObjectBaseClass="Dto"
 config poco GenericBaseClass=true
