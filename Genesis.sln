@@ -9,9 +9,59 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Cli", "src\Genesis.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Cli.Extensions", "src\Genesis.Cli.Extensions\Genesis.Cli.Extensions.csproj", "{1B5EEE3B-7194-4AF0-8E1F-7D09A8685B8A}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{A4522569-85BB-4EF1-AC94-BE2978547AAE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Output", "Output", "{43570CDD-40A3-4D73-A1B7-22F24B8261A9}"
+	ProjectSection(SolutionItems) = preProject
+		src\Executors\Output\README.md = src\Executors\Output\README.md 
+	EndProjectSection
+EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.Poco", "src\Executors\Output\Genesis.Output.Poco\Genesis.Output.Poco.csproj", "{D9CDB057-C6D0-4DC4-92A2-E0F064396DDC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.MSSqlDb", "src\Executors\Input\Genesis.Input.MSSqlDB\Genesis.Input.MSSqlDb.csproj", "{D259BD61-4078-45BF-B4D0-B8C2BCF4E875}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.XamarinViewModel", "src\Executors\Output\Genesis.Output.XamarinViewModel\Genesis.Output.XamarinViewModel.csproj", "{702CB7D8-F99E-430F-89A7-4C189D36ABCC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetMvcController", "src\Executors\Output\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj", "{DBA6938E-4793-4CD5-8A27-6C58C3724FDA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetDbContextCachedRepositories", "src\Executors\Output\Genesis.Output.AspNetDbContextCachedRepositories\Genesis.Output.AspNetDbContextCachedRepositories.csproj", "{CBB9B927-2472-4CF6-AF7D-E771C9721228}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.SwaggerUrl", "src\Executors\Input\Genesis.Input.SwaggerUrl\Genesis.Input.SwaggerUrl.csproj", "{58162A95-BD9B-48D1-B297-8465FE5216FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.Excel", "src\Executors\Input\Genesis.Input.Excel\Genesis.Input.Excel.csproj", "{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.ProtobufEntity", "src\Executors\Output\Genesis.Output.ProtobufEntity\Genesis.Output.ProtobufEntity.csproj", "{0195AE48-AC67-4488-AA87-1EDB46A87068}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.XamarinView", "src\Executors\Output\Genesis.Output.XamarinView\Genesis.Output.XamarinView.csproj", "{E05B3EBB-0433-4833-97ED-F77EA876C049}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.ReactEditorComponent", "src\Executors\Output\Genesis.Output.ReactEditorComponent\Genesis.Output.ReactEditorComponent.csproj", "{F9EA0203-AB75-4892-A182-45F04040D1AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.DotNetAssembly", "src\Executors\Input\Genesis.Input.DotNetAssembly\Genesis.Input.DotNetAssembly.csproj", "{CBCA7510-2B51-4660-9DCB-BFF70CDFFDA5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestInputAssembly", "tools\TestInputAssembly\TestInputAssembly.csproj", "{697F5343-DCB8-4A8F-B2E0-58C36146A7DF}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.ProtobufService", "src\Executors\Output\Genesis.Output.ProtobufService\Genesis.Output.ProtobufService.csproj", "{68642EB7-0498-4694-A95F-3A8EFB475DEB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.EFCoreModel", "src\Executors\Output\Genesis.Output.EFCoreModel\Genesis.Output.EFCoreModel.csproj", "{A05C6238-7022-436A-8078-D1DE20E35C63}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetDbContextRepositories", "src\Executors\Output\Genesis.Output.AspNetDbContextRepositories\Genesis.Output.AspNetDbContextRepositories.csproj", "{AAAA3FE1-1C87-474C-95AE-9872C2510E50}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetService", "src\Executors\Output\Genesis.Output.AspNetService\Genesis.Output.AspNetService.csproj", "{93A3D56C-0CDA-44D3-BF13-D05F64405740}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.JavascriptObject", "src\Executors\Output\Genesis.Output.JavascriptObject\Genesis.Output.JavascriptObject.csproj", "{FFC7F93D-447F-47C4-88AE-ACF17907633F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetAutoMapper", "src\Executors\Output\Genesis.Output.AspNetAutoMapper\Genesis.Output.AspNetAutoMapper.csproj", "{FC42C089-678B-4053-9D16-D033CBDFA36D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{92F0BC20-5145-4787-AB23-6D275B879E35}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9BB5B785-CA7F-4AC3-86E5-88513C768B14}"
+	ProjectSection(SolutionItems) = preProject
+		src\Debug.genesis = src\Debug.genesis
+		src\LocalDBSqlToCSharp.genesis = src\LocalDBSqlToCSharp.genesis
+		src\MSSqlToReactEditor.genesis = src\MSSqlToReactEditor.genesis
+		src\ScanAndBreak.genesis = src\ScanAndBreak.genesis
+		src\SwaggerToPoco.genesis = src\SwaggerToPoco.genesis
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A5DA5AE7-9B54-439A-8AD6-E3BEB08D2A99}"
 	ProjectSection(SolutionItems) = preProject
@@ -22,24 +72,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		src\ToDo.md = src\ToDo.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.XamarinViewModel", "src\Executors\Output\Genesis.Output.XamarinViewModel\Genesis.Output.XamarinViewModel.csproj", "{702CB7D8-F99E-430F-89A7-4C189D36ABCC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetMvcController", "src\Executors\Output\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj", "{DBA6938E-4793-4CD5-8A27-6C58C3724FDA}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetDbContextCachedRepositories", "src\Executors\Output\Genesis.Output.AspNetDbContextCachedRepositories\Genesis.Output.AspNetDbContextCachedRepositories.csproj", "{CBB9B927-2472-4CF6-AF7D-E771C9721228}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.SwaggerUrl", "src\Executors\Input\Genesis.Input.SwaggerUrl\Genesis.Input.SwaggerUrl.csproj", "{58162A95-BD9B-48D1-B297-8465FE5216FA}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Executors", "Executors", "{7064AAEF-D4AA-4CEB-A3AB-2588672FC1EE}"
 	ProjectSection(SolutionItems) = preProject
 		src\Executors\README.md = src\Executors\README.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{A4522569-85BB-4EF1-AC94-BE2978547AAE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Output", "Output", "{43570CDD-40A3-4D73-A1B7-22F24B8261A9}"
-	ProjectSection(SolutionItems) = preProject
-		src\Executors\Output\README.md = src\Executors\Output\README.md 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5FBB60FF-ABE1-4316-B82E-3E2AA32AF8E6}"
@@ -60,42 +95,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gifs", "gifs", "{A588CBB4-0
 		docs\gifs\scanCommand.gif = docs\gifs\scanCommand.gif
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.Excel", "src\Executors\Input\Genesis.Input.Excel\Genesis.Input.Excel.csproj", "{29EEAEC2-3EE7-4014-8FFD-38E1568C8FF8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.ProtobufEntity", "src\Executors\Output\Genesis.Output.ProtobufEntity\Genesis.Output.ProtobufEntity.csproj", "{0195AE48-AC67-4488-AA87-1EDB46A87068}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.XamarinView", "src\Executors\Output\Genesis.Output.XamarinView\Genesis.Output.XamarinView.csproj", "{E05B3EBB-0433-4833-97ED-F77EA876C049}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9BB5B785-CA7F-4AC3-86E5-88513C768B14}"
-	ProjectSection(SolutionItems) = preProject
-		src\Debug.genesis = src\Debug.genesis
-		src\LocalDBSqlToCSharp.genesis = src\LocalDBSqlToCSharp.genesis
-		src\MSSqlToReactEditor.genesis = src\MSSqlToReactEditor.genesis
-		src\ScanAndBreak.genesis = src\ScanAndBreak.genesis
-		src\SwaggerToPoco.genesis = src\SwaggerToPoco.genesis
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Executors.GraphTools", "src\Executors\Genesis.Executors.GraphTools\Genesis.Executors.GraphTools.csproj", "{EA2B8335-2F4F-43CB-9133-6B45165002B6}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.ReactEditorComponent", "src\Executors\Output\Genesis.Output.ReactEditorComponent\Genesis.Output.ReactEditorComponent.csproj", "{F9EA0203-AB75-4892-A182-45F04040D1AC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.DotNetAssembly", "src\Executors\Input\Genesis.Input.DotNetAssembly\Genesis.Input.DotNetAssembly.csproj", "{CBCA7510-2B51-4660-9DCB-BFF70CDFFDA5}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{92F0BC20-5145-4787-AB23-6D275B879E35}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TestInputAssembly", "tools\TestInputAssembly\TestInputAssembly.csproj", "{697F5343-DCB8-4A8F-B2E0-58C36146A7DF}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.ProtobufService", "src\Executors\Output\Genesis.Output.ProtobufService\Genesis.Output.ProtobufService.csproj", "{68642EB7-0498-4694-A95F-3A8EFB475DEB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.EFCoreModel", "src\Executors\Output\Genesis.Output.EFCoreModel\Genesis.Output.EFCoreModel.csproj", "{A05C6238-7022-436A-8078-D1DE20E35C63}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetDbContextRepositories", "src\Executors\Output\Genesis.Output.AspNetDbContextRepositories\Genesis.Output.AspNetDbContextRepositories.csproj", "{AAAA3FE1-1C87-474C-95AE-9872C2510E50}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetService", "src\Executors\Output\Genesis.Output.AspNetService\Genesis.Output.AspNetService.csproj", "{93A3D56C-0CDA-44D3-BF13-D05F64405740}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.JavascriptObject", "src\Executors\Output\Genesis.Output.JavascriptObject\Genesis.Output.JavascriptObject.csproj", "{FFC7F93D-447F-47C4-88AE-ACF17907633F}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetAutoMapper", "src\Executors\Output\Genesis.Output.AspNetAutoMapper\Genesis.Output.AspNetAutoMapper.csproj", "{FC42C089-678B-4053-9D16-D033CBDFA36D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
