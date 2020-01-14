@@ -45,7 +45,7 @@ namespace Genesis.Output.AspNetMvcController
                             .Replace(Tokens.ObjectNameAsArgument, entityName.ToCorrectedCase())
                             .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                             .Replace(Tokens.ServiceSuffix, Config.ServiceSuffix)
-                            .Replace(Tokens.DtoSuffix, Config.DtoSuffix)
+                            .Replace(Tokens.DtoBaseClass, Config.DtoSuffix)
                             .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
                             .Replace(Tokens.DepsDtoNamespace, Config.DepsDtoNamespace)
                             .Replace(Tokens.DepsServiceNamespace, Config.DepsServiceNamespace)

@@ -25,9 +25,13 @@ namespace Genesis.Output.Poco
         {
             Config = (PocoConfig)Configuration;
 
+            var baseTypeString = Config.GenericBaseClass
+                                    ? Config.ObjectBaseClass + "<TKey>"
+                                    : Config.ObjectBaseClass;
+
             Actions.Add(Tokens.Namespace, (ctx, obj) => Config.Namespace);
             Actions.Add(Tokens.ObjectName, (ctx, obj) => obj.Name.ToSingular());
-            Actions.Add(Tokens.ObjectBaseClass, (ctx, obj) => Config.ObjectBaseClass);
+            Actions.Add(Tokens.ObjectBaseClass, (ctx, obj) => baseTypeString);
             Actions.Add(Tokens.OutputSuffix, (ctx, obj) => Config.OutputSuffix);
             Actions.Add(Tokens.PropertiesStub, (ctx, obj) => GetPropertiesReplacement(obj.Properties));
             Actions.Add(Tokens.ConstructionStub, (ctx, obj) => GetConstructionReplacement(obj.Properties));
@@ -55,10 +59,14 @@ namespace Genesis.Output.Poco
 
         protected override GenesisDependency OnBeforeWriteDependency(object sender, DependencyEventArgs e)
         {
+            var baseTypeString = Config.GenericBaseClass
+                                    ? Config.ObjectBaseClass + "<TKey>"
+                                    : Config.ObjectBaseClass;
+
             string replaceTokens(string input)
                => input.Replace(Tokens.Namespace, Config.Namespace)  //TODO: Make more base level config properties so this can be global-er
                        .Replace(Tokens.ObjectName, e.Dependency.ObjectName)
-                       .Replace(Tokens.ObjectBaseClass, Config.ObjectBaseClass)
+                       .Replace(Tokens.ObjectBaseClass, baseTypeString)
                        .Replace(Tokens.OutputSuffix, Config.OutputSuffix);
 
             e.Dependency.Contents = replaceTokens(e.Dependency.Contents);

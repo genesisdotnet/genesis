@@ -14,15 +14,15 @@ namespace Genesis.Output.ApiServiceConfig
 {
     public class AspNetServiceGenerator : OutputExecutor
     {
-        public override string CommandText => "aspnet-svc";
-        public override string Description => "Typical? ASP.Net service layer boilerplate";
-        public override string FriendlyName => "Asp.Net 2nd-layer Services";
+        public override string CommandText => "aspnet-map";
+        public override string Description => "AutoMapper mapping profile";
+        public override string FriendlyName => "Mapper to convert DTOs <-> DbContext Models";
 
-        public AspNetServiceConfig Config { get; set; } = new AspNetServiceConfig();
+        public AspNetAutoMapperConfig Config { get; set; } = new AspNetAutoMapperConfig();
 
         protected override void OnInitialized()
         {
-            Config = (AspNetServiceConfig)Configuration;
+            Config = (AspNetAutoMapperConfig)Configuration;
         }
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
@@ -76,8 +76,6 @@ namespace Genesis.Output.ApiServiceConfig
             var output = Template.Raw
                             .Replace(Tokens.Namespace, Config.Namespace)                    //NOTE: see //2020:
                             .Replace(Tokens.ObjectName, objectGraph.Name.ToSingular())
-                            .Replace(Tokens.ObjectNameAsArgument, objectGraph.Name.ToCorrectedCase())
-                            .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToCodeDataType())
                             .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                             .Replace(Tokens.DtoBaseClass, Config.DtoBaseClass)
                             .Replace(Tokens.RepoSuffix, Config.RepoSuffix)
@@ -91,7 +89,7 @@ namespace Genesis.Output.ApiServiceConfig
                             .Replace(Tokens.DepsCachedRepoNamespace, Config.CachedRepoNamespace)
                             ;
 
-            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + Config.OutputSuffix + ".cs");
+            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + Config.MapperSuffix + ".cs");
 
             File.WriteAllText(outPath.Replace('<', '_').Replace('>', '_'), output); //HACK: Can't save fileNames with '<' or '>' in the name
 

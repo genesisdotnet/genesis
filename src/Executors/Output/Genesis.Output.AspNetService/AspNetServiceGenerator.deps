@@ -9,7 +9,8 @@ namespace ~NAMESPACE~
 {
     public interface I~OUTPUT_SUFFIX~ { }
 
-    public interface I~OUTPUT_SUFFIX~<TModel, TKey> : I~OUTPUT_SUFFIX~
+    public interface I~OUTPUT_SUFFIX~<TDto, TModel, TKey> : I~OUTPUT_SUFFIX~
+        where TKey : ~DTO_BASECLASS~
         where TModel : ~OBJECT_BASECLASS~
         where TKey : struct
     {
@@ -37,7 +38,8 @@ namespace ~DEPS_NAMESPACE~
         public abstract string Name { get; }
     }
 
-    public abstract class ~OUTPUT_SUFFIX~<TModel, TKey> : ~OUTPUT_SUFFIX~, I~OUTPUT_SUFFIX~<TModel, TKey>
+    public abstract class ~OUTPUT_SUFFIX~<TDto, TModel, TKey> : ~OUTPUT_SUFFIX~, I~OUTPUT_SUFFIX~<TDto, TModel, TKey>
+        where TDto : ~DTO_BASECLASS~
         where TModel : ~OBJECT_BASECLASS~
         where TKey : struct
     {

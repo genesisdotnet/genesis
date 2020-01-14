@@ -11,10 +11,11 @@ config aspnet-svc OutputPath="/src/genesis-mvp/src/Api/Genesis.Services/"
 config aspnet-svc DepsPath="/src/genesis-mvp/src/Api/Genesis.Framework/"
 config aspnet-svc OutputSuffix="Service"
 config aspnet-svc ObjectBaseClass="Service"
+config aspnet-svc DtoBaseClass="Dto"
 config aspnet-svc ModelBaseClass="Model"
+config aspnet-svc GenericBaseClass=true
 config aspnet-svc RepoSuffix="Repository"
 config aspnet-svc CachedRepoSuffix="CachedRepository"
-config aspnet-svc DtoSuffix="Dto"
 config aspnet-svc MapperSuffix="Mapper"
 config aspnet-svc Namespace="Genesis.Services"
 config aspnet-svc MapperNamespace="Genesis.Services.Mapping"
@@ -23,7 +24,6 @@ config aspnet-svc ModelNamespace="Genesis.Data.Models"
 config aspnet-svc CachedRepoNamespace="Genesis.Data.CachedRepositories"
 config aspnet-svc RepoNamespace="Genesis.Data.Repositories"
 config aspnet-svc DtoNamespace="Genesis.Common"
-config aspnet-svc GenericBaseClass=true
 
 add poco
 --Dump out our DTO objects in the common/shared project
@@ -31,7 +31,7 @@ config poco OutputPath="/src/genesis-mvp/src/Shared/Genesis.Common/"
 config poco DepsPath="/src/genesis-mvp/src/Api/Genesis.Framework/"
 config poco OutputSuffix="Dto"
 config poco ObjectBaseClass="Dto"
-config poco GenericBaseClass=false
+config poco GenericBaseClass=true
 config poco Namespace="Genesis.Common"
 
 add ef-model
@@ -44,6 +44,18 @@ config ef-model DepsNamespace="Genesis.Framework"
 config ef-model ObjectBaseClass="Model"
 config ef-model GenericBaseClass=true
 config ef-model Namespace="Genesis.Data.Models"
+
+add aspnet-map
+--Dump an automapper profile class out
+config aspnet-map OutputPath="/src/genesis-mvp/src/Api/Genesis.Services/Mapping/"
+config aspnet-map DepsPath="/src/genesis-mvp/src/Api/Genesis.Services/Mapping/"
+config aspnet-map DtoBaseClass="Dto"
+config aspnet-map GenericBaseClass=false
+config aspnet-map MapperSuffix="Mapper"
+config aspnet-map MapperNamespace="Genesis.Services.Mapping"
+config aspnet-map DepsNamespace="Genesis.Framework"
+config aspnet-map ModelNamespace="Genesis.Data.Models"
+config aspnet-map DtoNamespace="Genesis.Common"
 
 add aspnet-repo
 --Generate basic CRUD repositories

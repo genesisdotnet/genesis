@@ -6,6 +6,7 @@
   "depsPath": "C:\\src\\readyskill-mvp\\src\\Api\\ReadySkill.Framework\\",
   "depsNamespace": "C:\\src\\readyskill-mvp\\src\\Api\\ReadySkill.Framework\\",
   "objectBaseClass": "Model",
+  "genericBaseClass":  false,
   "overwrite": "all",
   "preserve": "none"
 }

@@ -50,6 +50,7 @@
     <ProjectReference Include="..\Executors\Input\Genesis.Input.Excel\Genesis.Input.Excel.csproj" />
     <ProjectReference Include="..\Executors\Input\Genesis.Input.MSSqlDB\Genesis.Input.MSSqlDb.csproj" />
     <ProjectReference Include="..\Executors\Input\Genesis.Input.SwaggerUrl\Genesis.Input.SwaggerUrl.csproj" />
+    <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetAutoMapper\Genesis.Output.AspNetAutoMapper.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetDbContextCachedRepositories\Genesis.Output.AspNetDbContextCachedRepositories.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetDbContextRepositories\Genesis.Output.AspNetDbContextRepositories.csproj" />
     <ProjectReference Include="..\Executors\Output\Genesis.Output.AspNetMvcController\Genesis.Output.AspNetMvcController.csproj" />

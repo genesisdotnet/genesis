@@ -1,0 +1,18 @@
+﻿using ~DEPS_MODEL_NAMESPACE~;
+using ~DEPS_DTO_NAMESPACE~;
+using ~DEPS_NAMESPACE~;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using AutoMapper;
+
+namespace ~NAMESPACE~
+{
+    public partial class ModelMap : IProfile
+    {
+        public partial void Initialize() 
+        {
+            ~MAPPING_CODE~
+        }
+    }
+}
