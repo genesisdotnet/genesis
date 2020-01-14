@@ -1,5 +1,0 @@
-﻿OBJECT_TYPE:
-	obj => graph.ObjectType;
-	
-NAMESPACE:
-	obj => graph.Namespace;

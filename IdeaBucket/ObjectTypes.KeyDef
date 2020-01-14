@@ -1,8 +1,0 @@
-﻿:OBJECT_NAME:
-    input.Name.ToSingular()
-
-:OBJECT_NAME_AS_ARG:
-    input.Name.ToCorrectedCase()
-
-:OBJECT_KEY_DATE_TYPE:
-   input.KeyDataType.ToCodeDataType()  
