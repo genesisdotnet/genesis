@@ -95,6 +95,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.JavascriptObject", "src\Executors\Output\Genesis.Output.JavascriptObject\Genesis.Output.JavascriptObject.csproj", "{FFC7F93D-447F-47C4-88AE-ACF17907633F}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetAutoMapper", "src\Executors\Output\Genesis.Output.AspNetAutoMapper\Genesis.Output.AspNetAutoMapper.csproj", "{FC42C089-678B-4053-9D16-D033CBDFA36D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -357,6 +359,18 @@ Global
 		{FFC7F93D-447F-47C4-88AE-ACF17907633F}.Release|x64.Build.0 = Release|Any CPU
 		{FFC7F93D-447F-47C4-88AE-ACF17907633F}.Release|x86.ActiveCfg = Release|Any CPU
 		{FFC7F93D-447F-47C4-88AE-ACF17907633F}.Release|x86.Build.0 = Release|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Debug|x64.Build.0 = Debug|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Debug|x86.Build.0 = Debug|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Release|x64.ActiveCfg = Release|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Release|x64.Build.0 = Release|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Release|x86.ActiveCfg = Release|Any CPU
+		{FC42C089-678B-4053-9D16-D033CBDFA36D}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -387,6 +401,7 @@ Global
 		{AAAA3FE1-1C87-474C-95AE-9872C2510E50} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{93A3D56C-0CDA-44D3-BF13-D05F64405740} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{FFC7F93D-447F-47C4-88AE-ACF17907633F} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
+		{FC42C089-678B-4053-9D16-D033CBDFA36D} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A29E004-0C17-4E72-AE88-F7EA03136D6E}

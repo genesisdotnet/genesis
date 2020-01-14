@@ -35,6 +35,9 @@ namespace Genesis.Output
         public IOutputConfiguration Configuration { get; set; } = new GeneratorConfiguration();
 
         public IList<IOutputDependency> Dependencies { get => _deps; }
+
+        public IDictionary<string, Func<GenesisContext, ObjectGraph, string>> Actions { get; } = new Dictionary<string, Func<GenesisContext, ObjectGraph, string>>();
+
         public Task<bool> DepositDependencies(string outputRoot = "") 
         {
             try

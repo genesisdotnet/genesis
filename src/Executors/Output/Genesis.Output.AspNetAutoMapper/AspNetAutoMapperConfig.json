@@ -1,0 +1,16 @@
+﻿{
+  "language": "C#",
+  "namespace": "Genesis.Services.Mapping",
+  "outputPath": "/Temp/Output/Services/Mapping",
+  "depsPath": "/Temp/Output/Services/Mapping",
+  "depsDtoNamespace": "Genesis.Common",
+  "depsModelNamespace": "Genesis.Data.Models",
+  "depsMapperNamespace": "Genesis.Services.Mapping",
+  "depsNamespace": "Genesis.Framework",
+  "objectBaseClass": "",
+  "dtoBaseClass": "Dto",
+  "genericBaseClass": false,
+  "mapperSuffix": "Mapper",
+  "overwrite": "all",
+  "preserve": "none"
+}

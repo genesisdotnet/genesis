@@ -26,6 +26,8 @@ namespace Genesis
 
             OnInitialized();
 
+            //TODO: Load Key / Action pairs from .genesis script
+
             Initialized = true;
 
             return Task.CompletedTask;

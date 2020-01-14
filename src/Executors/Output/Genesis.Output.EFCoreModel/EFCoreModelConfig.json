@@ -1,11 +1,11 @@
 ﻿{
   "language": "C#",
   "namespace": "Genesis.Data.Models",
-  "outputPath": "C:\\Temp\\Output",
+  "outputPath": "/Temp/Output",
   "outputSuffix": "",
   "objectBaseClass": "Model",
   "genericBaseClass": true,
-  "depsPath": "C:\\Temp\\Output\\Dependencies",
+  "depsPath": "/Temp/Output/Dependencies",
   "depsNamespace": "Genesis.Framework",
   "overwrite": "all",
   "preserve": "none"

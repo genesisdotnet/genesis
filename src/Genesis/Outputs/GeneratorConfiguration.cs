@@ -17,6 +17,6 @@ namespace Genesis.Output
         public string OutputPath { get; set; } = GenesisDefaults.OutputPath;
         public string OutputSuffix { get; set; } = string.Empty;
         public string DepsNamespace { get; set; } = "Genesis.Framework";
-        public string DepsPath { get; set; } = "C:\\Temp\\Output\\";
+        public string DepsPath { get; set; } = "/Temp/Output/";
     }
 }

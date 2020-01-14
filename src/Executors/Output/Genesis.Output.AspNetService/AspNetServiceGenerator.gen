@@ -13,9 +13,9 @@ using System.Threading.Tasks;
 
 namespace ~NAMESPACE~
 {
-    public interface I~OBJECT_NAME~~OUTPUT_SUFFIX~ : I~OUTPUT_SUFFIX~<~OBJECT_NAME~, ~KEY_DATATYPE~> { }
+    public interface I~OBJECT_NAME~~OUTPUT_SUFFIX~ : I~OUTPUT_SUFFIX~<~OBJECT_NAME~~DTO_BASECLASS~, ~OBJECT_NAME~, ~KEY_DATATYPE~> { }
 
-    public sealed class ~OBJECT_NAME~~OUTPUT_SUFFIX~ : ~OUTPUT_SUFFIX~<~OBJECT_NAME~, ~KEY_DATATYPE~>, I~OBJECT_NAME~~OUTPUT_SUFFIX~
+    public sealed class ~OBJECT_NAME~~OUTPUT_SUFFIX~ : ~OUTPUT_SUFFIX~<~OBJECT_NAME~~DTO_BASECLASS~, ~OBJECT_NAME~, ~KEY_DATATYPE~>, I~OBJECT_NAME~~OUTPUT_SUFFIX~
     {
         public override string Name { get => nameof(~OBJECT_NAME~~OUTPUT_SUFFIX~); }
 

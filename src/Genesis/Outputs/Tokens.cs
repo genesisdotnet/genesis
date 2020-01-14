@@ -165,7 +165,7 @@ namespace Genesis.Output
         /// <summary>
         /// Suffix for a Data Transfer Object
         /// </summary>
-        public static readonly string DtoSuffix = "~DTO_SUFFIX~";
+        public static readonly string DtoBaseClass = "~DTO_BASECLASS~";
         /// <summary>
         /// Suffix for a Mapper class
         /// </summary>

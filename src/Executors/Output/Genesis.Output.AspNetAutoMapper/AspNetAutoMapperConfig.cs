@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Genesis.Output.ApiServiceConfig
 {
-    public class AspNetServiceConfig : GeneratorConfiguration
+    public class AspNetAutoMapperConfig : GeneratorConfiguration
     {
         public string DtoNamespace { get; set; } = "Genesis.Common";
         public string ModelNamespace { get; set; } = "Genesis.Data.Models";

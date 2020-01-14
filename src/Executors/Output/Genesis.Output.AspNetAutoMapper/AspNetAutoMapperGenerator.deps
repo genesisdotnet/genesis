@@ -1,0 +1,15 @@
+﻿<!----->
+ModelMap
+ModelMap.cs
+using System;
+using System.Collections.Generic;
+using System.Text;
+using AutoMapper;
+
+namespace ~NAMESPACE~
+{
+    public partial class ModelMap : IProfile
+    {
+        public static ModelMap Current { get; } = new ModelMap();
+    }
+}

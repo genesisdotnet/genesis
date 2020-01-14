@@ -12,6 +12,8 @@ namespace Genesis.Output
         Task AttachDependencies(IList<IOutputDependency> deps);
         Task<bool> DepositDependencies(string outputRoot);
 
+        IDictionary<string, Func<GenesisContext, ObjectGraph, string>> Actions { get; }
+
         IGeneratorTemplate Template { get; set; }
 
         IOutputConfiguration Configuration { get; set; }
