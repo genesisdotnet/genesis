@@ -1,12 +1,12 @@
 ﻿{
   "language": "C#",
   "namespace": "Genesis.Output.Poco",
-  "outputPath": "C:\\Temp\\Output",
-  "outputSuffix": "Model",
-  "depsPath": "C:\\src\\readyskill-mvp\\src\\Api\\ReadySkill.Framework\\",
-  "depsNamespace": "C:\\src\\readyskill-mvp\\src\\Api\\ReadySkill.Framework\\",
-  "objectBaseClass": "Model",
-  "genericBaseClass":  false,
+  "outputPath": "/Temp/Output",
+  "outputSuffix": "Dto",
+  "depsPath": "/src/genesis-mvp/src/Shared/Genesis.Common/",
+  "depsNamespace": "Genesis.Common",
+  "objectBaseClass": "Dto",
+  "genericBaseClass":  true,
   "overwrite": "all",
   "preserve": "none"
 }

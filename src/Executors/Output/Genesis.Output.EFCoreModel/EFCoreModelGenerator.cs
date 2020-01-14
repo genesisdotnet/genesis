@@ -136,7 +136,7 @@ namespace Genesis.Output.EFCoreModel
                 "\t\t/// <summary>" + Environment.NewLine +
                 "\t\t/// Gets or sets the ~PROPERTY_NAME~." + Environment.NewLine + 
                 "\t\t/// <summary>" + Environment.NewLine +
-                "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }";
+                "\t\tpublic ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }~INIT~";
                     
             var sb = new StringBuilder();
 
@@ -153,7 +153,10 @@ namespace Genesis.Output.EFCoreModel
                 if (!p.SourceType.Equals(GenesisDefaults.UnknownSourceType, StringComparison.Ordinal))
                     sb.AppendLine(template.Replace(Tokens.PropertyDataType, p.SourceType.ToCodeDataType())
                         .Replace(Tokens.PropertyName, p.Name)
-                        .Replace(Tokens.PropertyMemberName, p.Name.ToCorrectedCase()));
+                        .Replace(Tokens.PropertyMemberName, p.Name.ToCorrectedCase()))
+                        .Replace("~INIT~", p.SourceType.ToCodeDataType().Equals("string", StringComparison.OrdinalIgnoreCase)
+                                                ? " = string.Empty;"
+                                                : string.Empty);
             }
 
             return sb.ToString();

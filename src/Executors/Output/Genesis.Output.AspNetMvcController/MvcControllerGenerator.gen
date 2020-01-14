@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 using ~DEPS_NAMESPACE~;
 using ~DEPS_SERVICE_NAMESPACE~;
 using ~DEPS_DTO_NAMESPACE~;
-using ~DEPS_MODELS_NAMESPACE~;
+using ~DEPS_MODEL_NAMESPACE~;
 
 namespace ~NAMESPACE~
 {
@@ -44,7 +44,7 @@ namespace ~NAMESPACE~
 
         // GET api/v#/~OBJECT_NAME~/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(~KEY_DATATYPE~ id)
         {
             return Ok(await _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~.GetById(id));
         }
@@ -53,24 +53,19 @@ namespace ~NAMESPACE~
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] ~OBJECT_NAME~Dto obj)
         {
-            return Ok(await _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~.Upsert(_mapper.Map<~OBJECT_NAME~>(obj)));
+            return Ok(await _~OBJECT_NAME_ARGUMENT~~SERVICE_SUFFIX~.Upsert(obj));
         }
 
         // PUT api/v#/~OBJECT_NAME~/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, [FromBody] ~OBJECT_NAME~Dto obj)
+        public IActionResult Put(~KEY_DATATYPE~ id, [FromBody] ~OBJECT_NAME~Dto obj)
         {
-			if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
 			return Ok(id);
         }
 
         // DELETE api/v#/~OBJECT_NAME~/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(~KEY_DATATYPE~ id)
         {
 			return Ok(id);
         }

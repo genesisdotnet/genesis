@@ -62,7 +62,9 @@ namespace Genesis.Output.ApiServiceConfig
                         .Replace(Tokens.ObjectBaseClass, modelBaseType)
                         .Replace(Tokens.DtoBaseClass, dtoBaseType)
                         .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
-                        .Replace(Tokens.DepsModelNamespace, Config.ModelNamespace);  //NOTE: its //2020: and this still isn't static and somehow additive
+                        .Replace(Tokens.DepsDtoNamespace, Config.DtoNamespace)
+                        .Replace(Tokens.DepsModelNamespace, Config.ModelNamespace)
+                        .Replace(Tokens.DepsMappingNamespace, Config.MapperNamespace);  //NOTE: its //2020: and this still isn't static and somehow additive
                                                                                          //2020: still using string.Replace().Replace()...
             e.Dependency.Contents = replaceTokens(e.Dependency.Contents);
             e.Dependency.ObjectName = replaceTokens(e.Dependency.ObjectName);

@@ -8,8 +8,8 @@ namespace Genesis.Output.Poco
     /*
      {
         "language": "C#",
-        "namespace": "Genesis.Output.Poco", --baseconfig
-        "outputPath": "C:\\Temp\\Output", --baseconfig
+        "namespace": "Genesis.Output.Poco",
+        "outputPath": "/src/genesis-mvp/src/Shared/Genesis.Common",
         "overwrite": "all",
         "preserve": "none"
     }
