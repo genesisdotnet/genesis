@@ -39,7 +39,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Input", "Input", "{A4522569
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Output", "Output", "{43570CDD-40A3-4D73-A1B7-22F24B8261A9}"
 	ProjectSection(SolutionItems) = preProject
-		src\Executors\Output\README.md = src\Executors\Output\README.md
+		src\Executors\Output\README.md = src\Executors\Output\README.md 
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{5FBB60FF-ABE1-4316-B82E-3E2AA32AF8E6}"
