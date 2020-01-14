@@ -12,7 +12,7 @@ using Genesis.Output;
 
 namespace Genesis.Output.ApiServiceConfig
 {
-    public class AspNetServiceGenerator : OutputExecutor
+    public class AspNetAutoMapperGenerator : OutputExecutor
     {
         public override string CommandText => "aspnet-map";
         public override string Description => "AutoMapper mapping profile";
@@ -87,9 +87,12 @@ namespace Genesis.Output.ApiServiceConfig
                             .Replace(Tokens.DepsMappingNamespace, Config.MapperNamespace)
                             .Replace(Tokens.DepsRepoNamespace, Config.RepoNamespace)
                             .Replace(Tokens.DepsCachedRepoNamespace, Config.CachedRepoNamespace)
+                            .Replace("~MAPPING_CODE~", GetMappingAssignments(objectGraph)) // yes
                             ;
 
-            var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + Config.MapperSuffix + ".cs");
+            Debug.WriteLine(objectGraph.Name.ToSingular() + Config.MapperSuffix + ".cs");
+
+             var outPath = Path.Combine(Config.OutputPath, objectGraph.Name.ToSingular() + Config.MapperSuffix + ".cs");
 
             File.WriteAllText(outPath.Replace('<', '_').Replace('>', '_'), output); //HACK: Can't save fileNames with '<' or '>' in the name
 
@@ -97,5 +100,8 @@ namespace Genesis.Output.ApiServiceConfig
 
             await Task.CompletedTask;
         }
+
+        private string GetMappingAssignments(ObjectGraph objectGraph) 
+            => $"CreateMap<{objectGraph.Name.ToSingular()}, {objectGraph.Name.ToSingular()}{Config.DtoBaseClass}>();";
     }
 }

@@ -10,6 +10,6 @@ namespace ~NAMESPACE~
 {
     public partial class ModelMap : IProfile
     {
-        public ModelMap Current { get; } = new ModelMap();
+        public static ModelMap Current { get; } = new ModelMap();
     }
 }
