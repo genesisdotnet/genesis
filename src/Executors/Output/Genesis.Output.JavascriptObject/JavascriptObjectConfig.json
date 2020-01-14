@@ -1,6 +1,6 @@
 ﻿{
   "language": "Javascript",
-  "outputPath": "/src/readyskill-mvp/src/Clients/ReadySkill.React/ClientApp/src/data",
+  "outputPath": "/src/genesis-mvp/src/Clients/Genesis.React/ClientApp/src/data",
   "outputSuffix": "Dto",
   "overwrite": "all",
   "preserve": "none"

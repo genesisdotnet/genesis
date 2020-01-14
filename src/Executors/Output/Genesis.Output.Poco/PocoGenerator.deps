@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace ~NAMESPACE~
 {
-    public partial class ~OUTPUT_SUFFIX~
+    public partial class ~OBJECT_BASECLASS~
     {
         
     }

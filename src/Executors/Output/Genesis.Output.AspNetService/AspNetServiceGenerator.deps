@@ -1,35 +1,41 @@
 ﻿<!----->
 I~OUTPUT_SUFFIX~
 I~OUTPUT_SUFFIX~.cs
-using System;
+using ~DEPS_DTO_NAMESPACE~;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ~NAMESPACE~
 {
     public interface I~OUTPUT_SUFFIX~ { }
 
     public interface I~OUTPUT_SUFFIX~<TDto, TModel, TKey> : I~OUTPUT_SUFFIX~
-        where TKey : ~DTO_BASECLASS~
+        where TDto : ~DTO_BASECLASS~
         where TModel : ~OBJECT_BASECLASS~
         where TKey : struct
     {
         string Name { get; }
         
-        Task<TModel> GetById(TKey id);
-        Task<IAsyncQueryable<TModel>> Query();
-        Task<TModel> Upsert(TModel model);
-        Task Delete(TKey model);
-        Task AddRange(IEnumerable<TModel> models);
+        Task<TDto> GetById(TKey id);
+        Task<IAsyncQueryable<TDto>> Query();
+        Task<TDto> Upsert(TDto dto);
+        Task Delete(TKey id);
+        Task AddRange(IEnumerable<TDto> objs);
         Task<int> SaveChanges(string currentUser);
     }
 }
 <!----->
 ~OUTPUT_SUFFIX~
 ~OUTPUT_SUFFIX~.cs
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
+using ~DEPS_DTO_NAMESPACE~;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ~DEPS_NAMESPACE~
 {
@@ -49,6 +55,7 @@ namespace ~DEPS_NAMESPACE~
         protected readonly IReadOnlyRepository<TModel, TKey> _cache = null!;
         protected readonly IFeatureManagerSnapshot _features = null!;
         protected readonly ILogger _logger = null!;
+        protected readonly IMapper _mapper = null!;
 
 #pragma warning restore IDE0052 // Remove unread private members
         
@@ -56,28 +63,30 @@ namespace ~DEPS_NAMESPACE~
             IRepository<TModel, TKey> repository,
             IReadOnlyRepository<TModel, TKey> cachedRepository,
             IFeatureManagerSnapshot featureManagementSnapshot,
-            ILogger logger)
+            ILogger logger,
+            IMapper mapper)
         {
             _repo = repository ?? throw new ServiceException(new ArgumentNullException(nameof(repository)));
             _cache = cachedRepository ?? throw new ServiceException(new ArgumentNullException(nameof(cachedRepository)));
             _features = featureManagementSnapshot ?? throw new ServiceException(new ArgumentNullException(nameof(featureManagementSnapshot)));
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public virtual async Task AddRange(IEnumerable<TModel> models)
-            => await _repo.AddRange(models);
+        public virtual async Task AddRange(IEnumerable<TDto> models)
+            => await _repo.AddRange(models.Select(x => _mapper.Map<TModel>(x)));
 
-        public virtual async Task<IAsyncQueryable<TModel>> Query()
-            => await _cache.Query();
+        public virtual async Task<IAsyncQueryable<TDto>> Query()
+            => (await _cache.Query()).Select(x => _mapper.Map<TDto>(x));
 
         public virtual async Task Delete(TKey id)
             => await _repo.Delete(id);
 
-        public virtual async Task<TModel> GetById(TKey id)
-            => await _cache.GetById(id);
+        public virtual async Task<TDto> GetById(TKey id)
+            => _mapper.Map<TDto>(await _cache.GetById(id));
 
-        public virtual async Task<TModel> Upsert(TModel model)
-            => await _repo.Upsert(model);
+        public virtual async Task<TDto> Upsert(TDto dto)
+            => _mapper.Map<TDto>(await _repo.Upsert(_mapper.Map<TModel>(dto)));
 
         protected virtual async Task<TModel> Add(string user, TModel model)
             => await _repo.Upsert(model);

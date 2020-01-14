@@ -15,9 +15,6 @@
     <None Update="AspNetAutoMapperConfig.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="AspNetAutoMapperGenerator.deps">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="AspNetAutoMapperGenerator.gen">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

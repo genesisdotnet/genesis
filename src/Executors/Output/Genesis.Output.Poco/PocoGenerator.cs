@@ -25,13 +25,11 @@ namespace Genesis.Output.Poco
         {
             Config = (PocoConfig)Configuration;
 
-            var baseTypeString = Config.GenericBaseClass
-                                    ? Config.ObjectBaseClass + "<TKey>"
-                                    : Config.ObjectBaseClass;
-
             Actions.Add(Tokens.Namespace, (ctx, obj) => Config.Namespace);
             Actions.Add(Tokens.ObjectName, (ctx, obj) => obj.Name.ToSingular());
-            Actions.Add(Tokens.ObjectBaseClass, (ctx, obj) => baseTypeString);
+            Actions.Add(Tokens.ObjectBaseClass, (ctx, obj) => Config.GenericBaseClass
+                                                                ? Config.ObjectBaseClass + '<'+obj.KeyDataType.ToCodeDataType()+'>'
+                                                                : Config.ObjectBaseClass);
             Actions.Add(Tokens.OutputSuffix, (ctx, obj) => Config.OutputSuffix);
             Actions.Add(Tokens.PropertiesStub, (ctx, obj) => GetPropertiesReplacement(obj.Properties));
             Actions.Add(Tokens.ConstructionStub, (ctx, obj) => GetConstructionReplacement(obj.Properties));
@@ -92,25 +90,31 @@ namespace Genesis.Output.Poco
             await Task.CompletedTask;
         }
 
-        private static string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators
+        private string GetPropertiesReplacement(IEnumerable<PropertyGraph> properties) //TODO: Figure out something for more configuration of the generators
         {
             string template =
                 "\t\t/// <summary>" + Environment.NewLine +
                 "\t\t/// Gets or sets the ~PROPERTY_NAME~ property." + Environment.NewLine +
                 "\t\t/// <summary>" + Environment.NewLine +
-                "\t\tpublic virtual ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }";
+                "\t\tpublic virtual ~PROPERTY_DATATYPE~ ~PROPERTY_NAME~ { get; set; }~INIT~" ;
 
             var sb = new StringBuilder();
 
             foreach (var p in properties)
             {
+                //if (Config.GenericBaseClass && p.Name.Equals("Id", StringComparison.InvariantCultureIgnoreCase))
+                //    continue; // defined in base
+
                 if (p.SourceType.Equals("sysname", StringComparison.InvariantCultureIgnoreCase))
                     continue;
 
                 if (!p.SourceType.Equals(GenesisDefaults.UnknownSourceType, StringComparison.Ordinal))
                     sb.AppendLine(template.Replace(Tokens.PropertyDataType, p.SourceType.ToCodeDataType())
                         .Replace(Tokens.PropertyName, p.Name)
-                        .Replace(Tokens.PropertyMemberName, p.Name.ToCorrectedCase()));
+                        .Replace(Tokens.PropertyMemberName, p.Name.ToCorrectedCase())
+                        .Replace("~INIT~", p.SourceType.ToCodeDataType().Equals("string", StringComparison.OrdinalIgnoreCase)
+                                                ? " = string.Empty;"
+                                                : string.Empty));
             }
 
             return sb.ToString();

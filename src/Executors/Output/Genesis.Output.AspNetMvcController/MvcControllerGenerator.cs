@@ -46,9 +46,11 @@ namespace Genesis.Output.AspNetMvcController
                             .Replace(Tokens.OutputSuffix, Config.OutputSuffix)
                             .Replace(Tokens.ServiceSuffix, Config.ServiceSuffix)
                             .Replace(Tokens.DtoBaseClass, Config.DtoSuffix)
+                            .Replace(Tokens.KeyDataType, objectGraph.KeyDataType.ToCodeDataType())
                             .Replace(Tokens.DepsNamespace, Config.DepsNamespace)
                             .Replace(Tokens.DepsDtoNamespace, Config.DepsDtoNamespace)
                             .Replace(Tokens.DepsServiceNamespace, Config.DepsServiceNamespace)
+                            .Replace(Tokens.DepsModelNamespace, Config.DepsModelNamespace)
                             ;
 
             var path = Path.Combine(Config.OutputPath, $@"{entityName}{Config.OutputSuffix}.cs");
