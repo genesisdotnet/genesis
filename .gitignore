@@ -18,6 +18,7 @@ Debug.genesis
 *.userprefs
 
 # Build results
+.vscode/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/

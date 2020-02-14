@@ -1,32 +1,38 @@
-# Genesis.Net
-Genesis.Net is a code execution engine that produces an output based on an arbitrary source or schema.
-
-* <b>`This is based on .Net Core 3.0 & c# 8.0 previews`</b>
-* [<b>.Net Core 3.0 Preview download</b>](https://dotnet.microsoft.com/download/dotnet-core/3.0 "Download")
-* [<b>Visual Studio Preview installer</b>](https://www.visualstudio.com/preview "Download Visual Studio Preview")
-
 # Executors
-An executor is a plugin to Genesis. They execute whatever code around a pseudo-context, or shared state. (not inside of a context) 
-Each executor is free to manipulate the ObjectGraph as they choose. Obviously you could be a dick, but that's not the point. 
 
-There are currently two types of Executors:
+* `This is based on .Net Core 3.1 using C# 8.0`
+* [.Net Core 3.1 download](https://dotnet.microsoft.com/download "Download")
+* [Visual Studio installer](https://www.visualstudio.com/ "Download Visual Studio")
+
+An executor is a plugin to Genesis. They execute arbitrary code around a pseudo-context, or shared state. *(not inside of a context)*
+Each executor is free to manipulate the ObjectGraph as they choose. Obviously you could be a dick, but that's not the point.
+
+`````c
+//TODO: Get rid of the 'only' two types of executors program flow.
+`````
 
 ## Input
-These are what feed an ObjectGraph context with schema information describing objects. 
 
-* `Genesis.Input.MSSqlDb` 
-    
-Reads MSSql database schema into ObjectGraphs (max lengths, datatypes, names, etc.)
+These are what feed an ObjectGraph context with schema information describing objects.
 
-* `Genesis.Input.SwaggerUrl` 
-    
-Reads a swagger web address into ObjectGraphs (api calls, their models etc)
+* `Genesis.Input.MSSqlDb`
+
+Reads `MSSql` database schema into ObjectGraphs (max lengths, datatypes, names, etc.)
+
+* `Genesis.Input.MySqlDb`
+
+Reads `MySql` database schema into ObjectGraphs (max lengths, datatypes, names, etc.)
+
+* `Genesis.Input.SwaggerUrl`
+
+Reads a `swagger.json` schema file into ObjectGraphs (api calls, their models etc)
 
 * `Genesis.Input.DotNetAssembly`
 
-You could populate ObjectGraphs off of actual objects for whatever reason. 
+You could populate ObjectGraphs off of actual objects from another .Net Core assembly.
 
 ## Output
+
 There's a ton of things to potentially do and/or generate. Here's a few...
 
 * `Genesis.Output.Poco`
@@ -54,6 +60,7 @@ Generate the .xaml markup for a Xamarin Forms Create/Edit view.
 Generate a simple .proto file with CRUD actions and an entity
 
 ## General
+
 General executors basically just inspect and/or manipulate the data in the ObjectGraphs at any point. For debug purposes there is a tools -> dump command that simply writes out the current ObjectGraphs schema to an .xml file in the `Config.OutputDir` of your choice.
 
 * `Genesis.Executors.GraphTools`
@@ -61,4 +68,5 @@ General executors basically just inspect and/or manipulate the data in the Objec
 Tools library for the ObjectGraphs.
 
 ## Executor Development
+
 Right now, all of the executors are referenced by the main Cli project to avoid build events and an overcomplicated dev process. They're still MEF'd in though.

@@ -379,5 +379,21 @@ namespace Genesis
                     .Where(w => w.IsPublic && w.Name == (string.IsNullOrEmpty(getOrSet) 
                                                             ? w.Name 
                                                             : getOrSet)).SingleOrDefault() != null);
+
+        /// <summary>
+        /// MySql seems to promote a 'table_name_like_this' and it's gross in a .Net world... So, this fixes that.
+        /// </summary>
+        /// <param name="s">The string you want un-MySqlified.</param>
+        /// <returns>The corrected string.</returns>
+        public static string FromMySqlUnderscored(this string s)
+        {
+            var sb = new StringBuilder();
+            var chunks = new List<string>(s.Split('_'));
+
+            foreach(var i in chunks)
+                sb.Append((i[0].ToString().ToUpper() + i[1..]).ToSingular());
+
+            return sb.ToString();
+        }
     }
 }
