@@ -1,0 +1,10 @@
+﻿{
+  "Server": "",
+  "Database": "",
+  "UserId": "",
+  "Password": "",
+
+  "ExcludePrefixes": [
+    "AspNet", "_", "sys"
+  ]
+}
