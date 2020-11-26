@@ -21,3 +21,20 @@ More to come... Changing the way templating works.
   * exec 'something in green text'
   
 ![Usage gif](https://github.com/genesisdotnet/genesis/blob/master/docs/gifs/demo.gif?raw=true)
+
+
+## How to install as dotnet tool
+
+if you nuget package is configured on your machine you can do this...
+
+```shell
+dotnet tool install genesis-cli --version 0.8.5-dev-UpdateBuildScript.0
+```
+
+if you want to test directly without publishing then reference the nuget folder 
+
+```shell
+dotnet tool install genesis-cli --version 0.8.5-dev-UpdateBuildScript.0 --add-source=Publish/Nuget
+```
+
+As a note, once published off of master and no pre-release info then this will install without the version

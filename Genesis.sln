@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		.gitattributes = .gitattributes
 		.gitignore = .gitignore
+		.runsettings = .runsettings
+		GitVersion.yml = GitVersion.yml
 		LICENSE = LICENSE
 		README.md = README.md
 		src\ToDo.md = src\ToDo.md
@@ -97,7 +99,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.JavascriptOb
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetAutoMapper", "src\Executors\Output\Genesis.Output.AspNetAutoMapper\Genesis.Output.AspNetAutoMapper.csproj", "{FC42C089-678B-4053-9D16-D033CBDFA36D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genesis.Input.MySqlDb", "src\Executors\Input\Genesis.Input.MySqlDb\Genesis.Input.MySqlDb.csproj", "{4D2FF77F-6FCB-4157-9851-99A16E30EC1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.MySqlDb", "src\Executors\Input\Genesis.Input.MySqlDb\Genesis.Input.MySqlDb.csproj", "{4D2FF77F-6FCB-4157-9851-99A16E30EC1C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{FDEAF19E-260B-410E-8413-8F6D7C424458}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E1E7A6F7-DEF1-4AFC-ABEA-E8022DBDD78C}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnetcore.yml = .github\workflows\dotnetcore.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".config", ".config", "{B8B5E162-0C52-4A63-A47A-3B6439CA166D}"
+	ProjectSection(SolutionItems) = preProject
+		.config\dotnet-tools.json = .config\dotnet-tools.json
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Tests", "src\Genesis.Tests\Genesis.Tests.csproj", "{31696C28-E952-472F-AE07-E3587F5B949A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -385,6 +401,18 @@ Global
 		{4D2FF77F-6FCB-4157-9851-99A16E30EC1C}.Release|x64.Build.0 = Release|Any CPU
 		{4D2FF77F-6FCB-4157-9851-99A16E30EC1C}.Release|x86.ActiveCfg = Release|Any CPU
 		{4D2FF77F-6FCB-4157-9851-99A16E30EC1C}.Release|x86.Build.0 = Release|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Debug|x64.Build.0 = Debug|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Debug|x86.Build.0 = Debug|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Release|x64.ActiveCfg = Release|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Release|x64.Build.0 = Release|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Release|x86.ActiveCfg = Release|Any CPU
+		{31696C28-E952-472F-AE07-E3587F5B949A}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -417,6 +445,9 @@ Global
 		{FFC7F93D-447F-47C4-88AE-ACF17907633F} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{FC42C089-678B-4053-9D16-D033CBDFA36D} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{4D2FF77F-6FCB-4157-9851-99A16E30EC1C} = {A4522569-85BB-4EF1-AC94-BE2978547AAE}
+		{FDEAF19E-260B-410E-8413-8F6D7C424458} = {A5DA5AE7-9B54-439A-8AD6-E3BEB08D2A99}
+		{E1E7A6F7-DEF1-4AFC-ABEA-E8022DBDD78C} = {FDEAF19E-260B-410E-8413-8F6D7C424458}
+		{B8B5E162-0C52-4A63-A47A-3B6439CA166D} = {A5DA5AE7-9B54-439A-8AD6-E3BEB08D2A99}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A29E004-0C17-4E72-AE88-F7EA03136D6E}
