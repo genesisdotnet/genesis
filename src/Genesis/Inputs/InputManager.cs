@@ -50,7 +50,6 @@ namespace Genesis.Input
                 Inputs.Add(populator);
 
                 var configType = populator.GetType().GetRuntimeProperty("Config").PropertyType ?? typeof(InputConfiguration);
-                var config = configType.IsInstanceOfType(typeof(InputConfiguration));
                 var cfgWarning = false;
                 try
                 {

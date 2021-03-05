@@ -2,17 +2,13 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <AssemblyName>genesis-cli</AssemblyName>
-    <LangVersion>8.0</LangVersion>
     <Authors>Izerian, Solatticus</Authors>
     <Company>Genesis Team</Company>
     <Product>genesis-cli</Product>
     <Description>Extensible scaffolding from just about any source to any destination you can write code for.</Description>
     <Copyright></Copyright>
-    <Deterministic>False</Deterministic> <!-- required (for now) to use the * below for the assembly version -->
-    <AssemblyVersion>0.8.4.*</AssemblyVersion> 
-    <FileVersion>0.8.4.0</FileVersion>
     <PackageProjectUrl>https://www.github.com/genesisdotnet/genesis</PackageProjectUrl>
   </PropertyGroup>
 
