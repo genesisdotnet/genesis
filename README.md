@@ -4,13 +4,15 @@
 An exploritory orchestration-based code generation tool. Data from pretty much any source that .Net is able to consume can be used to generate a variety of boilerplate code files or execute arbitrary code.
 
 *To run:*
-[.Net Core 3.1](https://dotnet.microsoft.com/download/dotnet-core/3.1) Is required, but the Visual Studio 2019 installer should install it, so...
+[Install DotNet](https://dotnet.microsoft.com/).
+
+Visual Studio installer should install it, so...
 
 * [Visual Studio Win/Mac 2019](https://visualstudio.com "Visual Studio Win/Mac 2019") 
 
 ## How does it work?
 
-More to come... Changing the way templating works.
+Busy year, will get back to this soon.
 
 # First run
 * The first thing that needs to happen is for the cli to scan for executors and make them available to Genesis. Do this by simply typing `scan`. (this is scriptable)
