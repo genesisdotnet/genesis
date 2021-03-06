@@ -1,5 +1,3 @@
-[![Build Status](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Factions-badge.atrox.dev%2Fgenesisdotnet%2Fgenesis%2Fbadge%3Fref%3Dmaster&style=flat)](https://actions-badge.atrox.dev/genesisdotnet/genesis/goto?ref=master)
-
 # Genesis .Net
 An exploritory orchestration-based code generation tool. Data from pretty much any source that .Net is able to consume can be used to generate a variety of boilerplate code files or execute arbitrary code.
 
