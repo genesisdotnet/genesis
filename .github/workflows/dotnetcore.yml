@@ -1,17 +1,67 @@
 name: .NET Core
 
-on: [push]
+on:
+  push:
+    branches: [ master, 'dev/**' ]
+    #paths: ['src/**']    
+  pull_request:
+    branches: [ master ]
+    #paths: ['src/**']    
 
 jobs:
   build:
-
-    runs-on: windows-latest
+  
+    runs-on: ubuntu-latest
+    #runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v1
+    - name: Get Latest Source
+      uses: actions/checkout@v2      
+      with:
+        fetch-depth: 0
     - name: Setup .NET Core
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 3.1.100 
-    - name: Build with dotnet
-      run: dotnet build --configuration Release
+        dotnet-version: 3.1.x 
+                
+    - name: Setup Project Variables
+      run: |
+        OUTPUT_PATH=Publish
+        BUILD_PROJECT=Genesis.sln
+        BUILD_CONFIGURATION=Release
+        dotnet tool restore
+        buildVersion=`dotnet gitversion /output json /showvariable FullSemVer`
+        echo Build Version= $buildVersion
+        echo "buildVersion=$buildVersion" >> $GITHUB_ENV   
+        echo "BUILD_PROJECT=$BUILD_PROJECT" >> $GITHUB_ENV
+        echo "BUILD_CONFIGURATION=$BUILD_CONFIGURATION" >> $GITHUB_ENV
+        echo "OUTPUT_PATH=$OUTPUT_PATH" >> $GITHUB_ENV  
+
+    - name: Build Project
+      run: dotnet build "$BUILD_PROJECT" -c $BUILD_CONFIGURATION -p:Version=$buildVersion
+    - name: Test Project
+      run: dotnet test "$BUILD_PROJECT" -c $BUILD_CONFIGURATION --no-build --no-restore --nologo --filter "TestCategory=Unit" -s ".runsettings"
+    - name: Pack Project
+      run: dotnet pack "$BUILD_PROJECT" -c $BUILD_CONFIGURATION --no-build --no-restore -o "$OUTPUT_PATH/Nuget" -p:PackageVersion=$buildVersion
+    - name: Publish Project
+      run: dotnet publish "$BUILD_PROJECT" -c $BUILD_CONFIGURATION  --no-build --no-restore -o "$OUTPUT_PATH/Binary"
+    
+    ### Once you register a NUGET_API_KEY you can uncomment this
+    ### Don't publish PR's
+    #- name: Publish Project to Nuget
+    #  if: github.event_name != 'pull_request'
+    #  run: dotnet nuget push "$OUTPUT_PATH/Nuget/*.nupkg" -k ${{secrets.NUGET_API_KEY}} -s https://api.nuget.org/v3/index.json --skip-duplicate
+
+    - name: Publish Binary
+      #if: github.ref != 'refs/heads/master'
+      uses: actions/upload-artifact@v2
+      with:
+        name: GenesisBinaries
+        path: '${{env.OUTPUT_PATH}}/Binary'
+
+    - name: Publish Nuget
+      #if: github.ref != 'refs/heads/master'
+      uses: actions/upload-artifact@v2
+      with:
+        name: GenesisNugetPackages
+        path: '${{env.OUTPUT_PATH}}/Nuget'

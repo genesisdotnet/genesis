@@ -1,0 +1,10 @@
+assembly-versioning-scheme: MajorMinorPatch
+next-version: 0.8.5
+mode: Mainline
+branches:
+  develop:
+    mode: ContinuousDeployment
+    tag: dev
+ignore:
+  sha: []
+merge-message-formats: {}

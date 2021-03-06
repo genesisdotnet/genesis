@@ -10,6 +10,11 @@
     <Description>Extensible scaffolding from just about any source to any destination you can write code for.</Description>
     <Copyright></Copyright>
     <PackageProjectUrl>https://www.github.com/genesisdotnet/genesis</PackageProjectUrl>
+
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>genesis-cli</ToolCommandName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
