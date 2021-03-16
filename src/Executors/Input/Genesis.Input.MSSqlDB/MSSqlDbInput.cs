@@ -171,7 +171,7 @@ namespace Genesis.Input.MSSqlDb
                 while (rdr.Read())
                 {
                     if (rdr["name"].ToString().StartsWith("_")) //migrations-ish table(s), skip them
-                        continue;
+                        continue; //TODO: MSSql table process - make this configurable
 
                     var p = new PropertyGraph
                     {

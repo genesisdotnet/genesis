@@ -32,7 +32,7 @@ namespace Genesis.Cli.Commands
 
                 foreach (var e in genesis.Chain.Execute(args))
                 {
-                    if (!e.Success) //Executors have to return a result with true
+                    if (!e?.Success ?? false) //Executors have to return a result with true
                         errorCount++;
                 }
 

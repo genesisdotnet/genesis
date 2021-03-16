@@ -18,7 +18,9 @@ namespace Genesis.Cli
         {
             var assemblies = new List<Assembly>();
 
-            foreach (var file in Directory.EnumerateFiles(Environment.CurrentDirectory, "*" + GenesisDefaults.LibraryExtension, SearchOption.TopDirectoryOnly))
+            var exeLocation = Path.GetDirectoryName(typeof(Program).Assembly.Location);
+
+            foreach (var file in Directory.EnumerateFiles(exeLocation, "*" + GenesisDefaults.LibraryExtension, SearchOption.TopDirectoryOnly))
                 assemblies.Add(Assembly.LoadFile(file));
 
             var conventions = new ConventionBuilder();

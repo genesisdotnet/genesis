@@ -21,7 +21,7 @@ namespace Genesis
             
             var argsTotal = 0; // required for "" as an arg but ditch whitespace between args
 
-            for (int i = 0; i < line.Length; i++)
+            for (int i = 0; i < line?.Length; i++)
             {
                 char c = line[i];
                 if (c == quote)

@@ -25,8 +25,7 @@ namespace Genesis.Input.MySqlDb
                                 INNER JOIN INFORMATION_SCHEMA.columns col 
                                     ON col.TABLE_NAME = tab.TABLE_NAME
                                 WHERE 
-	                                tab.TABLE_TYPE = 'BASE TABLE' 
-                                AND tab.TABLE_SCHEMA = '{DB}'
+	                                tab.TABLE_TYPE = 'BASE TABLE'
                                 ORDER BY tab.TABLE_NAME;
                                 ";
 
@@ -39,7 +38,7 @@ namespace Genesis.Input.MySqlDb
         protected override void OnInitialized()
         {
             Config = (MySqlConfig)Configuration;
-            _query = _query.Replace("{DB}", Config.Database);
+            _query = _query.Replace("{DB}", Config.Database); // used to filter by schema - may change back
         }
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
