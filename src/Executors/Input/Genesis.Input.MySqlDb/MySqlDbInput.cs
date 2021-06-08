@@ -12,20 +12,22 @@ namespace Genesis.Input.MySqlDb
     public class MySqlDbInput : InputExecutor
     {
         private string _query = @"
-                                SELECT
-	                                tab.TABLE_NAME as 'Table',
-                                    col.COLUMN_NAME as 'ColumnName',
-                                    col.COLUMN_DEFAULT as 'DefaultValue',
-                                    col.IS_NULLABLE as 'Nullable',
-                                    col.DATA_TYPE as 'DbDataType',
-                                    col.CHARACTER_MAXIMUM_LENGTH as 'MaxLength',
-                                    col.COLUMN_KEY as 'KeyInfo',
-                                    col.EXTRA as 'Flags'
-                                FROM INFORMATION_SCHEMA.tables tab
+                                SELECT * 
+                                " + // grabbing everything for now
+                                    //tab.TABLE_NAME as 'Table',
+                                    //   col.COLUMN_NAME as 'ColumnName',
+                                    //   col.COLUMN_DEFAULT as 'DefaultValue',
+                                    //   col.IS_NULLABLE as 'Nullable',
+                                    //   col.DATA_TYPE as 'DbDataType',
+                                    //   col.CHARACTER_MAXIMUM_LENGTH as 'MaxLength',
+                                    //   col.COLUMN_KEY as 'KeyInfo',
+                                    //   col.EXTRA as 'Flags'
+                                @"FROM INFORMATION_SCHEMA.tables tab
                                 INNER JOIN INFORMATION_SCHEMA.columns col 
                                     ON col.TABLE_NAME = tab.TABLE_NAME
                                 WHERE 
 	                                tab.TABLE_TYPE = 'BASE TABLE'
+                                AND tab.TABLE_SCHEMA = '{DB}'
                                 ORDER BY tab.TABLE_NAME;
                                 ";
 
@@ -38,11 +40,12 @@ namespace Genesis.Input.MySqlDb
         protected override void OnInitialized()
         {
             Config = (MySqlConfig)Configuration;
-            _query = _query.Replace("{DB}", Config.Database); // used to filter by schema - may change back
         }
 
         public override async Task<IGenesisExecutionResult> Execute(GenesisContext genesis, string[] args)
         {
+            _query = _query.Replace("{DB}", Config.Database); // used to filter by schema - may change back
+            
             static bool isExcluded(ObjectGraph g, string[] ex)
             {
                 foreach (var s in ex)
@@ -61,7 +64,7 @@ namespace Genesis.Input.MySqlDb
                 if (isExcluded(i, Config.ExcludePrefixes))
                     continue;
 
-                if(genesis.Objects.SingleOrDefault(x => x.KeyId == i.KeyId) == null) // only add if it doesn't exist
+                if(genesis.Objects.SingleOrDefault(x => x.Name == i.Name) == null) // only add if it doesn't exist
                 {
                     Text.White("Found "); Text.Yellow($"Table:{i.Name}, Key:{i.KeyId}, Type:{i.KeyDataType}, - ");
 
@@ -77,36 +80,14 @@ namespace Genesis.Input.MySqlDb
             });
         }
 
-        //private List<RelationshipGraph> GetRelationships()
-        //{
-        //    var list = new List<RelationshipGraph>();
-        //    using var con = new SqlConnection(Config.ConnectionString);
-        //    using var cmd = new SqlCommand(Q_FOREIGN_KEYS, con);
-
-        //    con.Open();
-
-        //    using var r = cmd.ExecuteReader(CommandBehavior.CloseConnection);
-
-        //    while(r.Read())
-        //    {
-        //        list.Add(new RelationshipGraph { 
-        //            ForeignColumn = r["ForeignColumn"].ToString(),
-        //            PrimaryColumn = r["PrimaryColumn"].ToString(),
-        //            ForeignTable = r["ForeignTable"].ToString(),
-        //            PrimaryTable = r["PrimaryTable"].ToString()
-        //        });
-        //    }
-
-        //    return list;
-        //}
-
         /// <summary>
         /// This is ugly, acknowledged
         /// </summary>
         /// <returns></returns>
         private List<ObjectGraph> GetSchemaGraph()
         {
-            static T getValue<T>(MySqlDataReader rdr, string fieldName) where T: new()
+            static T getValue<T>(MySqlDataReader rdr, string fieldName) 
+                where T: new()
                 => rdr.IsDBNull(fieldName)
                     ? new T()
                     : rdr.GetFieldValue<T>(fieldName);
@@ -114,14 +95,15 @@ namespace Genesis.Input.MySqlDb
             var objs = new List<ObjectGraph>();
             using (var con = new MySqlConnection(Config.ToConnectionString()))
             {
+                objs.Clear(); 
+                
                 using var r = new MySqlCommand(_query, con);
+                
                 con.Open();
 
                 using var rdr = r.ExecuteReader(CommandBehavior.CloseConnection);
                 if (!rdr.HasRows)
                     return objs;
-
-                objs.Clear();
 
                 var list = new List<SchemaRecord>();
 
@@ -130,20 +112,27 @@ namespace Genesis.Input.MySqlDb
                 {
                     try
                     {
-                        if (rdr["Table"]?.ToString()?.StartsWith("_") ?? true) //just removing EF migrations etc, should make a toggle
-                            continue;
+                        if (rdr["TABLE_NAME"]?.ToString()?.StartsWith("_") ?? true) //just removing EF migrations etc, should make a toggle
+                            continue; //TODO: Use the exclusion prefix list
 
                         temp = new SchemaRecord();
-                        temp.TableName = rdr["Table"]?.ToString() ?? string.Empty;
-                        temp.DbDataType = rdr["DbDataType"]?.ToString() ?? string.Empty;
-                        temp.ColumnName = rdr["ColumnName"]?.ToString() ?? string.Empty;
-                        temp.DefaultValue = rdr["DefaultValue"]?.ToString() ?? string.Empty;
-                        temp.IsNullable = (rdr["DefaultValue"]?.ToString() ?? string.Empty).Equals("YES", StringComparison.InvariantCultureIgnoreCase);
-                        temp.MaxLength = getValue<long>(rdr, "MaxLength");
-                        temp.KeyInfo = rdr["KeyInfo"].ToString() ?? string.Empty;
-                        temp.Flags = rdr["Flags"].ToString() ?? string.Empty;
+                        temp.Schema = rdr["TABLE_SCHEMA"].ToString();
+                        temp.TableName = rdr["TABLE_NAME"]?.ToString() ?? string.Empty;
+                        temp.DbDataType = rdr["DATA_TYPE"]?.ToString() ?? string.Empty;
+                        temp.ColumnName = rdr["COLUMN_NAME"]?.ToString() ?? string.Empty;
+                        temp.DefaultValue = rdr["COLUMN_DEFAULT"]?.ToString() ?? string.Empty;
+                        temp.IsNullable = (rdr["IS_NULLABLE"]?.ToString() ?? string.Empty).Equals("YES", StringComparison.InvariantCultureIgnoreCase);
+                        temp.MaxLength = getValue<long?>(rdr, "CHARACTER_MAXIMUM_LENGTH");
+                        temp.KeyInfo = rdr["COLUMN_KEY"].ToString() ?? string.Empty;
+                        temp.IsAutoIncrement = rdr["EXTRA"]?.ToString().Equals("auto_increment", StringComparison.InvariantCultureIgnoreCase) ?? false;
+                        temp.Flags = rdr["COLUMN_COMMENT"].ToString() ?? string.Empty;
                         
-                        list.Add(temp);
+                        if(!list.Any(w=>w.ColumnName == temp.ColumnName))
+                            list.Add(temp);
+                        else
+                        {
+                            //TODO: Not sure why multiple rows for columns - ignoring for now. 
+                        }
                     }
                     catch(Exception ex)
                     {
@@ -154,21 +143,25 @@ namespace Genesis.Input.MySqlDb
 
                 var tmp = new Dictionary<string, List<SchemaRecord>>();
 
-                var t = list
+                var tables = list
                     .GroupBy(g=>g.TableName)
-                    .ToDictionary(g => g.Key, g=>g.ToList());
+                    .ToList();
 
-                foreach(var key in t.Keys) // table loop
+                foreach(var table in tables) // table loop
                 {
-                    var val = t[key];
+                    var val = table;
                     var keyInfo = val.Where(x => !string.IsNullOrEmpty(x.KeyInfo)).FirstOrDefault();
 
                     // finding the key, if any
                     
                     var o = new ObjectGraph
                     {
-                        KeyId = (!string.IsNullOrEmpty(keyInfo?.KeyInfo) && keyInfo.KeyInfo.Equals("PRI", StringComparison.InvariantCultureIgnoreCase)) ? keyInfo.ColumnName : string.Empty,
-                        KeyDataType = (!string.IsNullOrEmpty(keyInfo?.KeyInfo) && keyInfo.KeyInfo.Equals("PRI", StringComparison.InvariantCultureIgnoreCase)) ? keyInfo.DbDataType.ToCodeDataType() : string.Empty,
+                        KeyId = (!string.IsNullOrEmpty(keyInfo?.KeyInfo) && keyInfo.KeyInfo.Equals("PRI", StringComparison.InvariantCultureIgnoreCase)) 
+                            ? keyInfo.ColumnName 
+                            : string.Empty,
+                        KeyDataType = (!string.IsNullOrEmpty(keyInfo?.KeyInfo) && keyInfo.KeyInfo.Equals("PRI", StringComparison.InvariantCultureIgnoreCase)) 
+                            ? keyInfo.DbDataType.ToCodeDataType() 
+                            : string.Empty,
                         Name = val.First().TableName.FromMySqlUnderscored()
                     };
 
@@ -199,9 +192,11 @@ namespace Genesis.Input.MySqlDb
             public string DefaultValue { get; set; } = string.Empty;
             public bool IsNullable { get; set; } = false;
             public string DbDataType { get; set; } = string.Empty;
-            public long MaxLength { get; set; } = 0;
+            public long? MaxLength { get; set; } = 0;
             public string KeyInfo { get; set; } = string.Empty;
             public string Flags { get; set; } = string.Empty;
+            public bool IsAutoIncrement { get; set; } = false;
+            public string Schema { get; internal set; }
         }
     }
 }

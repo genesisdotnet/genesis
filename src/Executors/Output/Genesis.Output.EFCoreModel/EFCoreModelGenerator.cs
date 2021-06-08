@@ -144,8 +144,8 @@ namespace Genesis.Output.EFCoreModel
             {
                 //TODO: Make this configurable to skip the Key
 
-                if (p.Name.Equals("Id", StringComparison.InvariantCultureIgnoreCase))
-                    continue;
+                //if (p.Name.Equals("Id", StringComparison.InvariantCultureIgnoreCase))
+                //    continue;
 
                 if (p.SourceType.Equals("sysname", StringComparison.InvariantCultureIgnoreCase))
                     continue;
