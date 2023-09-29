@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+<!-- Need to add project references somehow, but for now this is closer to MVP complete -->
+  </ItemGroup>
+
+</Project>

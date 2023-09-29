@@ -1,0 +1,12 @@
+﻿{
+  "language": "C#",
+  "overwrite": "all",
+  "preserve": "none",
+  "projects": {
+    "Genesis.Framework.csproj": "/src/genesis-mvp/src/server/Genesis.Framework",
+    "Genesis.Common.csproj": "/src/genesis-mvp/src/shared/Genesis.Common",
+    "Genesis.Data.csproj": "/src/genesis-mvp/src/server/Genesis.Data",
+    "Genesis.Services.csproj": "/src/genesis-mvp/src/server/Genesis.Services",
+    "Genesis.Server.csproj": "/src/genesis-mvp/src/server/Genesis.Server"
+  }
+}
