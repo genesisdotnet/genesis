@@ -3,10 +3,10 @@
   "namespace": "Genesis.Data",
   "outputPath": "/src/genesis-mvp/src/server/Genesis.Data",
   "outputSuffix": "Repository",
-  "depsPath": "/src/genesis-mvp/src/server/Genesis.Framework",
-  "depsNamespace": "Genesis.Framework",
+  "depsPath": "/src/genesis-mvp/src/server/Genesis.Data/.Internal",
+  "depsNamespace": "Genesis.Data",
   "depsModelNamespace": "Genesis.Data",
-  "modelBaseClass": "Model",
+  "modelBaseClass": "Entity",
   "genericBaseClass": true,
   "overwrite": "all",
   "preserve": "none"

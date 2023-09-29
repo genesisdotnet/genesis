@@ -2,7 +2,6 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.FeatureManagement;
 using ~DEPS_MODEL_NAMESPACE~;
-using ~DEPS_REPO_NAMESPACE~;
 using ~DEPS_DTO_NAMESPACE~;
 using ~DEPS_MAPPING_NAMESPACE~;
 using ~DEPS_NAMESPACE~;

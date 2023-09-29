@@ -1,5 +1,4 @@
 ﻿using ~DEPS_MODEL_NAMESPACE~;
-using ~DEPS_NAMESPACE~;
 
 namespace ~NAMESPACE~
 {

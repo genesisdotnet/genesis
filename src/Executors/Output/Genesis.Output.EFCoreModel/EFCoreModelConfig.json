@@ -5,8 +5,8 @@
   "outputSuffix": "",
   "objectBaseClass": "Entity",
   "genericBaseClass": true,
-  "depsPath": "/src/genesis-mvp/src/server/Genesis.Framework",
-  "depsNamespace": "Genesis.Framework",
+  "depsPath": "/src/genesis-mvp/src/server/Genesis.Data/.Internal",
+  "depsNamespace": "Genesis.Data",
   "overwrite": "all",
   "preserve": "none"
 }

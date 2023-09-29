@@ -2,6 +2,7 @@
 I~OUTPUT_SUFFIX~
 I~OUTPUT_SUFFIX~.cs
 using ~DEPS_DTO_NAMESPACE~;
+using ~DEPS_MODEL_NAMESPACE~;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

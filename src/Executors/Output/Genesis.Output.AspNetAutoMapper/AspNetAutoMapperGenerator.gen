@@ -1,6 +1,5 @@
 ﻿using ~DEPS_MODEL_NAMESPACE~;
 using ~DEPS_DTO_NAMESPACE~;
-using ~DEPS_NAMESPACE~;
 using AutoMapper;
 
 namespace ~NAMESPACE~
