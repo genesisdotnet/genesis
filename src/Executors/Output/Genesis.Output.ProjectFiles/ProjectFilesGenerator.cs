@@ -36,7 +36,7 @@ namespace Genesis.Output.Poco
             {
                 var outPath = Path.Combine(proj.Value, proj.Key);
 
-                await File.WriteAllTextAsync(outPath.Replace('<', '_').Replace('>', '_'), output); //hacky, can't save fileNames with '<' or '>' in the name
+                await File.WriteAllTextAsync(outPath.Replace('<', '_').Replace('>', '_'), Template.Raw); //hacky, can't save fileNames with '<' or '>' in the name
 
                 Text.White($"Wrote '"); Text.Yellow(outPath); Text.WhiteLine("'");
             }
