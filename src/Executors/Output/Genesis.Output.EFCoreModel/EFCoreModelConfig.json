@@ -1,11 +1,11 @@
 ﻿{
   "language": "C#",
-  "namespace": "Genesis.Data.Models",
-  "outputPath": "/Temp/Output",
+  "namespace": "Genesis.Data",
+  "outputPath": "/src/genesis-mvp/src/server/Genesis.Data/Entities",
   "outputSuffix": "",
-  "objectBaseClass": "Model",
+  "objectBaseClass": "Entity",
   "genericBaseClass": true,
-  "depsPath": "/Temp/Output/Dependencies",
+  "depsPath": "/src/genesis-mvp/src/server/Genesis.Framework",
   "depsNamespace": "Genesis.Framework",
   "overwrite": "all",
   "preserve": "none"

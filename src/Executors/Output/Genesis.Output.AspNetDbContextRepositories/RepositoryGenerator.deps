@@ -86,3 +86,13 @@ namespace ~DEPS_NAMESPACE~
             => DbContext.SaveChangesAsync(_tokenSource.Token);
     }
 }
+<!----->
+Project
+Genesis.Framework.csproj
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+  </PropertyGroup>
+
+</Project>

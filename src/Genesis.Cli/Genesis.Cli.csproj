@@ -4,7 +4,9 @@
     <OutputType>Exe</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <AssemblyName>genesis-cli</AssemblyName>
-    <Authors>Izerian, Solatticus</Authors>
+    <AssemblyVersion>1.0.1.*</AssemblyVersion>
+    <Deterministic>false</Deterministic>
+    <Authors>Solatticus</Authors>
     <Company>Genesis Team</Company>
     <Product>genesis-cli</Product>
     <Description>Extensible scaffolding from just about any source to any destination you can write code for.</Description>

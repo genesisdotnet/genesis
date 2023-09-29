@@ -14,5 +14,6 @@ namespace Genesis
         public bool IsKeyProperty { get; set; } = false;
         public MethodVisibilities GetterVisibility { get; set; } = MethodVisibilities.Public;
         public MethodVisibilities SetterVisibility { get; set; } = MethodVisibilities.Public;
+        public short MaxLength { get; set; } = 250;
     }
 }

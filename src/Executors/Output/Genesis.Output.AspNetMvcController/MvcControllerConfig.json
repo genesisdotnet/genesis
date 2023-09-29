@@ -1,13 +1,13 @@
 ﻿{
   "language": "C#",
   "namespace": "Genesis.Api.Controllers",
-  "outputPath": "/Temp/Output/Controllers",
+  "outputPath": "/src/genesis-mvp/src/server/Genesis.Server/Controllers",
   "overwrite": true,
   "serviceSuffix": "Service",
   "depsServiceNamespace": "Genesis.Services",
   "depsDtoNamespace": "Genesis.Common",
-  "depsModelNamespace": "Genesis.Data.Models",
-  "depsMappingNamespace": "Genesis.Services.Mapping",
+  "depsModelNamespace": "Genesis.Data",
+  "depsMappingNamespace": "Genesis.Services",
   "depsNamespace": "Genesis.Framework",
   "preserve": "none",
   "injections": [

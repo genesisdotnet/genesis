@@ -5,15 +5,6 @@ using System.Text;
 
 namespace Genesis.Output.Poco
 {
-    /*
-     {
-        "language": "C#",
-        "namespace": "Genesis.Output.Poco",
-        "outputPath": "/src/genesis-mvp/src/Shared/Genesis.Common",
-        "overwrite": "all",
-        "preserve": "none"
-    }
-     * */
     public class PocoConfig : GeneratorConfiguration
     {
         public string ObjectBaseClass { get; set; } = "Model";

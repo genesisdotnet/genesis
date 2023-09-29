@@ -1,9 +1,9 @@
 ﻿{
   "language": "C#",
-  "namespace": "Genesis.Output.Poco",
-  "outputPath": "/Temp/Output",
+  "namespace": "Genesis.Common",
+  "outputPath": "/src/genesis-mvp/src/shared/Genesis.Common",
   "outputSuffix": "Dto",
-  "depsPath": "/src/genesis-mvp/src/Shared/Genesis.Common/",
+  "depsPath": "/src/genesis-mvp/src/shared/Genesis.Common/",
   "depsNamespace": "Genesis.Common",
   "objectBaseClass": "Dto",
   "genericBaseClass":  true,

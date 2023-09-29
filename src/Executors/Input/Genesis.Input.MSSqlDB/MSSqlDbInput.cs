@@ -183,7 +183,7 @@ namespace Genesis.Input.MSSqlDb
                         //IsRowGuid = rdr.GetBoolean(rdr.GetOrdinal("is_rowguidcol")),
                         IsKeyProperty = rdr.GetBoolean(rdr.GetOrdinal("is_identity")),
                         //IsComputed = rdr.GetBoolean(rdr.GetOrdinal("is_computed")),
-                        //MaxLength = rdr.GetInt16(rdr.GetOrdinal("max_length")),
+                        MaxLength = rdr.GetInt16(rdr.GetOrdinal("max_length")),
                         //Precision = rdr.GetByte(rdr.GetOrdinal("precision")),
                         //Scale = rdr.GetByte(rdr.GetOrdinal("scale")),
                         //SystemTypeID = rdr.GetByte(rdr.GetOrdinal("system_type_id")),
