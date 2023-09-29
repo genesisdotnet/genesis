@@ -5,10 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.4.0" />
-    <PackageReference Include="NJsonSchema.CodeGeneration" Version="10.8.0" />
-    <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="10.8.0" />
-    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.18.0" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.7.0" />
+    <PackageReference Include="NJsonSchema.CodeGeneration" Version="10.9.0" />
+    <PackageReference Include="NJsonSchema.CodeGeneration.CSharp" Version="10.9.0" />
+    <PackageReference Include="NSwag.CodeGeneration.CSharp" Version="13.20.0" />
     <PackageReference Include="System.CodeDom" Version="7.0.0" />
     <PackageReference Include="System.Linq" Version="4.3.0" />
     <PackageReference Include="System.ObjectModel" Version="4.3.0" />
