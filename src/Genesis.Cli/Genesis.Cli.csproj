@@ -67,4 +67,10 @@
     <ProjectReference Include="..\Executors\Input\Genesis.Input.MySqlDb\Genesis.Input.MySqlDb.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="LocalSQLtoMVPsite.genesis">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

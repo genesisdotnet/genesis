@@ -1,0 +1,22 @@
+scan
+add mssql
+config mssql
+add poco
+config poco
+add aspnet-repo-cached
+config aspnet-repo-cached
+add aspnet-repo
+config aspnet-repo
+add ef-model
+config ef-model
+add aspnet-svc
+config aspnet-svc
+add aspnet-map
+config aspnet-map
+add aspnet-mvc-con
+config aspnet-mvc-con
+add project-files
+config project-files
+status
+exec chain
+break

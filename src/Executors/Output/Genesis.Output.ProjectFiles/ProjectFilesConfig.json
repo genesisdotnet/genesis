@@ -1,6 +1,6 @@
 ﻿{
   "language": "C#",
-  "overwrite": "all",
+  "overwrite": "false",
   "preserve": "none",
   "projects": {
     "Genesis.Framework.csproj": "/src/genesis-mvp/src/server/Genesis.Framework",
