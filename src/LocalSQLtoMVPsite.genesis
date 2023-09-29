@@ -15,6 +15,8 @@ add aspnet-map
 config aspnet-map
 add aspnet-mvc-con
 config aspnet-mvc-con
+add project-files
+config project-files
 status
 exec chain
 break

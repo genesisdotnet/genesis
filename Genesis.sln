@@ -100,6 +100,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.AspNetAutoMa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Input.MySqlDb", "src\Executors\Input\Genesis.Input.MySqlDb\Genesis.Input.MySqlDb.csproj", "{4D2FF77F-6FCB-4157-9851-99A16E30EC1C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Genesis.Output.ProjectFiles", "src\Executors\Output\Genesis.Output.ProjectFiles\Genesis.Output.ProjectFiles.csproj", "{7AE743CD-3009-497F-B690-B13371C540DB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -386,6 +388,18 @@ Global
 		{4D2FF77F-6FCB-4157-9851-99A16E30EC1C}.Release|x64.Build.0 = Release|Any CPU
 		{4D2FF77F-6FCB-4157-9851-99A16E30EC1C}.Release|x86.ActiveCfg = Release|Any CPU
 		{4D2FF77F-6FCB-4157-9851-99A16E30EC1C}.Release|x86.Build.0 = Release|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Debug|x64.Build.0 = Debug|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Debug|x86.Build.0 = Debug|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Release|x64.ActiveCfg = Release|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Release|x64.Build.0 = Release|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Release|x86.ActiveCfg = Release|Any CPU
+		{7AE743CD-3009-497F-B690-B13371C540DB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -418,6 +432,7 @@ Global
 		{FFC7F93D-447F-47C4-88AE-ACF17907633F} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{FC42C089-678B-4053-9D16-D033CBDFA36D} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 		{4D2FF77F-6FCB-4157-9851-99A16E30EC1C} = {A4522569-85BB-4EF1-AC94-BE2978547AAE}
+		{7AE743CD-3009-497F-B690-B13371C540DB} = {43570CDD-40A3-4D73-A1B7-22F24B8261A9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8A29E004-0C17-4E72-AE88-F7EA03136D6E}
